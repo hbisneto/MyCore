@@ -7,7 +7,7 @@ from datetime import datetime
 
 CurrentYear = date.today().year
 SoftwareName = "MyCore"
-Version = "1.0"
+Version = "1.1"
 CopyrightName = "Heitor"
 
 Now = datetime.now()

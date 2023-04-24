@@ -19,9 +19,9 @@ def Run():
         print(">> MENU <<")
         print("="*80)
         print("[1] - New Project...")
-        print("[2] - Projects List")
-        print("[3] - Backup Projects")
-        print("[4] - Sample Projects...")
+        # print("[2] - Projects List")
+        # print("[3] - Backup Projects")
+        # print("[4] - Sample Projects...")
         print("[0] - Quit PyBridge")
         print()
 
@@ -32,7 +32,7 @@ def Run():
             if Opc == 0:
                 BridgeLoop = False
                 print("=" * 80)
-                print("[PyBridge for Mac] - Encerrado")
+                # print("[PyBridge for Mac] - Quit")
                 print(f'[{SplashScreen.SoftwareName}] - Quit')
                 print("=" * 80)
                 try:
