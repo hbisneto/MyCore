@@ -5,7 +5,7 @@ from datetime import date
 
 CurrentYear = date.today().year
 SoftwareName = "MyCore"
-Version = "1.1"
+Version = "1.2"
 CopyrightName = "Heitor Bisneto"
 
 print("Name:", SoftwareName)
