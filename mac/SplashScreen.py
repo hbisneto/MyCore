@@ -8,7 +8,7 @@ from datetime import datetime
 CurrentYear = date.today().year
 SoftwareName = "MyCore"
 Version = "1.1"
-CopyrightName = "Heitor"
+CopyrightName = "Heitor Bisneto"
 
 Now = datetime.now()
 Hour = int(Now.strftime("%H"))

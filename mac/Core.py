@@ -2,6 +2,7 @@ import codecs
 import getpass
 import os
 import sys
+import time
 from datetime import datetime
 from exception import Exceptions
 from mac import FileSystem
@@ -17,7 +18,6 @@ BuildVersion = sys.version_info[2]
 TweetStr = "{Tweet}"
 
 def CreateExceptionsFile(AppName, FileLocation):
-    print("> Creating exceptions Library...")
     with codecs.open(FileLocation, "w", "utf-8-sig") as Exceptions:
         Exceptions.write(f'## Exceptions File\n')
         Exceptions.write(f'## This file contains events that`s raised when the program must to stop\n\n')
@@ -91,12 +91,16 @@ def CreateExceptionsFile(AppName, FileLocation):
         Exceptions.write(f'    print("=" * 80)\n\n')
         Exceptions.write(f'Throw = Raise(">> An Exception occurred:")')
         Exceptions.close()
+    print(f'[ O.K ]: Created exceptions Library')
 
 def CreateGitIgnoreFile(AppName, FileLocation):
-    print("> Creating '.gitignore' File...")
     with codecs.open(FileLocation, "w", "utf-8-sig") as GitIgnore:
-        GitIgnore.write(f'__pycache__/\n')
+        GitIgnore.write(f'### PYBRIDGE SETS TO IGNORE ###\n')
+        GitIgnore.write(f'## .DS_Store: Is a file that stores custom attributes of its containing folder, such as folder view options, icon positions, and other visual information.\n')
+        GitIgnore.write(f'.DS_Store\n')
+        GitIgnore.write(f'### PYBRIDGE SETS TO IGNORE ###\n\n')
         GitIgnore.write(f'# Byte-compiled / optimized / DLL files\n')
+        GitIgnore.write(f'__pycache__/\n')
         GitIgnore.write(f'*.py[cod]\n')
         GitIgnore.write(f'*$py.class\n\n')
         GitIgnore.write(f'# C extensions\n')
@@ -227,6 +231,7 @@ def CreateGitIgnoreFile(AppName, FileLocation):
         GitIgnore.write(f'#  option (not recommended) you can uncomment the following to ignore the entire idea folder.\n')
         GitIgnore.write(f'#.idea/')
         GitIgnore.close()
+    print(f'[ O.K ]: Created ".gitignore" File')
 
 def CreateInitFile(AppName, FileLocation):
     with codecs.open(FileLocation, "w", "utf-8-sig") as AppName:
@@ -257,7 +262,6 @@ def CreateInitFile(AppName, FileLocation):
         AppName.close()
 
 def CreateJupyterNotebook(AppName, FileLocation):
-    print(">> Applying Jupyter Notebook on Environment...\n>> Please wait...")
     with codecs.open(FileLocation, "w", "utf-8-sig") as JupyterFile:
         JupyterFile.write('{\n')
         JupyterFile.write(' "cells": [\n')
@@ -436,9 +440,9 @@ def CreateJupyterNotebook(AppName, FileLocation):
         JupyterFile.write(' "nbformat_minor": 2\n')
         JupyterFile.write('}\n')
         JupyterFile.close()
+    print(f'[ O.K ]: Applied Jupyter Notebook on Environment')
 
 def CreateReadmeFile(AppName, FileLocation):
-    print("> Creating 'README' File...")
     with codecs.open(FileLocation, "w", "utf-8-sig") as Readme:
         Readme.write('---\n')
         Readme.write(f'This project was created using [PyBridge](https://github.com/hbisneto/PyBridge)\n')
@@ -459,9 +463,9 @@ def CreateReadmeFile(AppName, FileLocation):
         Readme.write(f'#\n\n')
         Readme.write(f'Copyright © {datetime.now().year} {getpass.getuser().capitalize()}. All rights reserved.')
         Readme.close()
+    print(f'[ O.K ]: Created "README" File')
 
 def CreateRequirementsFile(AppName, FileLocation):
-    print("> Creating Requirements Library...")
     with codecs.open(FileLocation, "w", "utf-8-sig") as Requirements:
         Requirements.write(f'## Requirements File\n')
         Requirements.write(f'## This file is used to check if system matches with the minimum requirements to run\n\n')
@@ -517,9 +521,9 @@ def CreateRequirementsFile(AppName, FileLocation):
         Requirements.write(f'   CheckMajorVersion()\n')
         Requirements.write(f'   CheckMinorVersion()\n')
         Requirements.close()
+    print(f'[ O.K ]: Created Requirements Library')
 
 def CreateTokensFile(AppName, FileLocation):
-    print(">> Applying Twitter Application on Environment...\n>> Please wait...")
     with codecs.open(FileLocation, "w", "utf-8-sig") as Tokens:
         Tokens.write(f'## Tokens\n')
         Tokens.write(f'## Setup and connect you Twitter account here!\n')
@@ -539,12 +543,12 @@ def CreateTokensFile(AppName, FileLocation):
         Tokens.write(f'## Create an API Object\n')
         Tokens.write(f'Twitter = tweepy.API(Auth, wait_on_rate_limit = True)')
         Tokens.close()
+    print(f'[ O.K ]: Applied Twitter Application on Environment')
 
 ### TARGET OS MODULES
 ## LinuxApp File
 def CreateLinuxAppFile(AppName, FileLocation):
     if ProjectOption == 1:
-        print("> Creating LinuxApp Library...")
         with codecs.open(FileLocation, "w", "utf-8-sig") as LinuxAppFile:
             LinuxAppFile.write(f'## LinuxApp File\n')
             LinuxAppFile.write(f'## This file is used to implement code used to run scripts for Linux\n\n')
@@ -556,8 +560,6 @@ def CreateLinuxAppFile(AppName, FileLocation):
             LinuxAppFile.close()
             
     elif ProjectOption == 2:
-        print(">> Applying Loop Application on Environment on Linux...\n>> Please wait...")
-        print("> Creating LinuxApp Library...")
         with codecs.open(FileLocation, "w", "utf-8-sig") as LinuxAppFile:
             LinuxAppFile.write(f'## LinuxApp File\n')
             LinuxAppFile.write(f'## This file is used to implement code used to run scripts for Linux\n\n')
@@ -618,13 +620,13 @@ def CreateLinuxAppFile(AppName, FileLocation):
             LinuxAppFile.write(f'   NewTweet()\n\n')
             LinuxAppFile.write(f'Main()\n')
             LinuxAppFile.close()
+    print(f'[ O.K ]: Created LinuxApp Library')
+
 ## Linux File
 def CreateLinuxFile(AppName, FileLocation):
     print("="*80)
-    print(">> Creating Linux Modules <<")
+    print(">> Creating Linux Module <<")
     print("="*80)
-    
-    print("> Creating Linux Library...")
     with codecs.open(FileLocation, "w", "utf-8-sig") as LinuxFile:
         LinuxFile.write(f'## Linux File\n')
         LinuxFile.write(f'## This file is used to implement code used to run scripts for Linux\n')
@@ -641,9 +643,10 @@ def CreateLinuxFile(AppName, FileLocation):
         LinuxFile.write(f'   ## Start App for Linux\n')
         LinuxFile.write(f'   from linux import LinuxApp\n\n')
         LinuxFile.close()
+    print(f'[ O.K ]: Created Linux Library')
+
 ## Linux FileSystem
 def CreateLinuxFileSystem(AppName, FileLocation):
-    print("> Creating Linux FileSystem Library...")
     with codecs.open(FileLocation, "w", "utf-8-sig") as LinuxFS:
         Linux = "User = f'/home/{os.environ"
         FileSystem = '["USER"]}/'
@@ -663,6 +666,8 @@ def CreateLinuxFileSystem(AppName, FileLocation):
         LinuxFS.write("ProjectsRepo = f'{PyBridgeFolder}Projects/'\n")
         LinuxFS.write("PythonExtension = '.py'\n")
         LinuxFS.close()
+    print(f'[ O.K ]: Created FileSystem Library (Linux)')
+
 ## Linux SplashScreen
 def CreateLinuxSplashScreen(AppName, FileLocation):
     if ProjectOption == 3:
@@ -689,7 +694,6 @@ def CreateLinuxSplashScreen(AppName, FileLocation):
             SplashLinux.write(f'print()')
             SplashLinux.close()
     else:
-        print("> Creating SplashScreen...")
         with codecs.open(FileLocation, "w", "utf-8-sig") as SplashLinux:
             SplashLinux.write(f'## SplashScreen File\n')
             SplashLinux.write(f'## This file contains information about your project\n\n')
@@ -710,11 +714,11 @@ def CreateLinuxSplashScreen(AppName, FileLocation):
             SplashLinux.write(f'print("="*80)\n')
             SplashLinux.write(f'print()\n')
             SplashLinux.close()
+    print(f'[ O.K ]: Created SplashScreen Library')
 
 ## MacApp File
 def CreateMacAppFile(AppName, FileLocation):
     if ProjectOption == 1:
-        print("> Creating MacApp Library...")
         with codecs.open(FileLocation, "w", "utf-8-sig") as MacAppFile:
             MacAppFile.write(f'## MacApp File\n')
             MacAppFile.write(f'## This file is used to implement code used to run scripts for Mac\n\n')
@@ -726,8 +730,6 @@ def CreateMacAppFile(AppName, FileLocation):
             MacAppFile.close()
 
     elif ProjectOption == 2:
-        print(">> Applying Loop Application on Environment on Mac...\n>> Please wait...")
-        print("> Creating MacApp Library...")
         with codecs.open(FileLocation, "w", "utf-8-sig") as MacAppFile:
             MacAppFile.write(f'## MacApp File\n')
             MacAppFile.write(f'## This file is used to implement code used to run scripts for Mac\n\n')
@@ -788,14 +790,13 @@ def CreateMacAppFile(AppName, FileLocation):
             MacAppFile.write(f'   NewTweet()\n\n')
             MacAppFile.write(f'Main()\n')
             MacAppFile.close()
+    print(f'[ O.K ]: Created MacApp Library')
+
 ## Mac File
 def CreateMacFile(AppName, FileLocation):
     print("="*80)
-    print(">> Creating Mac Modules <<")
+    print(">> Creating Mac Module <<")
     print("="*80)
-
-    ## Mac File
-    print("> Creating Mac Library...")
     with codecs.open(FileLocation, "w", "utf-8-sig") as MacFile:
         MacFile.write(f'## Mac File\n')
         MacFile.write(f'## This file is used to implement code used to run scripts for Mac\n')
@@ -812,9 +813,10 @@ def CreateMacFile(AppName, FileLocation):
         MacFile.write(f'   ## Start App for Mac\n')
         MacFile.write(f'   from mac import MacApp\n\n')
         MacFile.close()
+    print("[ O.K ]: Created Mac Library")
+
 ## Mac FileSystem
 def CreateMacFileSystem(AppName, FileLocation):
-    print("> Creating Mac FileSystem Library...")
     with codecs.open(FileLocation, "w", "utf-8-sig") as MacFS:
         Mac = "User = f'/Users/{os.environ"
         FileSystem = '["USER"]}/'
@@ -838,6 +840,8 @@ def CreateMacFileSystem(AppName, FileLocation):
         MacFS.write("ProjectsRepo = f'{PyBridgeFolder}Projects/'\n")
         MacFS.write("PythonExtension = '.py'\n")
         MacFS.close()
+    print("[ O.K ]: Created FileSystem Library (macOS)")
+
 ## Mac SplashScreen
 def CreateMacSplashScreen(AppName, FileLocation):
     if ProjectOption == 3:
@@ -864,7 +868,6 @@ def CreateMacSplashScreen(AppName, FileLocation):
             SplashMac.write(f'print()')
             SplashMac.close()
     else:
-        print("> Creating SplashScreen...")
         with codecs.open(FileLocation, "w", "utf-8-sig") as SplashMac:
             SplashMac.write(f'## SplashScreen File\n')
             SplashMac.write(f'## This file contains information about your project\n\n')
@@ -885,11 +888,11 @@ def CreateMacSplashScreen(AppName, FileLocation):
             SplashMac.write(f'print("="*80)\n')
             SplashMac.write(f'print()\n')
             SplashMac.close()
+    print("[ O.K ]: Created SplashScreen Library")
 
 ## WindowsApp File
 def CreateWindowsAppFile(AppName, FileLocation):
     if ProjectOption == 1:
-        print("> Creating WindowsApp Library...")
         with codecs.open(FileLocation, "w", "utf-8-sig") as WindowsAppFile:
             WindowsAppFile.write(f'## WindowsApp File\n')
             WindowsAppFile.write(f'## This file is used to implement code used to run scripts for Windows\n\n')
@@ -901,8 +904,6 @@ def CreateWindowsAppFile(AppName, FileLocation):
             WindowsAppFile.close()
             
     elif ProjectOption == 2:
-        print(">> Applying Loop Application on Environment on Windows...\n>> Please wait...")
-        print("> Creating WindowsApp Library...")
         with codecs.open(FileLocation, "w", "utf-8-sig") as WindowsAppFile:
             WindowsAppFile.write(f'## WindowsApp File\n')
             WindowsAppFile.write(f'## This file is used to implement code used to run scripts for Windows\n\n')
@@ -963,13 +964,14 @@ def CreateWindowsAppFile(AppName, FileLocation):
             WindowsAppFile.write(f'   NewTweet()\n\n')
             WindowsAppFile.write(f'Main()\n')
             WindowsAppFile.close()
+    print(f'[ O.K ]: Created WindowsApp Library')
+
 ## Windows File
 def CreateWindowsFile(AppName, FileLocation):
     print("="*80)
-    print(">> Creating Windows Modules <<")
+    print(">> Creating Windows Module <<")
     print("="*80)
-    
-    print("> Creating Windows Library...")
+
     with codecs.open(FileLocation, "w", "utf-8-sig") as WindowsFile:
         WindowsFile.write(f'## Windows File\n')
         WindowsFile.write(f'## This file is used to implement code used to run scripts for Windows\n')
@@ -986,9 +988,10 @@ def CreateWindowsFile(AppName, FileLocation):
         WindowsFile.write(f'   ## Start App for Windows\n')
         WindowsFile.write(f'   from windows import WindowsApp\n\n')
         WindowsFile.close()
+    print("[ O.K ]: Created Windows Library")
+
 ## Windows FileSystem
 def CreateWindowsFileSystem(AppName, FileLocation):
-    print("> Creating Windows FileSystem Library...")
     with codecs.open(FileLocation, "w", "utf-8-sig") as WindowsFS:
         WindowsFS.write(f'## FileSystem\n')
         WindowsFS.write(f'## This file contains some default directories of your system\n\n')
@@ -1009,6 +1012,8 @@ def CreateWindowsFileSystem(AppName, FileLocation):
         WindowsFS.write("ProjectsRepo = f'{PyBridgeFolder}Projects/'\n")
         WindowsFS.write("PythonExtension = '.py'\n")
         WindowsFS.close()
+    print("[ O.K ]: Created FileSystem Library (Windows)")
+
 ## Windows SplashScreen
 def CreateWindowsSplashScreen(AppName, FileLocation):
     if ProjectOption == 3:
@@ -1035,7 +1040,6 @@ def CreateWindowsSplashScreen(AppName, FileLocation):
             SplashWindows.write(f'print()')
             SplashWindows.close()
     else:
-        print("> Creating SplashScreen...")
         with codecs.open(FileLocation, "w", "utf-8-sig") as SplashWindows:
             SplashWindows.write(f'## SplashScreen File\n')
             SplashWindows.write(f'## This file contains information about your project\n\n')
@@ -1056,6 +1060,7 @@ def CreateWindowsSplashScreen(AppName, FileLocation):
             SplashWindows.write(f'print("="*80)\n')
             SplashWindows.write(f'print()\n')
             SplashWindows.close()
+    print("[ O.K ]: Created SplashScreen Library")
 ### TARGET OS MODULES
 
 def CreateBridge():
@@ -1066,6 +1071,7 @@ def CreateBridge():
     print("="*80)
     UserInput = str(input(">>[!] Project Name: "))
     print(f'>> Creating bridge to the project "{UserInput}"...')
+    print("="*80)
     print()
     
     try:
@@ -1090,35 +1096,39 @@ def CreateBridge():
     linuxPath = f'{AppLocation}linux/'
     macPath = f'{AppLocation}mac/'
     windowsPath = f'{AppLocation}windows/'
+
+    print("=" * 80)
+    print(f'>> Creating {AppName} Modules <<')
+    print("=" * 80)
     try:
-        print(f'- [Generating "System" Module]')
         os.mkdir(systemPath)
+        print(f'[ O.K ]: Created "system" Module')
     except:
-        print(f'>> The Module "System" could not be created.\n>> Your app may not run.')
+        print(f'[ERROR]: The Module "system" could not be created.\n>> Your app may not run.')
 
     try:
-        print(f'- [Generating "Exceptions" Module]')
         os.mkdir(exceptionPath)
+        print(f'[ O.K ]: Created "exception" Module')
     except:
-        print(f'>> The Module "Exceptions" could not be created.\n>> Your app may not run.')
+        print(f'[ERROR]: The Module "exception" could not be created.\n>> Your app may not run.')
     
     try:
-        print(f'- [Generating "Linux" Module]')
         os.mkdir(linuxPath)
+        print(f'[ O.K ]: Created "linux" Module')
     except:
-        print(f'>> The Module "Linux" could not be created.\n>> Your app may not run.')
+        print(f'[ERROR]: The Module "linux" could not be created.\n>> Your app may not run on Linux.')
     
     try:
-        print(f'- [Generating "Mac" Module]')
         os.mkdir(macPath)
+        print(f'[ O.K ]: Created "mac" Module')
     except:
-        print(f'>> The Module "Mac" could not be created.\n>> Your app may not run.')
+        print(f'[ERROR]: The Module "mac" could not be created.\n>> Your app may not run on macOS.')
     
     try:
-        print(f'- [Generating "Windows" Module]')
         os.mkdir(windowsPath)
+        print(f'[ O.K ]: Created "windows" Module')
     except:
-        print(f'>> The Module "Windows" could not be created.\n>> Your app may not run.')
+        print(f'[ERROR]: The Module "windows" could not be created.\n>> Your app may not run on Windows.')
     ### GENERATE MODULES FOR THE BRIDGE
 
     ### GENERATE LIBRARIES FOR THE BRIDGE
@@ -1158,73 +1168,88 @@ def CreateBridge():
     ### GENERATE LIBRARIES FOR THE BRIDGE
 
     ### CRETE BRIDGE
+    print("=" * 80)
+    print(f'>> Creating {AppName} Libraries and Files <<')
+    print("=" * 80)
     CreateExceptionsFile(AppName, exceptionsFile)
     CreateGitIgnoreFile(AppName, gitignoreFile)
     CreateReadmeFile(AppName, readmeFile)
     CreateRequirementsFile(AppName, requirementsFile)
 
+    startTime = time.time()
     if ProjectOption == 1:
-        print(f'>> PyBridge Blank Project')
+        print()
         CreateInitFile(AppName, initFile)
         
-        CreateLinuxAppFile(AppName, linuxAppFile)
         CreateLinuxFile(AppName, linuxFile)
+        CreateLinuxAppFile(AppName, linuxAppFile)
         CreateLinuxFileSystem(AppName, linuxFSFile)
         CreateLinuxSplashScreen(AppName, splashLinuxFile)
         
-        CreateMacAppFile(AppName, macAppFile)
         CreateMacFile(AppName, macFile)
+        CreateMacAppFile(AppName, macAppFile)
         CreateMacFileSystem(AppName, macFSFile)
         CreateMacSplashScreen(AppName, splashMacFile)
         
-        CreateWindowsAppFile(AppName, windowsAppFile)
         CreateWindowsFile(AppName, windowsFile)
+        CreateWindowsAppFile(AppName, windowsAppFile)
         CreateWindowsFileSystem(AppName, windowsFSFile)
         CreateWindowsSplashScreen(AppName, splashWindowsFile)
     elif ProjectOption == 2:
-        print(f'>> Menu Application Loop Project')
+        print()
         CreateInitFile(AppName, initFile)
         
-        CreateLinuxAppFile(AppName, linuxAppFile)
         CreateLinuxFile(AppName, linuxFile)
+        CreateLinuxAppFile(AppName, linuxAppFile)
         CreateLinuxFileSystem(AppName, linuxFSFile)
         CreateLinuxSplashScreen(AppName, splashLinuxFile)
         
-        CreateMacAppFile(AppName, macAppFile)
         CreateMacFile(AppName, macFile)
+        CreateMacAppFile(AppName, macAppFile)
         CreateMacFileSystem(AppName, macFSFile)
         CreateMacSplashScreen(AppName, splashMacFile)
         
-        CreateWindowsAppFile(AppName, windowsAppFile)
         CreateWindowsFile(AppName, windowsFile)
+        CreateWindowsAppFile(AppName, windowsAppFile)
         CreateWindowsFileSystem(AppName, windowsFSFile)
         CreateWindowsSplashScreen(AppName, splashWindowsFile)
     elif ProjectOption == 3:
-        print(f'>> Twitter Application Project')
         CreateInitFile(AppName, initFile)
         CreateTokensFile(AppName, tokensFile)
         
-        CreateLinuxAppFile(AppName, linuxAppFile)
         CreateLinuxFile(AppName, linuxFile)
+        CreateLinuxAppFile(AppName, linuxAppFile)
         CreateLinuxFileSystem(AppName, linuxFSFile)
         CreateLinuxSplashScreen(AppName, splashLinuxFile)
         
-        CreateMacAppFile(AppName, macAppFile)
         CreateMacFile(AppName, macFile)
+        CreateMacAppFile(AppName, macAppFile)
         CreateMacFileSystem(AppName, macFSFile)
         CreateMacSplashScreen(AppName, splashMacFile)
         
-        CreateWindowsAppFile(AppName, windowsAppFile)
         CreateWindowsFile(AppName, windowsFile)
+        CreateWindowsAppFile(AppName, windowsAppFile)
         CreateWindowsFileSystem(AppName, windowsFSFile)
         CreateWindowsSplashScreen(AppName, splashWindowsFile)
     elif ProjectOption == 4:
-        print(f'>> Jupyter Notebook Project')
         CreateJupyterNotebook(AppName, jupyterFile)
 
         CreateLinuxFileSystem(AppName, linuxFSFile)
         CreateMacFileSystem(AppName, macFSFile)
         CreateWindowsFileSystem(AppName, windowsFSFile)
+    print()
+
+    print("="*80)
+    endTime = time.time()
+    timeTaken = endTime-startTime
+
+    if timeTaken < 1:
+        print(f'[ DONE ]: The bridge to the project "{AppName}" was created in less than a second')
+    else:
+        print(f'[ DONE ]: The bridge to the project "{AppName}" was created in {timeTaken:.2f}')
+    print("="*80)
+    print()
+
     ### CRETE BRIDGE
     
     ### BRIDGE CREATION OPTIONS
