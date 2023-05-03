@@ -1,6 +1,7 @@
 import codecs
 import getpass
 import os
+import subprocess
 import sys
 import time
 from datetime import datetime
@@ -234,32 +235,28 @@ def CreateGitIgnoreFile(AppName, FileLocation):
     print(f'[ O.K ]: Created ".gitignore" File')
 
 def CreateInitFile(AppName, FileLocation):
-    with codecs.open(FileLocation, "w", "utf-8-sig") as AppName:
-        AppName.write(f'## __init__.py File\n')
-        AppName.write(f'## Here the contents will be processed to choose the best platform to go\n\n')
-        AppName.write(f'try:\n')
-        AppName.write(f'   ## Imported Libraries\n')
-        AppName.write(f'   from sys import platform\n\n')
-        AppName.write(f'   ## Local Libraries\n')
-        AppName.write(f'   from exception import Exceptions\n')
-        AppName.write(f'except:\n')
-        AppName.write(f'   raise RuntimeError(">> Could not import library: Check if the libraries are installed and run the program again.")\n\n')
-        AppName.write(f'def Main():\n')
-        AppName.write(f'   Platform = platform\n\n')
-        AppName.write(f'   ## Linux\n')
-        AppName.write(f'   if Platform == "linux" or Platform == "linux2":\n')
-        AppName.write(f'      from linux import Linux\n')
-        AppName.write(f'      Linux.Linux()\n\n')
-        AppName.write(f'   ## Mac\n')
-        AppName.write(f'   elif Platform == "darwin":\n')
-        AppName.write(f'      from mac import Mac\n')
-        AppName.write(f'      Mac.Mac()\n\n')
-        AppName.write(f'   ## Windows\n')
-        AppName.write(f'   elif Platform == "win32" or Platform == "win64":\n')
-        AppName.write(f'      from windows import Windows\n')
-        AppName.write(f'      Windows.Windows()\n\n')
-        AppName.write(f'Main()')
-        AppName.close()
+    with codecs.open(FileLocation, "w", "utf-8-sig") as initFile:
+        initFile.write(f'## __init__.py File\n')
+        initFile.write(f'## Here the contents will be processed to choose the best platform to go\n')
+        initFile.write(f'\n')
+        initFile.write(f'## Native Libraries\n')
+        initFile.write(f'from sys import platform\n')
+        initFile.write(f'\n')
+        initFile.write(f'## Linux\n')
+        initFile.write(f'if platform == "linux" or platform == "linux2":\n')
+        initFile.write(f'   from linux import Linux\n')
+        initFile.write(f'   Linux.Linux()\n')
+        initFile.write(f'\n')
+        initFile.write(f'## Mac\n')
+        initFile.write(f'elif platform == "darwin":\n')
+        initFile.write(f'   from mac import Mac\n')
+        initFile.write(f'   Mac.Mac()\n')
+        initFile.write(f'\n')
+        initFile.write(f'## Windows\n')
+        initFile.write(f'elif platform == "win32" or platform == "win64":\n')
+        initFile.write(f'   from windows import Windows\n')
+        initFile.write(f'   Windows.Windows()\n')
+        initFile.close()
 
 def CreateJupyterNotebook(AppName, FileLocation):
     with codecs.open(FileLocation, "w", "utf-8-sig") as JupyterFile:
@@ -1249,6 +1246,10 @@ def CreateBridge():
         print(f'[ DONE ]: The bridge to the project "{AppName}" was created in {timeTaken:.2f}')
     print("="*80)
     print()
+
+    ### OPEN PROJECT FOLDER
+    cmd = subprocess.getoutput(f'open {AppLocation}')
+    ### OPEN PROJECT FOLDER
 
     ### CRETE BRIDGE
     
