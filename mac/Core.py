@@ -15,7 +15,6 @@ ProjectOption = 0
 MajorVersion = sys.version_info[0]
 MinorVersion = sys.version_info[1]
 BuildVersion = sys.version_info[2]
-
 TweetStr = "{Tweet}"
 
 def CreateExceptionsFile(AppName, FileLocation):
@@ -520,9 +519,9 @@ def CreateRequirementsFile(AppName, FileLocation):
         Requirements.close()
     print(f'[ O.K ]: Created Requirements Library')
 
-def CreateTokensFile(AppName, FileLocation):
+def CreateTwitterFile(AppName, FileLocation):
     with codecs.open(FileLocation, "w", "utf-8-sig") as Tokens:
-        Tokens.write(f'## Tokens\n')
+        Tokens.write(f'## Twitter\n')
         Tokens.write(f'## Setup and connect you Twitter account here!\n')
         Tokens.write(f'# Note: DO NOT share your tokens\n')
         Tokens.write(f'## You can generate and regenerate tokens on Twitter Developer Platform\n\n')
@@ -1134,7 +1133,7 @@ def CreateBridge():
     initFile = f'{AppLocation}__init__.py'
     jupyterFile = f'{AppLocation}{AppName}.ipynb'
     readmeFile = f'{AppLocation}README.md'
-    tokensFile = f'{AppLocation}Tokens.py'
+    twitterFile = f'{AppLocation}Twitter.py'
     ## Root Files
 
     ## System and Exceptions Files
@@ -1212,7 +1211,7 @@ def CreateBridge():
         CreateWindowsSplashScreen(AppName, splashWindowsFile)
     elif ProjectOption == 3:
         CreateInitFile(AppName, initFile)
-        CreateTokensFile(AppName, tokensFile)
+        CreateTwitterFile(AppName, twitterFile)
         
         CreateLinuxFile(AppName, linuxFile)
         CreateLinuxAppFile(AppName, linuxAppFile)
