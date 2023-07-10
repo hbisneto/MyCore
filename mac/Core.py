@@ -9,7 +9,6 @@ from exception import Exceptions
 from mac import FileSystem
 
 ProjectType = "Default Project"
-AppName = ''
 AppLocation = ""
 ProjectOption = 0
 MajorVersion = sys.version_info[0]
@@ -1070,7 +1069,7 @@ def CreateBridge():
         print(">> Could not create your project:")
         print(f'> Check if "{UserInput}" already exists and try again.')
         print("="*80)
-        Exceptions.Throw.FileExists()
+        Exceptions.Throw.ProjectExists()
 
     # print("CreateEnvironmentTag")
     # print(f'Project Name: {AppName}')
@@ -1165,7 +1164,7 @@ def CreateBridge():
     startTime = time.time()
     if ProjectOption == 1:
         print()
-        CreateInitFile(AppName, initFile)
+        CreateInitFile(AppName, initFile) ## Hbisneto
         
         CreateLinuxFile(AppName, linuxFile)
         CreateLinuxAppFile(AppName, linuxAppFile)
@@ -1238,6 +1237,13 @@ def CreateBridge():
 
     ### OPEN PROJECT FOLDER
     cmd = subprocess.getoutput(f'open {AppLocation}')
+
+    userInput = str(input(">> Would you like to open project in Visual Studio Code? [Y/n]: "))
+
+    if userInput == "Y" or userInput == "y":
+        cmd = subprocess.getoutput(f'cd {AppLocation}')
+        cmd = subprocess.getoutput(f'code .')
+
     ### OPEN PROJECT FOLDER
 
     ### CRETE BRIDGE

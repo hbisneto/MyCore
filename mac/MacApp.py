@@ -6,9 +6,9 @@ MacApp.py
 ## MacApp File
 ## This file is used to implement code used to run scripts for Mac
 
+import APPINFO
 from exception import Exceptions
 from mac import Core
-from mac import SplashScreen
 
 def Run():
     BridgeLoop = True
@@ -28,33 +28,33 @@ def Run():
         try:
             Opc = int(input(">>[!] Type The Item Number: "))
             print()
-
-            if Opc == 0:
-                BridgeLoop = False
-                print("=" * 80)
-                # print("[PyBridge for Mac] - Quit")
-                print(f'[{SplashScreen.SoftwareName}] - Quit')
-                print("=" * 80)
-                try:
-                    quit()
-                except:
-                    return
-
-            elif Opc == 1:
-                NewProjectMenu()
-
-            elif Opc == 2:
-                Core.ProjectList()
-                
-            elif Opc == 3:
-                Core.Backup()
-
-            elif Opc == 4:
-                print(">> Module not installed")
-            else:
-                Exceptions.Throw.InvalidOption()
         except:
             Exceptions.Throw.InputFormat()
+
+        if Opc == 0:
+            BridgeLoop = False
+            print("=" * 80)
+            # print("[PyBridge for Mac] - Quit")
+            print(f'[{APPINFO.NAME}] - Quit')
+            print("=" * 80)
+            try:
+                quit()
+            except:
+                return
+
+        elif Opc == 1:
+            NewProjectMenu()
+
+        elif Opc == 2:
+            Core.ProjectList()
+            
+        elif Opc == 3:
+            Core.Backup()
+
+        elif Opc == 4:
+            print(">> Module not installed")
+        else:
+            Exceptions.Throw.InvalidOption()
 
 def NewProjectMenu():
     print("="*80)
@@ -67,34 +67,34 @@ def NewProjectMenu():
     print("[0] - << Go Back")
     print()
 
-    try:
-        Opc = int(input(">>[!] Type The Item Number: "))
-        print()
+    # try:
+    Opc = int(input(">>[!] Type The Item Number: "))
+    print()
 
-        if Opc == 0:
-            return
+    if Opc == 0:
+        return
 
-        elif Opc == 1:
-            Core.ProjectOption = 1
-            Core.ProjectType = "PyBridge Blank Project"
-            Core.CreateBridge()
+    elif Opc == 1:
+        Core.ProjectOption = 1
+        Core.ProjectType = "PyBridge Blank Project"
+        Core.CreateBridge()
 
-        elif Opc == 2:
-            Core.ProjectOption = 2
-            Core.ProjectType = "Menu Application Loop Project"
-            Core.CreateBridge()
+    elif Opc == 2:
+        Core.ProjectOption = 2
+        Core.ProjectType = "Menu Application Loop Project"
+        Core.CreateBridge()
 
-        elif Opc == 3:
-            Core.ProjectOption = 3
-            Core.ProjectType = "Twitter Application Project"
-            Core.CreateBridge()
+    elif Opc == 3:
+        Core.ProjectOption = 3
+        Core.ProjectType = "Twitter Application Project"
+        Core.CreateBridge()
 
-        elif Opc == 4:
-            Core.ProjectOption = 4
-            Core.ProjectType = "Jupyter Notebook Project"
-            Core.CreateBridge()
+    elif Opc == 4:
+        Core.ProjectOption = 4
+        Core.ProjectType = "Jupyter Notebook Project"
+        Core.CreateBridge()
 
-        else:
-            Exceptions.Throw.InvalidOption()
-    except:
-        Exceptions.Throw.InputFormat()
+    else:
+        Exceptions.Throw.InvalidOption()
+    # except:
+    #     Exceptions.Throw.InputFormat()
