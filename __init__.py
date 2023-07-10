@@ -10,7 +10,7 @@ if platform == "linux" or platform == "linux2":
     from linux import Linux
     Linux.Linux()
 
-## Mac    
+## Mac
 elif platform == "darwin":
     from mac import Mac
     Mac.Mac()

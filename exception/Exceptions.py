@@ -1,5 +1,5 @@
 ﻿"""
-# Exceptions.py
+### Exceptions.py
 
 - This file contains events raised when the program must to stop:
 

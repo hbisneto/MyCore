@@ -1,4 +1,9 @@
-﻿## SplashScreen File
+﻿"""
+### SplashScreen.py
+
+- This file contains information about your project
+"""
+## SplashScreen File
 ## This file contains information about your project
 
 import getpass
@@ -7,16 +12,12 @@ from datetime import date
 from datetime import datetime
 
 CurrentYear = date.today().year
-# SoftwareName = "MyCore"
-# Version = "1.2"
-# CopyrightName = "Heitor Bisneto"
 
 Now = datetime.now()
 Hour = int(Now.strftime("%H"))
 Minute = int(Now.strftime("%M"))
 Second = int(Now.strftime("%S"))
 TimeAccess = Now.strftime("%H:%M:%S")
-# UserName = getpass.getuser().capitalize()
 
 def Show():    
     print("="*80)

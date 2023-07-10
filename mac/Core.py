@@ -1,3 +1,57 @@
+"""
+### Core.py
+
+This is where all the resources of each platform will work.
+You can use and customize default functions to fit your work. 
+
+### Functions you can call:
+
+`CreateExceptionsFile()`: This is something.
+
+`CreateGitIgnoreFile()`:
+
+`CreateInitFile()`:
+
+`CreateJupyterNotebook()`:
+
+`CreateReadmeFile()`:
+
+`CreateRequirementsFile()`:
+
+`CreateTwitterFile()`:
+
+
+#### Linux Functions
+
+`CreateLinuxAppFile()`:
+
+`CreateLinuxFile()`:
+
+`CreateLinuxFileSystem()`:
+
+`CreateLinuxSplashScreen()`:
+
+#### macOS Functions:
+
+`CreateMacAppFile()`:
+
+`CreateMacFile()`:
+
+`CreateMacFileSystem()`:
+
+`CreateMacSplashScreen()`:
+
+#### Windows Functions:
+
+`CreateWindowsAppFile()`:
+
+`CreateWindowsFile()`:
+
+`CreateWindowsFileSystem()`:
+
+`CreateWindowsSplashScreen()`:
+"""
+
 import codecs
 import getpass
 import os
