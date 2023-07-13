@@ -8,10 +8,11 @@
 ## This file is used to implement code used to run scripts for Mac
 ## Codes implemented here, will run before the main script starts running
 
-from mac import SplashScreen
-from mac import FileSystem
-from mac import MacApp
+import App
+import FileSystem
 from system import Requirements
+from system import SplashScreen
+# from mac import MacApp
 
 def Mac():
    ## NOTE: You can use this function
@@ -28,7 +29,8 @@ def Mac():
    ### You just need to run ONCE: Be sure you commented this code after first run
 
    ### Verify environment folders
-   FileSystem.VerifyFolders()
+   FileSystem.CreateEnvironmentFolders()
 
    ## Start App for Mac
-   MacApp.Run()
+   # MacApp.Run()
+   App.Run()

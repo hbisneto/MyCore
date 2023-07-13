@@ -7,12 +7,11 @@
 ## This file contains information about your project
 
 import getpass
-import APPINFO
+from system import APPINFO
 from datetime import date
 from datetime import datetime
 
 CurrentYear = date.today().year
-
 Now = datetime.now()
 Hour = int(Now.strftime("%H"))
 Minute = int(Now.strftime("%M"))

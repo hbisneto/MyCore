@@ -1,19 +1,19 @@
 ﻿"""
-### MacApp.py
+### App.py
 
-- This file is used to implement code used to run scripts for Mac
+- This file is used to implement code used to run scripts for the bridge
 """
-## MacApp File
+## App File
 ## This file is used to implement code used to run scripts for Mac
 
-import APPINFO
+from system import APPINFO
 from exception import Exceptions
-from mac import Core
+from system import Core
 
 def Run():
-    BridgeLoop = True
+    Loop = True
 
-    while BridgeLoop == True:
+    while Loop == True:
         print()
         print("="*80)
         print(">> MENU <<")
@@ -26,13 +26,13 @@ def Run():
         print()
 
         try:
-            Opc = int(input(">>[!] Type The Item Number: "))
+            Opt = int(input(">>[!] Type The Item Number: "))
             print()
         except:
             Exceptions.Throw.InputFormat()
 
-        if Opc == 0:
-            BridgeLoop = False
+        if Opt == 0:
+            Loop = False
             print("=" * 80)
             # print("[PyBridge for Mac] - Quit")
             print(f'[{APPINFO.NAME}] - Quit')
@@ -42,16 +42,16 @@ def Run():
             except:
                 return
 
-        elif Opc == 1:
+        elif Opt == 1:
             NewProjectMenu()
 
-        elif Opc == 2:
+        elif Opt == 2:
             Core.ProjectList()
             
-        elif Opc == 3:
+        elif Opt == 3:
             Core.Backup()
 
-        elif Opc == 4:
+        elif Opt == 4:
             print(">> Module not installed")
         else:
             Exceptions.Throw.InvalidOption()
@@ -67,29 +67,31 @@ def NewProjectMenu():
     print("[0] - << Go Back")
     print()
 
-    # try:
-    Opc = int(input(">>[!] Type The Item Number: "))
-    print()
+    try:
+        Opt = int(input(">>[!] Type The Item Number: "))
+        print()
+    except:
+        Exceptions.Throw.InputFormat()
 
-    if Opc == 0:
+    if Opt == 0:
         return
 
-    elif Opc == 1:
+    elif Opt == 1:
         Core.ProjectOption = 1
         Core.ProjectType = "PyBridge Blank Project"
         Core.CreateBridge()
 
-    elif Opc == 2:
+    elif Opt == 2:
         Core.ProjectOption = 2
         Core.ProjectType = "Menu Application Loop Project"
         Core.CreateBridge()
 
-    elif Opc == 3:
+    elif Opt == 3:
         Core.ProjectOption = 3
         Core.ProjectType = "Twitter Application Project"
         Core.CreateBridge()
 
-    elif Opc == 4:
+    elif Opt == 4:
         Core.ProjectOption = 4
         Core.ProjectType = "Jupyter Notebook Project"
         Core.CreateBridge()

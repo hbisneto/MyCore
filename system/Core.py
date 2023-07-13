@@ -1,66 +1,12 @@
-"""
-### Core.py
-
-This is where all the resources of each platform will work.
-You can use and customize default functions to fit your work. 
-
-### Functions you can call:
-
-`CreateExceptionsFile()`: This is something.
-
-`CreateGitIgnoreFile()`:
-
-`CreateInitFile()`:
-
-`CreateJupyterNotebook()`:
-
-`CreateReadmeFile()`:
-
-`CreateRequirementsFile()`:
-
-`CreateTwitterFile()`:
-
-
-#### Linux Functions
-
-`CreateLinuxAppFile()`:
-
-`CreateLinuxFile()`:
-
-`CreateLinuxFileSystem()`:
-
-`CreateLinuxSplashScreen()`:
-
-#### macOS Functions:
-
-`CreateMacAppFile()`:
-
-`CreateMacFile()`:
-
-`CreateMacFileSystem()`:
-
-`CreateMacSplashScreen()`:
-
-#### Windows Functions:
-
-`CreateWindowsAppFile()`:
-
-`CreateWindowsFile()`:
-
-`CreateWindowsFileSystem()`:
-
-`CreateWindowsSplashScreen()`:
-"""
-
 import codecs
 import getpass
 import os
 import subprocess
 import sys
 import time
+import FileSystem
 from datetime import datetime
 from exception import Exceptions
-from mac import FileSystem
 
 ProjectType = "Default Project"
 AppLocation = ""
@@ -584,82 +530,83 @@ def CreateTwitterFile(AppName, FileLocation):
         Tokens.close()
     print(f'[ O.K ]: Applied Twitter Application on Environment')
 
-### TARGET OS MODULES
+### TARGET OS MODULES ###
+########## LINUX ##########
 ## LinuxApp File
-def CreateLinuxAppFile(AppName, FileLocation):
-    if ProjectOption == 1:
-        with codecs.open(FileLocation, "w", "utf-8-sig") as LinuxAppFile:
-            LinuxAppFile.write(f'## LinuxApp File\n')
-            LinuxAppFile.write(f'## This file is used to implement code used to run scripts for Linux\n\n')
-            LinuxAppFile.write(f'from exception import Exceptions\n')
-            LinuxAppFile.write(f'from linux import FileSystem\n\n')
-            LinuxAppFile.write(f'def Main():\n')
-            LinuxAppFile.write(f'   print("Hello World!")\n\n')
-            LinuxAppFile.write(f'Main()\n')
-            LinuxAppFile.close()
+# def CreateLinuxAppFile(AppName, FileLocation):
+#     if ProjectOption == 1:
+#         with codecs.open(FileLocation, "w", "utf-8-sig") as LinuxAppFile:
+#             LinuxAppFile.write(f'## LinuxApp File\n')
+#             LinuxAppFile.write(f'## This file is used to implement code used to run scripts for Linux\n\n')
+#             LinuxAppFile.write(f'from exception import Exceptions\n')
+#             LinuxAppFile.write(f'from linux import FileSystem\n\n')
+#             LinuxAppFile.write(f'def Main():\n')
+#             LinuxAppFile.write(f'   print("Hello World!")\n\n')
+#             LinuxAppFile.write(f'Main()\n')
+#             LinuxAppFile.close()
             
-    elif ProjectOption == 2:
-        with codecs.open(FileLocation, "w", "utf-8-sig") as LinuxAppFile:
-            LinuxAppFile.write(f'## LinuxApp File\n')
-            LinuxAppFile.write(f'## This file is used to implement code used to run scripts for Linux\n\n')
-            LinuxAppFile.write(f'from exception import Exceptions\n')
-            LinuxAppFile.write(f'from linux import FileSystem\n\n')
-            LinuxAppFile.write(f'def Main():\n')
-            LinuxAppFile.write(f'   while True:\n')
-            LinuxAppFile.write(f'      print("="*80)\n')
-            LinuxAppFile.write(f'      print(">> Options Menu <<")\n')
-            LinuxAppFile.write(f'      print(">> 1. Option One")\n')
-            LinuxAppFile.write(f'      print(">> 2. Option Two")\n')
-            LinuxAppFile.write(f'      print(">> 3. Option Three")\n\n')
-            LinuxAppFile.write(f'      try:\n')
-            LinuxAppFile.write(f'         UserInput = int(input(">>[!] Type the option number: "))\n')
-            LinuxAppFile.write(f'         print("="*80)\n')
-            LinuxAppFile.write(f'         if UserInput == 1:\n')
-            LinuxAppFile.write(f'            print("> Option 1")\n')
-            LinuxAppFile.write(f'         elif UserInput == 2:\n')
-            LinuxAppFile.write(f'            print("> Option 2")\n')
-            LinuxAppFile.write(f'         elif UserInput == 3:\n')
-            LinuxAppFile.write(f'            print("> Option 3")\n')
-            LinuxAppFile.write(f'         else:\n')
-            LinuxAppFile.write(f'            print(">> This option is unavailable at this time")\n')
-            LinuxAppFile.write(f'      except:\n')
-            LinuxAppFile.write(f'         print("-"*80)\n')
-            LinuxAppFile.write(f'         print(">> This option is unavailable at this time")\n')
-            LinuxAppFile.write(f'         print("-"*80)\n\n')  
-            LinuxAppFile.write(f'Main()\n')
-            LinuxAppFile.close()
+#     elif ProjectOption == 2:
+#         with codecs.open(FileLocation, "w", "utf-8-sig") as LinuxAppFile:
+#             LinuxAppFile.write(f'## LinuxApp File\n')
+#             LinuxAppFile.write(f'## This file is used to implement code used to run scripts for Linux\n\n')
+#             LinuxAppFile.write(f'from exception import Exceptions\n')
+#             LinuxAppFile.write(f'from linux import FileSystem\n\n')
+#             LinuxAppFile.write(f'def Main():\n')
+#             LinuxAppFile.write(f'   while True:\n')
+#             LinuxAppFile.write(f'      print("="*80)\n')
+#             LinuxAppFile.write(f'      print(">> Options Menu <<")\n')
+#             LinuxAppFile.write(f'      print(">> 1. Option One")\n')
+#             LinuxAppFile.write(f'      print(">> 2. Option Two")\n')
+#             LinuxAppFile.write(f'      print(">> 3. Option Three")\n\n')
+#             LinuxAppFile.write(f'      try:\n')
+#             LinuxAppFile.write(f'         UserInput = int(input(">>[!] Type the option number: "))\n')
+#             LinuxAppFile.write(f'         print("="*80)\n')
+#             LinuxAppFile.write(f'         if UserInput == 1:\n')
+#             LinuxAppFile.write(f'            print("> Option 1")\n')
+#             LinuxAppFile.write(f'         elif UserInput == 2:\n')
+#             LinuxAppFile.write(f'            print("> Option 2")\n')
+#             LinuxAppFile.write(f'         elif UserInput == 3:\n')
+#             LinuxAppFile.write(f'            print("> Option 3")\n')
+#             LinuxAppFile.write(f'         else:\n')
+#             LinuxAppFile.write(f'            print(">> This option is unavailable at this time")\n')
+#             LinuxAppFile.write(f'      except:\n')
+#             LinuxAppFile.write(f'         print("-"*80)\n')
+#             LinuxAppFile.write(f'         print(">> This option is unavailable at this time")\n')
+#             LinuxAppFile.write(f'         print("-"*80)\n\n')  
+#             LinuxAppFile.write(f'Main()\n')
+#             LinuxAppFile.close()
 
-    elif ProjectOption == 3:
-        with codecs.open(FileLocation, "w", "utf-8-sig") as LinuxAppFile:
-            LinuxAppFile.write(f'## LinuxApp File\n')
-            LinuxAppFile.write(f'## This file is used to implement code used to run scripts for Linux\n\n')
-            LinuxAppFile.write(f'import Tokens\n')
-            LinuxAppFile.write(f'from exception import Exceptions\n')
-            LinuxAppFile.write(f'from linux import FileSystem\n\n')
-            LinuxAppFile.write(f'def NewTweet():\n')
-            LinuxAppFile.write(f'   print("="*80)\n')
-            LinuxAppFile.write(f'   print("NEW TWEET")\n')
-            LinuxAppFile.write(f'   print("="*80)\n')
-            LinuxAppFile.write(f'   Tweet = str(input(">>[!] Whats happening? "))\n')
-            LinuxAppFile.write(f'   print("="*80)\n')
-            LinuxAppFile.write(f'   print()\n')
-            LinuxAppFile.write(f'   print("-"*80)\n')
-            LinuxAppFile.write(f'   print(">> Your tweet was sent")\n')
-            LinuxAppFile.write(f'   print("-"*80)\n')
-            LinuxAppFile.write(f'   print()\n')
-            LinuxAppFile.write(f'   print("="*80)\n\n')
-            LinuxAppFile.write(f'   try:\n')
-            LinuxAppFile.write(f'      Tokens.Twitter.update_status(Tweet)\n')
-            LinuxAppFile.write(f"      print(f'>> Your last tweet:')\n")
-            LinuxAppFile.write(f"      print(f' > {TweetStr}')\n")
-            LinuxAppFile.write(f'      print("-" * 80)\n')
-            LinuxAppFile.write(f'   except:\n')
-            LinuxAppFile.write(f'      print(">>  Something went wrong: Unabled to connect to Twitter.")\n\n')
-            LinuxAppFile.write(f'def Main():\n')
-            LinuxAppFile.write(f'   NewTweet()\n\n')
-            LinuxAppFile.write(f'Main()\n')
-            LinuxAppFile.close()
-    print(f'[ O.K ]: Created LinuxApp Library')
+#     elif ProjectOption == 3:
+#         with codecs.open(FileLocation, "w", "utf-8-sig") as LinuxAppFile:
+#             LinuxAppFile.write(f'## LinuxApp File\n')
+#             LinuxAppFile.write(f'## This file is used to implement code used to run scripts for Linux\n\n')
+#             LinuxAppFile.write(f'import Tokens\n')
+#             LinuxAppFile.write(f'from exception import Exceptions\n')
+#             LinuxAppFile.write(f'from linux import FileSystem\n\n')
+#             LinuxAppFile.write(f'def NewTweet():\n')
+#             LinuxAppFile.write(f'   print("="*80)\n')
+#             LinuxAppFile.write(f'   print("NEW TWEET")\n')
+#             LinuxAppFile.write(f'   print("="*80)\n')
+#             LinuxAppFile.write(f'   Tweet = str(input(">>[!] Whats happening? "))\n')
+#             LinuxAppFile.write(f'   print("="*80)\n')
+#             LinuxAppFile.write(f'   print()\n')
+#             LinuxAppFile.write(f'   print("-"*80)\n')
+#             LinuxAppFile.write(f'   print(">> Your tweet was sent")\n')
+#             LinuxAppFile.write(f'   print("-"*80)\n')
+#             LinuxAppFile.write(f'   print()\n')
+#             LinuxAppFile.write(f'   print("="*80)\n\n')
+#             LinuxAppFile.write(f'   try:\n')
+#             LinuxAppFile.write(f'      Tokens.Twitter.update_status(Tweet)\n')
+#             LinuxAppFile.write(f"      print(f'>> Your last tweet:')\n")
+#             LinuxAppFile.write(f"      print(f' > {TweetStr}')\n")
+#             LinuxAppFile.write(f'      print("-" * 80)\n')
+#             LinuxAppFile.write(f'   except:\n')
+#             LinuxAppFile.write(f'      print(">>  Something went wrong: Unabled to connect to Twitter.")\n\n')
+#             LinuxAppFile.write(f'def Main():\n')
+#             LinuxAppFile.write(f'   NewTweet()\n\n')
+#             LinuxAppFile.write(f'Main()\n')
+#             LinuxAppFile.close()
+#     print(f'[ O.K ]: Created LinuxApp Library')
 
 ## Linux File
 def CreateLinuxFile(AppName, FileLocation):
@@ -685,151 +632,152 @@ def CreateLinuxFile(AppName, FileLocation):
     print(f'[ O.K ]: Created Linux Library')
 
 ## Linux FileSystem
-def CreateLinuxFileSystem(AppName, FileLocation):
-    with codecs.open(FileLocation, "w", "utf-8-sig") as LinuxFS:
-        Linux = "User = f'/home/{os.environ"
-        FileSystem = '["USER"]}/'
-        SUser = f"{Linux}{FileSystem}'"
-        LinuxFS.write(f'## FileSystem\n')
-        LinuxFS.write(f'## This file contains some default directories of your system\n\n')
-        LinuxFS.write(f'import os\n\n')
-        LinuxFS.write(f'## Special Directories\n')
-        LinuxFS.write(f'CurrentPath = os.getcwd()\n')
-        LinuxFS.write(f'{SUser}\n\n')
-        LinuxFS.write("Desktop = f'{User}Desktop/'\n")
-        LinuxFS.write("Documents = f'{User}Documents/'\n")
-        LinuxFS.write("Downloads = f'{User}Downloads/'\n")
-        LinuxFS.write("Music = f'{User}Music/'\n\n")
-        LinuxFS.write("## Project Directories\n")
-        LinuxFS.write("PyBridgeFolder = f'{Documents}PyBridge/'\n")
-        LinuxFS.write("ProjectsRepo = f'{PyBridgeFolder}Projects/'\n")
-        LinuxFS.write("PythonExtension = '.py'\n")
-        LinuxFS.close()
-    print(f'[ O.K ]: Created FileSystem Library (Linux)')
+# def CreateLinuxFileSystem(AppName, FileLocation):
+#     with codecs.open(FileLocation, "w", "utf-8-sig") as LinuxFS:
+#         Linux = "User = f'/home/{os.environ"
+#         FileSystem = '["USER"]}/'
+#         SUser = f"{Linux}{FileSystem}'"
+#         LinuxFS.write(f'## FileSystem\n')
+#         LinuxFS.write(f'## This file contains some default directories of your system\n\n')
+#         LinuxFS.write(f'import os\n\n')
+#         LinuxFS.write(f'## Special Directories\n')
+#         LinuxFS.write(f'CurrentPath = os.getcwd()\n')
+#         LinuxFS.write(f'{SUser}\n\n')
+#         LinuxFS.write("Desktop = f'{User}Desktop/'\n")
+#         LinuxFS.write("Documents = f'{User}Documents/'\n")
+#         LinuxFS.write("Downloads = f'{User}Downloads/'\n")
+#         LinuxFS.write("Music = f'{User}Music/'\n\n")
+#         LinuxFS.write("## Project Directories\n")
+#         LinuxFS.write("PyBridgeFolder = f'{Documents}PyBridge/'\n")
+#         LinuxFS.write("ProjectsRepo = f'{PyBridgeFolder}Projects/'\n")
+#         LinuxFS.write("PythonExtension = '.py'\n")
+#         LinuxFS.close()
+#     print(f'[ O.K ]: Created FileSystem Library (Linux)')
 
 ## Linux SplashScreen
-def CreateLinuxSplashScreen(AppName, FileLocation):
-    if ProjectOption == 3:
-        with codecs.open(FileLocation, "w", "utf-8-sig") as SplashLinux:
-            SplashLinux.write(f'## SplashScreen File\n')
-            SplashLinux.write(f'## This file contains information about your project\n\n')
-            SplashLinux.write(f'from datetime import date\n\n')
-            SplashLinux.write(f'CurrentYear = date.today().year\n')
-            SplashLinux.write(f'SoftwareName = "{AppName}"\n')
-            SplashLinux.write(f'Version = "1.0"\n')
-            SplashLinux.write(f'CopyrightName = "{getpass.getuser().capitalize()}"\n\n')
-            SplashLinux.write(f'print("Name:", SoftwareName)\n')
-            SplashLinux.write(f'print("Version:", Version)\n')
-            SplashLinux.write(f'print("Created By:", CopyrightName)\n\n')
-            SplashLinux.write(f'if CurrentYear == 2022:\n')
-            SplashLinux.write(f'   print("Copyright ©", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n')
-            SplashLinux.write(f'else:\n')
-            SplashLinux.write(f'   print("Copyright © 2022 -", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n\n')
-            SplashLinux.write(f'print("="*80)\n')
-            SplashLinux.write("print(f'[{SoftwareName} for Linux] - Running...')\n")
-            SplashLinux.write(f'print("="*80)\n')
-            SplashLinux.write(f"print(f'>> Checking Twitter connection. Please wait...')\n")
-            SplashLinux.write(f'print("="*80)\n')
-            SplashLinux.write(f'print()')
-            SplashLinux.close()
-    else:
-        with codecs.open(FileLocation, "w", "utf-8-sig") as SplashLinux:
-            SplashLinux.write(f'## SplashScreen File\n')
-            SplashLinux.write(f'## This file contains information about your project\n\n')
-            SplashLinux.write(f'from datetime import date\n\n')
-            SplashLinux.write(f'CurrentYear = date.today().year\n')
-            SplashLinux.write(f'SoftwareName = "{AppName}"\n')
-            SplashLinux.write(f'Version = "1.0"\n')
-            SplashLinux.write(f'CopyrightName = "{getpass.getuser().capitalize()}"\n\n')
-            SplashLinux.write(f'print("Name:", SoftwareName)\n')
-            SplashLinux.write(f'print("Version:", Version)\n')
-            SplashLinux.write(f'print("Created By:", CopyrightName)\n\n')
-            SplashLinux.write(f'if CurrentYear == 2022:\n')
-            SplashLinux.write(f'   print("Copyright ©", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n')
-            SplashLinux.write(f'else:\n')
-            SplashLinux.write(f'   print("Copyright © 2022 -", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n\n')
-            SplashLinux.write(f'print("="*80)\n')
-            SplashLinux.write("print(f'[{SoftwareName} for Linux] - Running...')\n")
-            SplashLinux.write(f'print("="*80)\n')
-            SplashLinux.write(f'print()\n')
-            SplashLinux.close()
-    print(f'[ O.K ]: Created SplashScreen Library')
+# def CreateLinuxSplashScreen(AppName, FileLocation):
+#     if ProjectOption == 3:
+#         with codecs.open(FileLocation, "w", "utf-8-sig") as SplashLinux:
+#             SplashLinux.write(f'## SplashScreen File\n')
+#             SplashLinux.write(f'## This file contains information about your project\n\n')
+#             SplashLinux.write(f'from datetime import date\n\n')
+#             SplashLinux.write(f'CurrentYear = date.today().year\n')
+#             SplashLinux.write(f'SoftwareName = "{AppName}"\n')
+#             SplashLinux.write(f'Version = "1.0"\n')
+#             SplashLinux.write(f'CopyrightName = "{getpass.getuser().capitalize()}"\n\n')
+#             SplashLinux.write(f'print("Name:", SoftwareName)\n')
+#             SplashLinux.write(f'print("Version:", Version)\n')
+#             SplashLinux.write(f'print("Created By:", CopyrightName)\n\n')
+#             SplashLinux.write(f'if CurrentYear == 2022:\n')
+#             SplashLinux.write(f'   print("Copyright ©", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n')
+#             SplashLinux.write(f'else:\n')
+#             SplashLinux.write(f'   print("Copyright © 2022 -", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n\n')
+#             SplashLinux.write(f'print("="*80)\n')
+#             SplashLinux.write("print(f'[{SoftwareName} for Linux] - Running...')\n")
+#             SplashLinux.write(f'print("="*80)\n')
+#             SplashLinux.write(f"print(f'>> Checking Twitter connection. Please wait...')\n")
+#             SplashLinux.write(f'print("="*80)\n')
+#             SplashLinux.write(f'print()')
+#             SplashLinux.close()
+#     else:
+#         with codecs.open(FileLocation, "w", "utf-8-sig") as SplashLinux:
+#             SplashLinux.write(f'## SplashScreen File\n')
+#             SplashLinux.write(f'## This file contains information about your project\n\n')
+#             SplashLinux.write(f'from datetime import date\n\n')
+#             SplashLinux.write(f'CurrentYear = date.today().year\n')
+#             SplashLinux.write(f'SoftwareName = "{AppName}"\n')
+#             SplashLinux.write(f'Version = "1.0"\n')
+#             SplashLinux.write(f'CopyrightName = "{getpass.getuser().capitalize()}"\n\n')
+#             SplashLinux.write(f'print("Name:", SoftwareName)\n')
+#             SplashLinux.write(f'print("Version:", Version)\n')
+#             SplashLinux.write(f'print("Created By:", CopyrightName)\n\n')
+#             SplashLinux.write(f'if CurrentYear == 2022:\n')
+#             SplashLinux.write(f'   print("Copyright ©", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n')
+#             SplashLinux.write(f'else:\n')
+#             SplashLinux.write(f'   print("Copyright © 2022 -", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n\n')
+#             SplashLinux.write(f'print("="*80)\n')
+#             SplashLinux.write("print(f'[{SoftwareName} for Linux] - Running...')\n")
+#             SplashLinux.write(f'print("="*80)\n')
+#             SplashLinux.write(f'print()\n')
+#             SplashLinux.close()
+#     print(f'[ O.K ]: Created SplashScreen Library')
 
+########## MAC ##########
 ## MacApp File
-def CreateMacAppFile(AppName, FileLocation):
-    if ProjectOption == 1:
-        with codecs.open(FileLocation, "w", "utf-8-sig") as MacAppFile:
-            MacAppFile.write(f'## MacApp File\n')
-            MacAppFile.write(f'## This file is used to implement code used to run scripts for Mac\n\n')
-            MacAppFile.write(f'from exception import Exceptions\n')
-            MacAppFile.write(f'from mac import FileSystem\n\n')
-            MacAppFile.write(f'def Main():\n')
-            MacAppFile.write(f'   print("Hello World!")\n\n')
-            MacAppFile.write(f'Main()\n')
-            MacAppFile.close()
+# def CreateMacAppFile(AppName, FileLocation):
+#     if ProjectOption == 1:
+#         with codecs.open(FileLocation, "w", "utf-8-sig") as MacAppFile:
+#             MacAppFile.write(f'## MacApp File\n')
+#             MacAppFile.write(f'## This file is used to implement code used to run scripts for Mac\n\n')
+#             MacAppFile.write(f'from exception import Exceptions\n')
+#             MacAppFile.write(f'from mac import FileSystem\n\n')
+#             MacAppFile.write(f'def Main():\n')
+#             MacAppFile.write(f'   print("Hello World!")\n\n')
+#             MacAppFile.write(f'Main()\n')
+#             MacAppFile.close()
 
-    elif ProjectOption == 2:
-        with codecs.open(FileLocation, "w", "utf-8-sig") as MacAppFile:
-            MacAppFile.write(f'## MacApp File\n')
-            MacAppFile.write(f'## This file is used to implement code used to run scripts for Mac\n\n')
-            MacAppFile.write(f'from exception import Exceptions\n')
-            MacAppFile.write(f'from mac import FileSystem\n\n')
-            MacAppFile.write(f'def Main():\n')
-            MacAppFile.write(f'   while True:\n')
-            MacAppFile.write(f'      print("="*80)\n')
-            MacAppFile.write(f'      print(">> Options Menu <<")\n')
-            MacAppFile.write(f'      print(">> 1. Option One")\n')
-            MacAppFile.write(f'      print(">> 2. Option Two")\n')
-            MacAppFile.write(f'      print(">> 3. Option Three")\n\n')
-            MacAppFile.write(f'      try:\n')
-            MacAppFile.write(f'         UserInput = int(input(">>[!] Type the option number: "))\n')
-            MacAppFile.write(f'         print("="*80)\n')
-            MacAppFile.write(f'         if UserInput == 1:\n')
-            MacAppFile.write(f'            print("> Option 1")\n')
-            MacAppFile.write(f'         elif UserInput == 2:\n')
-            MacAppFile.write(f'            print("> Option 2")\n')
-            MacAppFile.write(f'         elif UserInput == 3:\n')
-            MacAppFile.write(f'            print("> Option 3")\n')
-            MacAppFile.write(f'         else:\n')
-            MacAppFile.write(f'            print(">> This option is unavailable at this time")\n')
-            MacAppFile.write(f'      except:\n')
-            MacAppFile.write(f'         print("-"*80)\n')
-            MacAppFile.write(f'         print(">> This option is unavailable at this time")\n')
-            MacAppFile.write(f'         print("-"*80)\n\n')
-            MacAppFile.write(f'Main()\n')
-            MacAppFile.close()
+#     elif ProjectOption == 2:
+#         with codecs.open(FileLocation, "w", "utf-8-sig") as MacAppFile:
+#             MacAppFile.write(f'## MacApp File\n')
+#             MacAppFile.write(f'## This file is used to implement code used to run scripts for Mac\n\n')
+#             MacAppFile.write(f'from exception import Exceptions\n')
+#             MacAppFile.write(f'from mac import FileSystem\n\n')
+#             MacAppFile.write(f'def Main():\n')
+#             MacAppFile.write(f'   while True:\n')
+#             MacAppFile.write(f'      print("="*80)\n')
+#             MacAppFile.write(f'      print(">> Options Menu <<")\n')
+#             MacAppFile.write(f'      print(">> 1. Option One")\n')
+#             MacAppFile.write(f'      print(">> 2. Option Two")\n')
+#             MacAppFile.write(f'      print(">> 3. Option Three")\n\n')
+#             MacAppFile.write(f'      try:\n')
+#             MacAppFile.write(f'         UserInput = int(input(">>[!] Type the option number: "))\n')
+#             MacAppFile.write(f'         print("="*80)\n')
+#             MacAppFile.write(f'         if UserInput == 1:\n')
+#             MacAppFile.write(f'            print("> Option 1")\n')
+#             MacAppFile.write(f'         elif UserInput == 2:\n')
+#             MacAppFile.write(f'            print("> Option 2")\n')
+#             MacAppFile.write(f'         elif UserInput == 3:\n')
+#             MacAppFile.write(f'            print("> Option 3")\n')
+#             MacAppFile.write(f'         else:\n')
+#             MacAppFile.write(f'            print(">> This option is unavailable at this time")\n')
+#             MacAppFile.write(f'      except:\n')
+#             MacAppFile.write(f'         print("-"*80)\n')
+#             MacAppFile.write(f'         print(">> This option is unavailable at this time")\n')
+#             MacAppFile.write(f'         print("-"*80)\n\n')
+#             MacAppFile.write(f'Main()\n')
+#             MacAppFile.close()
 
-    elif ProjectOption == 3:
-        with codecs.open(FileLocation, "w", "utf-8-sig") as MacAppFile:
-            MacAppFile.write(f'## MacApp File\n')
-            MacAppFile.write(f'## This file is used to implement code used to run scripts for Mac\n\n')
-            MacAppFile.write(f'import Tokens\n')
-            MacAppFile.write(f'from exception import Exceptions\n')
-            MacAppFile.write(f'from mac import FileSystem\n\n')
-            MacAppFile.write(f'def NewTweet():\n')
-            MacAppFile.write(f'   print("="*80)\n')
-            MacAppFile.write(f'   print("NEW TWEET")\n')
-            MacAppFile.write(f'   print("="*80)\n')
-            MacAppFile.write(f'   Tweet = str(input(">>[!] Whats happening? "))\n')
-            MacAppFile.write(f'   print("="*80)\n')
-            MacAppFile.write(f'   print()\n')
-            MacAppFile.write(f'   print("-"*80)\n')
-            MacAppFile.write(f'   print(">> Your tweet was sent")\n')
-            MacAppFile.write(f'   print("-"*80)\n')
-            MacAppFile.write(f'   print()\n')
-            MacAppFile.write(f'   print("="*80)\n\n')
-            MacAppFile.write(f'   try:\n')
-            MacAppFile.write(f'      Tokens.Twitter.update_status(Tweet)\n')
-            MacAppFile.write(f"      print(f'>> Your last tweet:')\n")
-            MacAppFile.write(f"      print(f' > {TweetStr}')\n")
-            MacAppFile.write(f'      print("-" * 80)\n')
-            MacAppFile.write(f'   except:\n')
-            MacAppFile.write(f'      print(">>  Something went wrong: Unabled to connect to Twitter.")\n\n') 
-            MacAppFile.write(f'def Main():\n')
-            MacAppFile.write(f'   NewTweet()\n\n')
-            MacAppFile.write(f'Main()\n')
-            MacAppFile.close()
-    print(f'[ O.K ]: Created MacApp Library')
+#     elif ProjectOption == 3:
+#         with codecs.open(FileLocation, "w", "utf-8-sig") as MacAppFile:
+#             MacAppFile.write(f'## MacApp File\n')
+#             MacAppFile.write(f'## This file is used to implement code used to run scripts for Mac\n\n')
+#             MacAppFile.write(f'import Tokens\n')
+#             MacAppFile.write(f'from exception import Exceptions\n')
+#             MacAppFile.write(f'from mac import FileSystem\n\n')
+#             MacAppFile.write(f'def NewTweet():\n')
+#             MacAppFile.write(f'   print("="*80)\n')
+#             MacAppFile.write(f'   print("NEW TWEET")\n')
+#             MacAppFile.write(f'   print("="*80)\n')
+#             MacAppFile.write(f'   Tweet = str(input(">>[!] Whats happening? "))\n')
+#             MacAppFile.write(f'   print("="*80)\n')
+#             MacAppFile.write(f'   print()\n')
+#             MacAppFile.write(f'   print("-"*80)\n')
+#             MacAppFile.write(f'   print(">> Your tweet was sent")\n')
+#             MacAppFile.write(f'   print("-"*80)\n')
+#             MacAppFile.write(f'   print()\n')
+#             MacAppFile.write(f'   print("="*80)\n\n')
+#             MacAppFile.write(f'   try:\n')
+#             MacAppFile.write(f'      Tokens.Twitter.update_status(Tweet)\n')
+#             MacAppFile.write(f"      print(f'>> Your last tweet:')\n")
+#             MacAppFile.write(f"      print(f' > {TweetStr}')\n")
+#             MacAppFile.write(f'      print("-" * 80)\n')
+#             MacAppFile.write(f'   except:\n')
+#             MacAppFile.write(f'      print(">>  Something went wrong: Unabled to connect to Twitter.")\n\n') 
+#             MacAppFile.write(f'def Main():\n')
+#             MacAppFile.write(f'   NewTweet()\n\n')
+#             MacAppFile.write(f'Main()\n')
+#             MacAppFile.close()
+#     print(f'[ O.K ]: Created MacApp Library')
 
 ## Mac File
 def CreateMacFile(AppName, FileLocation):
@@ -855,155 +803,156 @@ def CreateMacFile(AppName, FileLocation):
     print("[ O.K ]: Created Mac Library")
 
 ## Mac FileSystem
-def CreateMacFileSystem(AppName, FileLocation):
-    with codecs.open(FileLocation, "w", "utf-8-sig") as MacFS:
-        Mac = "User = f'/Users/{os.environ"
-        FileSystem = '["USER"]}/'
-        SUser = f"{Mac}{FileSystem}'"
-        MacFS.write(f'## FileSystem\n')
-        MacFS.write(f'## This file contains some default directories of your system\n\n')
-        MacFS.write(f'import os\n\n')
-        MacFS.write(f'## Special Directories\n')
-        MacFS.write(f'CurrentPath = os.getcwd()\n')
-        MacFS.write(f'{SUser}\n')
-        MacFS.write("Applications = f'{User}Applications/'\n")
-        MacFS.write("Desktop = f'{User}Desktop/'\n")
-        MacFS.write("Documents = f'{User}Documents/'\n")
-        MacFS.write("Downloads = f'{User}Downloads/'\n")
-        MacFS.write("Movies = f'{User}Movies/'\n")
-        MacFS.write("Music = f'{User}Music/'\n")
-        MacFS.write("Pictures = f'{User}Pictures/'\n")
-        MacFS.write("Public = f'{User}Public/'\n\n")
-        MacFS.write("## Project Directories\n")
-        MacFS.write("PyBridgeFolder = f'{Documents}PyBridge/'\n")
-        MacFS.write("ProjectsRepo = f'{PyBridgeFolder}Projects/'\n")
-        MacFS.write("PythonExtension = '.py'\n")
-        MacFS.close()
-    print("[ O.K ]: Created FileSystem Library (macOS)")
+# def CreateMacFileSystem(AppName, FileLocation):
+#     with codecs.open(FileLocation, "w", "utf-8-sig") as MacFS:
+#         Mac = "User = f'/Users/{os.environ"
+#         FileSystem = '["USER"]}/'
+#         SUser = f"{Mac}{FileSystem}'"
+#         MacFS.write(f'## FileSystem\n')
+#         MacFS.write(f'## This file contains some default directories of your system\n\n')
+#         MacFS.write(f'import os\n\n')
+#         MacFS.write(f'## Special Directories\n')
+#         MacFS.write(f'CurrentPath = os.getcwd()\n')
+#         MacFS.write(f'{SUser}\n')
+#         MacFS.write("Applications = f'{User}Applications/'\n")
+#         MacFS.write("Desktop = f'{User}Desktop/'\n")
+#         MacFS.write("Documents = f'{User}Documents/'\n")
+#         MacFS.write("Downloads = f'{User}Downloads/'\n")
+#         MacFS.write("Movies = f'{User}Movies/'\n")
+#         MacFS.write("Music = f'{User}Music/'\n")
+#         MacFS.write("Pictures = f'{User}Pictures/'\n")
+#         MacFS.write("Public = f'{User}Public/'\n\n")
+#         MacFS.write("## Project Directories\n")
+#         MacFS.write("PyBridgeFolder = f'{Documents}PyBridge/'\n")
+#         MacFS.write("ProjectsRepo = f'{PyBridgeFolder}Projects/'\n")
+#         MacFS.write("PythonExtension = '.py'\n")
+#         MacFS.close()
+#     print("[ O.K ]: Created FileSystem Library (macOS)")
 
 ## Mac SplashScreen
-def CreateMacSplashScreen(AppName, FileLocation):
-    if ProjectOption == 3:
-        with codecs.open(FileLocation, "w", "utf-8-sig") as SplashMac:
-            SplashMac.write(f'## SplashScreen File\n')
-            SplashMac.write(f'## This file contains information about your project\n\n')
-            SplashMac.write(f'from datetime import date\n\n')
-            SplashMac.write(f'CurrentYear = date.today().year\n')
-            SplashMac.write(f'SoftwareName = "{AppName}"\n')
-            SplashMac.write(f'Version = "1.0"\n')
-            SplashMac.write(f'CopyrightName = "{getpass.getuser().capitalize()}"\n\n')
-            SplashMac.write(f'print("Name:", SoftwareName)\n')
-            SplashMac.write(f'print("Version:", Version)\n')
-            SplashMac.write(f'print("Created By:", CopyrightName)\n\n')
-            SplashMac.write(f'if CurrentYear == 2022:\n')
-            SplashMac.write(f'   print("Copyright ©", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n')
-            SplashMac.write(f'else:\n')
-            SplashMac.write(f'   print("Copyright © 2022 -", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n\n')
-            SplashMac.write(f'print("="*80)\n')
-            SplashMac.write("print(f'[{SoftwareName} for Mac] - Running...')\n")
-            SplashMac.write(f'print("="*80)\n')
-            SplashMac.write(f"print(f'>> Checking Twitter connection. Please wait...')\n")
-            SplashMac.write(f'print("="*80)\n')
-            SplashMac.write(f'print()')
-            SplashMac.close()
-    else:
-        with codecs.open(FileLocation, "w", "utf-8-sig") as SplashMac:
-            SplashMac.write(f'## SplashScreen File\n')
-            SplashMac.write(f'## This file contains information about your project\n\n')
-            SplashMac.write(f'from datetime import date\n\n')
-            SplashMac.write(f'CurrentYear = date.today().year\n')
-            SplashMac.write(f'SoftwareName = "{AppName}"\n')
-            SplashMac.write(f'Version = "1.0"\n')
-            SplashMac.write(f'CopyrightName = "{getpass.getuser().capitalize()}"\n\n')
-            SplashMac.write(f'print("Name:", SoftwareName)\n')
-            SplashMac.write(f'print("Version:", Version)\n')
-            SplashMac.write(f'print("Created By:", CopyrightName)\n\n')
-            SplashMac.write(f'if CurrentYear == 2022:\n')
-            SplashMac.write(f'   print("Copyright ©", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n')
-            SplashMac.write(f'else:\n')
-            SplashMac.write(f'   print("Copyright © 2022 -", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n\n')
-            SplashMac.write(f'print("="*80)\n')
-            SplashMac.write("print(f'[{SoftwareName} for Mac] - Running...')\n")
-            SplashMac.write(f'print("="*80)\n')
-            SplashMac.write(f'print()\n')
-            SplashMac.close()
-    print("[ O.K ]: Created SplashScreen Library")
+# def CreateMacSplashScreen(AppName, FileLocation):
+#     if ProjectOption == 3:
+#         with codecs.open(FileLocation, "w", "utf-8-sig") as SplashMac:
+#             SplashMac.write(f'## SplashScreen File\n')
+#             SplashMac.write(f'## This file contains information about your project\n\n')
+#             SplashMac.write(f'from datetime import date\n\n')
+#             SplashMac.write(f'CurrentYear = date.today().year\n')
+#             SplashMac.write(f'SoftwareName = "{AppName}"\n')
+#             SplashMac.write(f'Version = "1.0"\n')
+#             SplashMac.write(f'CopyrightName = "{getpass.getuser().capitalize()}"\n\n')
+#             SplashMac.write(f'print("Name:", SoftwareName)\n')
+#             SplashMac.write(f'print("Version:", Version)\n')
+#             SplashMac.write(f'print("Created By:", CopyrightName)\n\n')
+#             SplashMac.write(f'if CurrentYear == 2022:\n')
+#             SplashMac.write(f'   print("Copyright ©", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n')
+#             SplashMac.write(f'else:\n')
+#             SplashMac.write(f'   print("Copyright © 2022 -", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n\n')
+#             SplashMac.write(f'print("="*80)\n')
+#             SplashMac.write("print(f'[{SoftwareName} for Mac] - Running...')\n")
+#             SplashMac.write(f'print("="*80)\n')
+#             SplashMac.write(f"print(f'>> Checking Twitter connection. Please wait...')\n")
+#             SplashMac.write(f'print("="*80)\n')
+#             SplashMac.write(f'print()')
+#             SplashMac.close()
+#     else:
+#         with codecs.open(FileLocation, "w", "utf-8-sig") as SplashMac:
+#             SplashMac.write(f'## SplashScreen File\n')
+#             SplashMac.write(f'## This file contains information about your project\n\n')
+#             SplashMac.write(f'from datetime import date\n\n')
+#             SplashMac.write(f'CurrentYear = date.today().year\n')
+#             SplashMac.write(f'SoftwareName = "{AppName}"\n')
+#             SplashMac.write(f'Version = "1.0"\n')
+#             SplashMac.write(f'CopyrightName = "{getpass.getuser().capitalize()}"\n\n')
+#             SplashMac.write(f'print("Name:", SoftwareName)\n')
+#             SplashMac.write(f'print("Version:", Version)\n')
+#             SplashMac.write(f'print("Created By:", CopyrightName)\n\n')
+#             SplashMac.write(f'if CurrentYear == 2022:\n')
+#             SplashMac.write(f'   print("Copyright ©", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n')
+#             SplashMac.write(f'else:\n')
+#             SplashMac.write(f'   print("Copyright © 2022 -", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n\n')
+#             SplashMac.write(f'print("="*80)\n')
+#             SplashMac.write("print(f'[{SoftwareName} for Mac] - Running...')\n")
+#             SplashMac.write(f'print("="*80)\n')
+#             SplashMac.write(f'print()\n')
+#             SplashMac.close()
+#     print("[ O.K ]: Created SplashScreen Library")
 
+########## Windows ##########
 ## WindowsApp File
-def CreateWindowsAppFile(AppName, FileLocation):
-    if ProjectOption == 1:
-        with codecs.open(FileLocation, "w", "utf-8-sig") as WindowsAppFile:
-            WindowsAppFile.write(f'## WindowsApp File\n')
-            WindowsAppFile.write(f'## This file is used to implement code used to run scripts for Windows\n\n')
-            WindowsAppFile.write(f'from exception import Exceptions\n')
-            WindowsAppFile.write(f'from windows import FileSystem\n\n')
-            WindowsAppFile.write(f'def Main():\n')
-            WindowsAppFile.write(f'   print("Hello World!")\n\n') 
-            WindowsAppFile.write(f'Main()\n')
-            WindowsAppFile.close()
+# def CreateWindowsAppFile(AppName, FileLocation):
+#     if ProjectOption == 1:
+#         with codecs.open(FileLocation, "w", "utf-8-sig") as WindowsAppFile:
+#             WindowsAppFile.write(f'## WindowsApp File\n')
+#             WindowsAppFile.write(f'## This file is used to implement code used to run scripts for Windows\n\n')
+#             WindowsAppFile.write(f'from exception import Exceptions\n')
+#             WindowsAppFile.write(f'from windows import FileSystem\n\n')
+#             WindowsAppFile.write(f'def Main():\n')
+#             WindowsAppFile.write(f'   print("Hello World!")\n\n') 
+#             WindowsAppFile.write(f'Main()\n')
+#             WindowsAppFile.close()
             
-    elif ProjectOption == 2:
-        with codecs.open(FileLocation, "w", "utf-8-sig") as WindowsAppFile:
-            WindowsAppFile.write(f'## WindowsApp File\n')
-            WindowsAppFile.write(f'## This file is used to implement code used to run scripts for Windows\n\n')
-            WindowsAppFile.write(f'from exception import Exceptions\n')
-            WindowsAppFile.write(f'from windows import FileSystem\n\n')
-            WindowsAppFile.write(f'def Main():\n')
-            WindowsAppFile.write(f'   while True:\n')
-            WindowsAppFile.write(f'      print("="*80)\n')
-            WindowsAppFile.write(f'      print(">> Options Menu <<")\n')
-            WindowsAppFile.write(f'      print(">> 1. Option One")\n')
-            WindowsAppFile.write(f'      print(">> 2. Option Two")\n')
-            WindowsAppFile.write(f'      print(">> 3. Option Three")\n\n')
-            WindowsAppFile.write(f'      try:\n')
-            WindowsAppFile.write(f'         UserInput = int(input(">>[!] Type the option number: "))\n')
-            WindowsAppFile.write(f'         print("="*80)\n')
-            WindowsAppFile.write(f'         if UserInput == 1:\n')
-            WindowsAppFile.write(f'            print("> Option 1")\n')
-            WindowsAppFile.write(f'         elif UserInput == 2:\n')
-            WindowsAppFile.write(f'            print("> Option 2")\n')
-            WindowsAppFile.write(f'         elif UserInput == 3:\n')
-            WindowsAppFile.write(f'            print("> Option 3")\n')
-            WindowsAppFile.write(f'         else:\n')
-            WindowsAppFile.write(f'            print(">> This option is unavailable at this time")\n')
-            WindowsAppFile.write(f'      except:\n')
-            WindowsAppFile.write(f'         print("-"*80)\n')
-            WindowsAppFile.write(f'         print(">> This option is unavailable at this time")\n')
-            WindowsAppFile.write(f'         print("-"*80)\n\n')  
-            WindowsAppFile.write(f'Main()\n')
-            WindowsAppFile.close()
+#     elif ProjectOption == 2:
+#         with codecs.open(FileLocation, "w", "utf-8-sig") as WindowsAppFile:
+#             WindowsAppFile.write(f'## WindowsApp File\n')
+#             WindowsAppFile.write(f'## This file is used to implement code used to run scripts for Windows\n\n')
+#             WindowsAppFile.write(f'from exception import Exceptions\n')
+#             WindowsAppFile.write(f'from windows import FileSystem\n\n')
+#             WindowsAppFile.write(f'def Main():\n')
+#             WindowsAppFile.write(f'   while True:\n')
+#             WindowsAppFile.write(f'      print("="*80)\n')
+#             WindowsAppFile.write(f'      print(">> Options Menu <<")\n')
+#             WindowsAppFile.write(f'      print(">> 1. Option One")\n')
+#             WindowsAppFile.write(f'      print(">> 2. Option Two")\n')
+#             WindowsAppFile.write(f'      print(">> 3. Option Three")\n\n')
+#             WindowsAppFile.write(f'      try:\n')
+#             WindowsAppFile.write(f'         UserInput = int(input(">>[!] Type the option number: "))\n')
+#             WindowsAppFile.write(f'         print("="*80)\n')
+#             WindowsAppFile.write(f'         if UserInput == 1:\n')
+#             WindowsAppFile.write(f'            print("> Option 1")\n')
+#             WindowsAppFile.write(f'         elif UserInput == 2:\n')
+#             WindowsAppFile.write(f'            print("> Option 2")\n')
+#             WindowsAppFile.write(f'         elif UserInput == 3:\n')
+#             WindowsAppFile.write(f'            print("> Option 3")\n')
+#             WindowsAppFile.write(f'         else:\n')
+#             WindowsAppFile.write(f'            print(">> This option is unavailable at this time")\n')
+#             WindowsAppFile.write(f'      except:\n')
+#             WindowsAppFile.write(f'         print("-"*80)\n')
+#             WindowsAppFile.write(f'         print(">> This option is unavailable at this time")\n')
+#             WindowsAppFile.write(f'         print("-"*80)\n\n')  
+#             WindowsAppFile.write(f'Main()\n')
+#             WindowsAppFile.close()
         
-    elif ProjectOption == 3:
-        with codecs.open(FileLocation, "w", "utf-8-sig") as WindowsAppFile:
-            WindowsAppFile.write(f'## WindowsApp File\n')
-            WindowsAppFile.write(f'## This file is used to implement code used to run scripts for Windows\n\n')
-            WindowsAppFile.write(f'import Tokens\n')
-            WindowsAppFile.write(f'from exception import Exceptions\n')
-            WindowsAppFile.write(f'from windows import FileSystem\n\n')
-            WindowsAppFile.write(f'def NewTweet():\n')
-            WindowsAppFile.write(f'   print("="*80)\n')
-            WindowsAppFile.write(f'   print("NEW TWEET")\n')
-            WindowsAppFile.write(f'   print("="*80)\n')
-            WindowsAppFile.write(f'   Tweet = str(input(">>[!] Whats happening? "))\n')
-            WindowsAppFile.write(f'   print("="*80)\n')
-            WindowsAppFile.write(f'   print()\n')
-            WindowsAppFile.write(f'   print("-"*80)\n')
-            WindowsAppFile.write(f'   print(">> Your tweet was sent")\n')
-            WindowsAppFile.write(f'   print("-"*80)\n')
-            WindowsAppFile.write(f'   print()\n')
-            WindowsAppFile.write(f'   print("="*80)\n\n')
-            WindowsAppFile.write(f'   try:\n')
-            WindowsAppFile.write(f'      Tokens.Twitter.update_status(Tweet)\n')
-            WindowsAppFile.write(f"      print(f'>> Your last tweet:')\n")
-            WindowsAppFile.write(f"      print(f' > {TweetStr}')\n")
-            WindowsAppFile.write(f'      print("-" * 80)\n')
-            WindowsAppFile.write(f'   except:\n')
-            WindowsAppFile.write(f'      print(">>  Something went wrong: Unabled to connect to Twitter.")\n\n')  
-            WindowsAppFile.write(f'def Main():\n')
-            WindowsAppFile.write(f'   NewTweet()\n\n')
-            WindowsAppFile.write(f'Main()\n')
-            WindowsAppFile.close()
-    print(f'[ O.K ]: Created WindowsApp Library')
+#     elif ProjectOption == 3:
+#         with codecs.open(FileLocation, "w", "utf-8-sig") as WindowsAppFile:
+#             WindowsAppFile.write(f'## WindowsApp File\n')
+#             WindowsAppFile.write(f'## This file is used to implement code used to run scripts for Windows\n\n')
+#             WindowsAppFile.write(f'import Tokens\n')
+#             WindowsAppFile.write(f'from exception import Exceptions\n')
+#             WindowsAppFile.write(f'from windows import FileSystem\n\n')
+#             WindowsAppFile.write(f'def NewTweet():\n')
+#             WindowsAppFile.write(f'   print("="*80)\n')
+#             WindowsAppFile.write(f'   print("NEW TWEET")\n')
+#             WindowsAppFile.write(f'   print("="*80)\n')
+#             WindowsAppFile.write(f'   Tweet = str(input(">>[!] Whats happening? "))\n')
+#             WindowsAppFile.write(f'   print("="*80)\n')
+#             WindowsAppFile.write(f'   print()\n')
+#             WindowsAppFile.write(f'   print("-"*80)\n')
+#             WindowsAppFile.write(f'   print(">> Your tweet was sent")\n')
+#             WindowsAppFile.write(f'   print("-"*80)\n')
+#             WindowsAppFile.write(f'   print()\n')
+#             WindowsAppFile.write(f'   print("="*80)\n\n')
+#             WindowsAppFile.write(f'   try:\n')
+#             WindowsAppFile.write(f'      Tokens.Twitter.update_status(Tweet)\n')
+#             WindowsAppFile.write(f"      print(f'>> Your last tweet:')\n")
+#             WindowsAppFile.write(f"      print(f' > {TweetStr}')\n")
+#             WindowsAppFile.write(f'      print("-" * 80)\n')
+#             WindowsAppFile.write(f'   except:\n')
+#             WindowsAppFile.write(f'      print(">>  Something went wrong: Unabled to connect to Twitter.")\n\n')  
+#             WindowsAppFile.write(f'def Main():\n')
+#             WindowsAppFile.write(f'   NewTweet()\n\n')
+#             WindowsAppFile.write(f'Main()\n')
+#             WindowsAppFile.close()
+#     print(f'[ O.K ]: Created WindowsApp Library')
 
 ## Windows File
 def CreateWindowsFile(AppName, FileLocation):
@@ -1030,77 +979,78 @@ def CreateWindowsFile(AppName, FileLocation):
     print("[ O.K ]: Created Windows Library")
 
 ## Windows FileSystem
-def CreateWindowsFileSystem(AppName, FileLocation):
-    with codecs.open(FileLocation, "w", "utf-8-sig") as WindowsFS:
-        WindowsFS.write(f'## FileSystem\n')
-        WindowsFS.write(f'## This file contains some default directories of your system\n\n')
-        WindowsFS.write(f'import os\n\n')
-        WindowsFS.write(f'## Special Directories\n')
-        WindowsFS.write(f'CurrentPath = os.getcwd()\n')
-        WindowsFS.write(f"User = os.environ['USERPROFILE']\n")
-        WindowsFS.write("ApplicationData = f'{User}/AppData/Roaming/'\n")
-        WindowsFS.write("Desktop = f'{User}/Desktop/'\n")
-        WindowsFS.write("Documents = f'{User}/Documents/'\n")
-        WindowsFS.write("Downloads = f'{User}/Downloads/'\n")
-        WindowsFS.write("LocalAppData = f'{User}/AppData/Local/'\n")
-        WindowsFS.write("Temp = f'{LocalAppData}Temp'\n")
-        WindowsFS.write("Pictures = f'{User}/Pictures/'\n")
-        WindowsFS.write("Favorites = f'{User}/Favorites/'\n\n")
-        WindowsFS.write("## Project Directories\n")
-        WindowsFS.write("PyBridgeFolder = f'{Documents}PyBridge/'\n")
-        WindowsFS.write("ProjectsRepo = f'{PyBridgeFolder}Projects/'\n")
-        WindowsFS.write("PythonExtension = '.py'\n")
-        WindowsFS.close()
-    print("[ O.K ]: Created FileSystem Library (Windows)")
+# def CreateWindowsFileSystem(AppName, FileLocation):
+#     with codecs.open(FileLocation, "w", "utf-8-sig") as WindowsFS:
+#         WindowsFS.write(f'## FileSystem\n')
+#         WindowsFS.write(f'## This file contains some default directories of your system\n\n')
+#         WindowsFS.write(f'import os\n\n')
+#         WindowsFS.write(f'## Special Directories\n')
+#         WindowsFS.write(f'CurrentPath = os.getcwd()\n')
+#         WindowsFS.write(f"User = os.environ['USERPROFILE']\n")
+#         WindowsFS.write("ApplicationData = f'{User}/AppData/Roaming/'\n")
+#         WindowsFS.write("Desktop = f'{User}/Desktop/'\n")
+#         WindowsFS.write("Documents = f'{User}/Documents/'\n")
+#         WindowsFS.write("Downloads = f'{User}/Downloads/'\n")
+#         WindowsFS.write("LocalAppData = f'{User}/AppData/Local/'\n")
+#         WindowsFS.write("Temp = f'{LocalAppData}Temp'\n")
+#         WindowsFS.write("Pictures = f'{User}/Pictures/'\n")
+#         WindowsFS.write("Favorites = f'{User}/Favorites/'\n\n")
+#         WindowsFS.write("## Project Directories\n")
+#         WindowsFS.write("PyBridgeFolder = f'{Documents}PyBridge/'\n")
+#         WindowsFS.write("ProjectsRepo = f'{PyBridgeFolder}Projects/'\n")
+#         WindowsFS.write("PythonExtension = '.py'\n")
+#         WindowsFS.close()
+#     print("[ O.K ]: Created FileSystem Library (Windows)")
 
 ## Windows SplashScreen
-def CreateWindowsSplashScreen(AppName, FileLocation):
-    if ProjectOption == 3:
-        with codecs.open(FileLocation, "w", "utf-8-sig") as SplashWindows:
-            SplashWindows.write(f'## SplashScreen File\n')
-            SplashWindows.write(f'## This file contains information about your project\n\n')
-            SplashWindows.write(f'from datetime import date\n\n')
-            SplashWindows.write(f'CurrentYear = date.today().year\n')
-            SplashWindows.write(f'SoftwareName = "{AppName}"\n')
-            SplashWindows.write(f'Version = "1.0"\n')
-            SplashWindows.write(f'CopyrightName = "{getpass.getuser().capitalize()}"\n\n')
-            SplashWindows.write(f'print("Name:", SoftwareName)\n')
-            SplashWindows.write(f'print("Version:", Version)\n')
-            SplashWindows.write(f'print("Created By:", CopyrightName)\n\n')
-            SplashWindows.write(f'if CurrentYear == 2022:\n')
-            SplashWindows.write(f'   print("Copyright ©", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n')
-            SplashWindows.write(f'else:\n')
-            SplashWindows.write(f'   print("Copyright © 2022 -", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n\n')
-            SplashWindows.write(f'print("="*80)\n')
-            SplashWindows.write("print(f'[{SoftwareName} for Windows] - Running...')\n")
-            SplashWindows.write(f'print("="*80)\n')
-            SplashWindows.write(f"print(f'>> Checking Twitter connection. Please wait...')\n")
-            SplashWindows.write(f'print("="*80)\n')
-            SplashWindows.write(f'print()')
-            SplashWindows.close()
-    else:
-        with codecs.open(FileLocation, "w", "utf-8-sig") as SplashWindows:
-            SplashWindows.write(f'## SplashScreen File\n')
-            SplashWindows.write(f'## This file contains information about your project\n\n')
-            SplashWindows.write(f'from datetime import date\n\n')
-            SplashWindows.write(f'CurrentYear = date.today().year\n')
-            SplashWindows.write(f'SoftwareName = "{AppName}"\n')
-            SplashWindows.write(f'Version = "1.0"\n')
-            SplashWindows.write(f'CopyrightName = "{getpass.getuser().capitalize()}"\n\n')
-            SplashWindows.write(f'print("Name:", SoftwareName)\n')
-            SplashWindows.write(f'print("Version:", Version)\n')
-            SplashWindows.write(f'print("Created By:", CopyrightName)\n\n')
-            SplashWindows.write(f'if CurrentYear == 2022:\n')
-            SplashWindows.write(f'   print("Copyright ©", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n')
-            SplashWindows.write(f'else:\n')
-            SplashWindows.write(f'   print("Copyright © 2022 -", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n\n')
-            SplashWindows.write(f'print("="*80)\n')
-            SplashWindows.write("print(f'[{SoftwareName} for Windows] - Running...')\n")
-            SplashWindows.write(f'print("="*80)\n')
-            SplashWindows.write(f'print()\n')
-            SplashWindows.close()
-    print("[ O.K ]: Created SplashScreen Library")
-### TARGET OS MODULES
+# def CreateWindowsSplashScreen(AppName, FileLocation):
+#     if ProjectOption == 3:
+#         with codecs.open(FileLocation, "w", "utf-8-sig") as SplashWindows:
+#             SplashWindows.write(f'## SplashScreen File\n')
+#             SplashWindows.write(f'## This file contains information about your project\n\n')
+#             SplashWindows.write(f'from datetime import date\n\n')
+#             SplashWindows.write(f'CurrentYear = date.today().year\n')
+#             SplashWindows.write(f'SoftwareName = "{AppName}"\n')
+#             SplashWindows.write(f'Version = "1.0"\n')
+#             SplashWindows.write(f'CopyrightName = "{getpass.getuser().capitalize()}"\n\n')
+#             SplashWindows.write(f'print("Name:", SoftwareName)\n')
+#             SplashWindows.write(f'print("Version:", Version)\n')
+#             SplashWindows.write(f'print("Created By:", CopyrightName)\n\n')
+#             SplashWindows.write(f'if CurrentYear == 2022:\n')
+#             SplashWindows.write(f'   print("Copyright ©", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n')
+#             SplashWindows.write(f'else:\n')
+#             SplashWindows.write(f'   print("Copyright © 2022 -", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n\n')
+#             SplashWindows.write(f'print("="*80)\n')
+#             SplashWindows.write("print(f'[{SoftwareName} for Windows] - Running...')\n")
+#             SplashWindows.write(f'print("="*80)\n')
+#             SplashWindows.write(f"print(f'>> Checking Twitter connection. Please wait...')\n")
+#             SplashWindows.write(f'print("="*80)\n')
+#             SplashWindows.write(f'print()')
+#             SplashWindows.close()
+#     else:
+#         with codecs.open(FileLocation, "w", "utf-8-sig") as SplashWindows:
+#             SplashWindows.write(f'## SplashScreen File\n')
+#             SplashWindows.write(f'## This file contains information about your project\n\n')
+#             SplashWindows.write(f'from datetime import date\n\n')
+#             SplashWindows.write(f'CurrentYear = date.today().year\n')
+#             SplashWindows.write(f'SoftwareName = "{AppName}"\n')
+#             SplashWindows.write(f'Version = "1.0"\n')
+#             SplashWindows.write(f'CopyrightName = "{getpass.getuser().capitalize()}"\n\n')
+#             SplashWindows.write(f'print("Name:", SoftwareName)\n')
+#             SplashWindows.write(f'print("Version:", Version)\n')
+#             SplashWindows.write(f'print("Created By:", CopyrightName)\n\n')
+#             SplashWindows.write(f'if CurrentYear == 2022:\n')
+#             SplashWindows.write(f'   print("Copyright ©", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n')
+#             SplashWindows.write(f'else:\n')
+#             SplashWindows.write(f'   print("Copyright © 2022 -", CurrentYear, "|", CopyrightName + ".", "All rights reserved.")\n\n')
+#             SplashWindows.write(f'print("="*80)\n')
+#             SplashWindows.write("print(f'[{SoftwareName} for Windows] - Running...')\n")
+#             SplashWindows.write(f'print("="*80)\n')
+#             SplashWindows.write(f'print()\n')
+#             SplashWindows.close()
+#     print("[ O.K ]: Created SplashScreen Library")
+
+### TARGET OS MODULES ###
 
 def CreateBridge():
     print("="*80)
@@ -1114,7 +1064,7 @@ def CreateBridge():
     print()
     
     try:
-        AppLocation = f'{FileSystem.ProjectsRepo}{UserInput}/'
+        AppLocation = f'{FileSystem.Repository}/{UserInput}'
         os.mkdir(AppLocation)
         AppName = UserInput
     except:
@@ -1130,11 +1080,11 @@ def CreateBridge():
     # print(f'Folder Location: {AppLocation}')
 
     ### GENERATE MODULES FOR THE BRIDGE
-    systemPath = f'{AppLocation}system/'
-    exceptionPath = f'{AppLocation}exception/'
-    linuxPath = f'{AppLocation}linux/'
-    macPath = f'{AppLocation}mac/'
-    windowsPath = f'{AppLocation}windows/'
+    systemPath = f'{AppLocation}/system'
+    exceptionPath = f'{AppLocation}/exception'
+    linuxPath = f'{AppLocation}/linux'
+    macPath = f'{AppLocation}/mac'
+    windowsPath = f'{AppLocation}/windows'
 
     print("=" * 80)
     print(f'>> Creating {AppName} Modules <<')
@@ -1172,37 +1122,37 @@ def CreateBridge():
 
     ### GENERATE LIBRARIES FOR THE BRIDGE
     ## Root Files
-    gitignoreFile = f'{AppLocation}.gitignore'
-    initFile = f'{AppLocation}__init__.py'
-    jupyterFile = f'{AppLocation}{AppName}.ipynb'
-    readmeFile = f'{AppLocation}README.md'
-    twitterFile = f'{AppLocation}Twitter.py'
+    gitignoreFile = f'{AppLocation}/.gitignore'
+    initFile = f'{AppLocation}/__init__.py'
+    jupyterFile = f'{AppLocation}/{AppName}.ipynb'
+    readmeFile = f'{AppLocation}/README.md'
+    twitterFile = f'{AppLocation}/Twitter.py'
     ## Root Files
 
     ## System and Exceptions Files
-    exceptionsFile = f'{exceptionPath}Exceptions.py'
-    requirementsFile = f'{systemPath}Requirements.py'
+    exceptionsFile = f'{exceptionPath}/Exceptions.py'
+    requirementsFile = f'{systemPath}/Requirements.py'
     ## System and Exceptions Files
 
     ## Linux Files
-    linuxFSFile = f'{linuxPath}FileSystem.py'
-    linuxFile = f'{linuxPath}Linux.py'
-    linuxAppFile = f'{linuxPath}LinuxApp.py'
-    splashLinuxFile = f'{linuxPath}SplashScreen.py'
+    linuxFSFile = f'{linuxPath}/FileSystem.py'
+    linuxFile = f'{linuxPath}/Linux.py'
+    linuxAppFile = f'{linuxPath}/LinuxApp.py'
+    splashLinuxFile = f'{linuxPath}/SplashScreen.py'
     ## Linux Files
 
     ## Mac Files
-    macFSFile = f'{macPath}FileSystem.py'
-    macFile = f'{macPath}Mac.py'
-    macAppFile = f'{macPath}MacApp.py'
-    splashMacFile = f'{macPath}SplashScreen.py'
+    macFSFile = f'{macPath}/FileSystem.py'
+    macFile = f'{macPath}/Mac.py'
+    macAppFile = f'{macPath}/MacApp.py'
+    splashMacFile = f'{macPath}/SplashScreen.py'
     ## Mac Files
 
     ## Windows Files
-    windowsFSFile = f'{windowsPath}FileSystem.py'
-    windowsFile = f'{windowsPath}Windows.py'
-    windowsAppFile = f'{windowsPath}WindowsApp.py'
-    splashWindowsFile = f'{windowsPath}SplashScreen.py'
+    windowsFSFile = f'{windowsPath}/FileSystem.py'
+    windowsFile = f'{windowsPath}/Windows.py'
+    windowsAppFile = f'{windowsPath}/WindowsApp.py'
+    splashWindowsFile = f'{windowsPath}/SplashScreen.py'
     ## Windows Files
     ### GENERATE LIBRARIES FOR THE BRIDGE
 
@@ -1221,61 +1171,61 @@ def CreateBridge():
         CreateInitFile(AppName, initFile) ## Hbisneto
         
         CreateLinuxFile(AppName, linuxFile)
-        CreateLinuxAppFile(AppName, linuxAppFile)
-        CreateLinuxFileSystem(AppName, linuxFSFile)
-        CreateLinuxSplashScreen(AppName, splashLinuxFile)
+        # CreateLinuxAppFile(AppName, linuxAppFile)
+        # CreateLinuxFileSystem(AppName, linuxFSFile)
+        # CreateLinuxSplashScreen(AppName, splashLinuxFile)
         
         CreateMacFile(AppName, macFile)
-        CreateMacAppFile(AppName, macAppFile)
-        CreateMacFileSystem(AppName, macFSFile)
-        CreateMacSplashScreen(AppName, splashMacFile)
+        # CreateMacAppFile(AppName, macAppFile)
+        # CreateMacFileSystem(AppName, macFSFile)
+        # CreateMacSplashScreen(AppName, splashMacFile)
         
         CreateWindowsFile(AppName, windowsFile)
-        CreateWindowsAppFile(AppName, windowsAppFile)
-        CreateWindowsFileSystem(AppName, windowsFSFile)
-        CreateWindowsSplashScreen(AppName, splashWindowsFile)
+        # CreateWindowsAppFile(AppName, windowsAppFile)
+        # CreateWindowsFileSystem(AppName, windowsFSFile)
+        # CreateWindowsSplashScreen(AppName, splashWindowsFile)
     elif ProjectOption == 2:
         print()
         CreateInitFile(AppName, initFile)
         
         CreateLinuxFile(AppName, linuxFile)
-        CreateLinuxAppFile(AppName, linuxAppFile)
-        CreateLinuxFileSystem(AppName, linuxFSFile)
-        CreateLinuxSplashScreen(AppName, splashLinuxFile)
+        # CreateLinuxAppFile(AppName, linuxAppFile)
+        # CreateLinuxFileSystem(AppName, linuxFSFile)
+        # CreateLinuxSplashScreen(AppName, splashLinuxFile)
         
         CreateMacFile(AppName, macFile)
-        CreateMacAppFile(AppName, macAppFile)
-        CreateMacFileSystem(AppName, macFSFile)
-        CreateMacSplashScreen(AppName, splashMacFile)
+        # CreateMacAppFile(AppName, macAppFile)
+        # CreateMacFileSystem(AppName, macFSFile)
+        # CreateMacSplashScreen(AppName, splashMacFile)
         
         CreateWindowsFile(AppName, windowsFile)
-        CreateWindowsAppFile(AppName, windowsAppFile)
-        CreateWindowsFileSystem(AppName, windowsFSFile)
-        CreateWindowsSplashScreen(AppName, splashWindowsFile)
+        # CreateWindowsAppFile(AppName, windowsAppFile)
+        # CreateWindowsFileSystem(AppName, windowsFSFile)
+        # CreateWindowsSplashScreen(AppName, splashWindowsFile)
     elif ProjectOption == 3:
         CreateInitFile(AppName, initFile)
         CreateTwitterFile(AppName, twitterFile)
         
         CreateLinuxFile(AppName, linuxFile)
-        CreateLinuxAppFile(AppName, linuxAppFile)
-        CreateLinuxFileSystem(AppName, linuxFSFile)
-        CreateLinuxSplashScreen(AppName, splashLinuxFile)
+        # CreateLinuxAppFile(AppName, linuxAppFile)
+        # CreateLinuxFileSystem(AppName, linuxFSFile)
+        # CreateLinuxSplashScreen(AppName, splashLinuxFile)
         
         CreateMacFile(AppName, macFile)
-        CreateMacAppFile(AppName, macAppFile)
-        CreateMacFileSystem(AppName, macFSFile)
-        CreateMacSplashScreen(AppName, splashMacFile)
+        # CreateMacAppFile(AppName, macAppFile)
+        # CreateMacFileSystem(AppName, macFSFile)
+        # CreateMacSplashScreen(AppName, splashMacFile)
         
         CreateWindowsFile(AppName, windowsFile)
-        CreateWindowsAppFile(AppName, windowsAppFile)
-        CreateWindowsFileSystem(AppName, windowsFSFile)
-        CreateWindowsSplashScreen(AppName, splashWindowsFile)
+        # CreateWindowsAppFile(AppName, windowsAppFile)
+        # CreateWindowsFileSystem(AppName, windowsFSFile)
+        # CreateWindowsSplashScreen(AppName, splashWindowsFile)
     elif ProjectOption == 4:
         CreateJupyterNotebook(AppName, jupyterFile)
 
-        CreateLinuxFileSystem(AppName, linuxFSFile)
-        CreateMacFileSystem(AppName, macFSFile)
-        CreateWindowsFileSystem(AppName, windowsFSFile)
+        # CreateLinuxFileSystem(AppName, linuxFSFile)
+        # CreateMacFileSystem(AppName, macFSFile)
+        # CreateWindowsFileSystem(AppName, windowsFSFile)
     print()
 
     print("="*80)
@@ -1290,14 +1240,13 @@ def CreateBridge():
     print()
 
     ### OPEN PROJECT FOLDER
-    cmd = subprocess.getoutput(f'open {AppLocation}')
+        # cmd = subprocess.getoutput(f'open {AppLocation}')
 
-    userInput = str(input(">> Would you like to open project in Visual Studio Code? [Y/n]: "))
+        # userInput = str(input(">> Would you like to open project in Visual Studio Code? [Y/n]: "))
 
-    if userInput == "Y" or userInput == "y":
-        cmd = subprocess.getoutput(f'cd {AppLocation}')
-        cmd = subprocess.getoutput(f'code .')
-
+        # if userInput == "Y" or userInput == "y":
+        #     cmd = subprocess.getoutput(f'cd {AppLocation}')
+        #     cmd = subprocess.getoutput(f'code .')
     ### OPEN PROJECT FOLDER
 
     ### CRETE BRIDGE
