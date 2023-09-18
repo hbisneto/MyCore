@@ -8,6 +8,32 @@ This project was created using [PyBridge](https://github.com/hbisneto/PyBridge)
 ### Novidades dessa versão
 ---
 
+```
+.
+├── __init__.py
+├── exception
+│ ├── Exceptions.py
+├── system
+│ ├── SystemRequirements.py
+├── linux
+│ ├── Linux.py
+│ ├── LinuxApp.py
+│ ├── FileSystem.py
+│ └── SplashScreen.py
+├── mac
+│ ├── Mac.py
+│ ├── MacApp.py
+│ ├── FileSystem.py
+│ └── SplashScreen.py
+├── windows
+│ ├── Windows.py
+│ ├── WindowsApp.py
+│ ├── FileSystem.py
+│ └── SplashScreen.py
+├── Tokens.py
+└── README.md
+```
+
 **Environment**
 
 - Improvements in CLI (Command Line Interface)

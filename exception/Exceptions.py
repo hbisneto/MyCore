@@ -42,7 +42,7 @@ class Raise:
     print()
 
   def BuildVersion(self, CurrentVersion, TargetVersion, BuildVer):
-    raise Exception(f'>> This application only can run on Python {TargetVersion}. [Current Version: {CurrentVersion}]')
+    raise Exception(f'>> This application can only run on Python {TargetVersion}. [Current Version: {CurrentVersion}]')
 
   def __init__(self, exctype):
     self.exctype = exctype
@@ -60,6 +60,7 @@ class Raise:
     raise RuntimeError(">> Could not import library: Check if the libraries are installed and run the program again.")
 
   def InputFormat(self):
+    print()
     print("=" * 80)
     print(f'{self.exctype} INVALID INPUT')
     print("=" * 80)
@@ -67,6 +68,7 @@ class Raise:
     print("=" * 80)
   
   def ProgramQuit(self):
+    print()
     print("=" * 80)
     print(f'{self.exctype} PYBRIDGE HAS QUIT!')
     print("=" * 80)
@@ -74,13 +76,15 @@ class Raise:
     print("=" * 80)
 
   def InvalidOption(self):
+    print()
     print("=" * 80)
     print(f'{self.exctype} INVALID OPTION')
     print("=" * 80)
-    print(f'>> You typed an invalid option.\n>> Running the program again!')
+    print(f'>> You typed an invalid option.')
     print("=" * 80)
 
   def ProjectsLoadFail(self):
+    print()
     print("=" * 80)
     print(f'{self.exctype} PROJECT LOADING FAILED!')
     print("=" * 80)
@@ -88,6 +92,7 @@ class Raise:
     print("=" * 80)
 
   def BackupFail(self):
+    print()
     print("=" * 80)
     print(f'{self.exctype} BACKUP CREATION FAILED!')
     print("=" * 80)
@@ -97,6 +102,7 @@ class Raise:
     print("*" * 80)
 
   def CompressBackupFail(self):
+    print()
     print("=" * 80)
     print(f'{self.exctype} COMPRESSED FILE CREATION FAILED!')
     print("=" * 80)
@@ -105,4 +111,6 @@ class Raise:
     print(f'>> Try again later.')
     print("*" * 80)
 
-Throw = Raise(">> An Exception occurred:")
+Throw = Raise("")
+
+# Throw.CompressBackupFail() # REMOVE THIS LINE

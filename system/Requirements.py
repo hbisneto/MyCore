@@ -50,6 +50,7 @@ if REQUIRE == True:
                Exceptions.Throw.MajorVersion(CurrentVersion, TargetVersion, MajorVersion)
 
    def InstallDependencies():
+      print()
       print("=" * 80)
       print(">> INSTALL DEPENDENCIES <<")
       print("=" * 80)

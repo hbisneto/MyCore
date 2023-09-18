@@ -11,7 +11,7 @@ FileSystem.py
 ### NATIVE LIBRARIES ###
 import os
 from sys import platform
-from system import APPINFO
+import APPINFO
 ### NATIVE LIBRARIES ###
 
 ### GLOBAL VARIABLES ###

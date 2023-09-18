@@ -1,6 +1,9 @@
 ### PYBRIDGE SETS TO IGNORE ###
 ## .DS_Store: Is a file that stores custom attributes of its containing folder, such as folder view options, icon positions, and other visual information.
 .DS_Store
+closed_source_files
+mycorevsconfig.code-workspace
+App_OLD.py
 ### PYBRIDGE SETS TO IGNORE ###
 
 # Byte-compiled / optimized / DLL files

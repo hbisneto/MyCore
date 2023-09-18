@@ -11,21 +11,20 @@
 import App
 import FileSystem
 from system import Requirements
-from system import SplashScreen
-# from mac import MacApp
+import APPINFO
 
 def Mac():
    ## NOTE: You can use this function
    ## To load information before the app starts running
 
-   ## Lets run the SplashScreen
-   SplashScreen.Show()
+   ## Lets get Application Info (APPINFO.py)
+   APPINFO.loadSplashScreen()
 
    ## Lets check system requirements
    Requirements.CheckVersion()
 
    ### You just need to run ONCE: Be sure you commented this code after first run
-   ### Requirements.InstallDependencies()
+   # Requirements.InstallDependencies()
    ### You just need to run ONCE: Be sure you commented this code after first run
 
    ### Verify environment folders
@@ -33,4 +32,4 @@ def Mac():
 
    ## Start App for Mac
    # MacApp.Run()
-   App.Run()
+   App.start()
