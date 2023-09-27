@@ -1,10 +1,4 @@
-# MyDict = {
-#     'GetInfo':["GetInfo", "URL"],
-#     'JoKenPo':["JoKenPo", "URL"]
-# }
-
-# print(MyDict["GetInfo"][1])
-
+import CLI
 import os
 import requests
 import shutil
@@ -24,17 +18,13 @@ SAMPLES = {
 }
 
 def DownloadSamplesMenu():
-    print("="*80)
-    print(">> DOWNLOAD SAMPLE CODE <<")
-    print("="*80)
-    print('[1] - Download GetInfo')
-    print('[2] - Download JoKenPo')
-    print('[3] - Download MyTimeline')
-    print('[4] - Download JupyterBridge')
+    CLI.showMenu("DOWNLOAD SAMPLE CODE", separatorStyle=">")
+    for i in SAMPLES:
+        print(f'[{i}] - {SAMPLES[i][0]}')
     print('[0] - << Go Back')
     print()
     UserOption = int(input('>>[!] Type The Item Number: '))
-    print("="*80)
+    CLI.separator(style = "<")
 
     try:
         AppName = SAMPLES[UserOption-1][0] ### 0 is the first value of dictionary
@@ -95,6 +85,4 @@ def DownloadSamplesMenu():
         print("="*80)
 
     except:
-        if UserOption == 0:
-            print("=" * 80)
         pass

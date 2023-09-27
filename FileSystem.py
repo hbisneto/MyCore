@@ -9,9 +9,11 @@ FileSystem.py
 ## You can use this file to implement custom directories used by your application
 
 ### NATIVE LIBRARIES ###
-import os
-from sys import platform
 import APPINFO
+import os
+import CLI
+from exception import Exceptions
+from sys import platform
 ### NATIVE LIBRARIES ###
 
 ### GLOBAL VARIABLES ###
@@ -65,12 +67,13 @@ windows_Favorites = f'{User}/Favorites'
 
 ## MY VARIABLES
 AppFolder = f'{Documents}/{APPINFO.NAME}'
-Repository = f'{AppFolder}/Repository'
+Repository = f'{AppFolder}/Repository/'
+projectsArray = []
 ## MY VARIABLES
 ### CUSTOM VARIABLES ###
 
 ### FUNCTIONS ###
-def CreateEnvironmentFolders():
+def requiredFolders():
     try:
         os.mkdir(AppFolder)
         print(f'>> {APPINFO.NAME}: "{AppFolder}" created')
@@ -83,6 +86,30 @@ def CreateEnvironmentFolders():
     except:
         pass
 
-def ProjectList():
-    print("Hellow orld")
+def getProjectList():
+    projectsArray.clear()
+    try:
+        repoList = os.listdir(Repository)
+        for Project in repoList:
+            projectsArray.append(Project)
+            if '.DS_Store' in projectsArray:
+                projectsArray.remove('.DS_Store')
+    except:
+        Exceptions.Throw.ProjectsLoadFail()
+    
+    BridgeLoop = True
+    while BridgeLoop == True:
+        CLI.showMenu("PROJECT LIST", style = "default", newline = True)
+        Count = 0
+        for App in projectsArray:
+            Count += 1
+            print(f'[{Count}] - {App}')
+        
+        if Count == 0:
+            print("="*80)
+            print(f'>> Your list of projects is empty')
+            print("="*80)
+            print()
+        BridgeLoop = False
+        # ProjOptions()
 ### FUNCTIONS ###

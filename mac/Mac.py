@@ -28,8 +28,7 @@ def Mac():
    ### You just need to run ONCE: Be sure you commented this code after first run
 
    ### Verify environment folders
-   FileSystem.CreateEnvironmentFolders()
+   FileSystem.requiredFolders()
 
    ## Start App for Mac
-   # MacApp.Run()
    App.start()

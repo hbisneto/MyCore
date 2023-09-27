@@ -33,7 +33,8 @@ class Raise:
     print('=' * 80)
     print(">> WARNING <<")
     print('=' * 80)
-    print(f'>> Your appication targets a version of Python older than the version currently\ninstalled. You may get errors during the process')
+    print(f'>> Your appication targets a version of Python older than the version currently')
+    print('installed. You may get errors during the process')
     print('=' * 80)
     print(f'- Current Version: {CurrentVersion}')
     print(f'- Target Version: {TargetVersion}')
@@ -72,7 +73,8 @@ class Raise:
     print("=" * 80)
     print(f'{self.exctype} PYBRIDGE HAS QUIT!')
     print("=" * 80)
-    print(f'>> The program has been closed and couldn`t be restored.\n>> Run the program again!')
+    print(f'>> The program has been closed and couldn`t be restored.')
+    print('>> Run the program again!')
     print("=" * 80)
 
   def InvalidOption(self):

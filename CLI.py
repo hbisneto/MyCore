@@ -2,7 +2,7 @@
 ## This file is used to implement the CLI styles for users
 
 
-def showMenu(title, text = "", style = "default", newline = True):
+def showMenu(title, text = "", style = "default", newline = True, separatorStyle = "="):
     """
     A função aceita quatro parâmetros: `title`, `text`, `style` e `newline`.
     Os parâmetros `text`, `style` e `newline` não são obrigatórios.
@@ -75,10 +75,10 @@ def showMenu(title, text = "", style = "default", newline = True):
         print()
     if style == "short":
         # print("1. Short Style Selected")
-        print("="*80)
+        print(f'{separatorStyle}'*80)
         print(f"{title}")
         print(f"{text}")
-        print("="*80)
+        print(f'{separatorStyle}'*80)
     elif style == "long":
         # print("2. Long Style Selected")
         print("="*80)
@@ -88,12 +88,12 @@ def showMenu(title, text = "", style = "default", newline = True):
         print("="*80)
     else:
         # print("3. Default Style Selected")
-        print("="*80)
+        print(f'{separatorStyle}'*80)
         print(f"{title}")
-        print("="*80)
+        print(f'{separatorStyle}'*80)
 
-def separator():
-    print("=" * 80)
+def separator(style = "="):
+    print(f'{style}' * 80)
 
 ### EXEMPLES OF USE ###
     # ShowMenu("1. Title", "Short description", "short", True)
