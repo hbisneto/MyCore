@@ -1,7 +1,7 @@
 # MyCore 1.8
 
 This version is designed to speed up access to project information.
-Now, with the unification of the FileSystem libraries for macOS, Windows and Linux in a single file, just use `import FileSystem`. This simplifies the code, making it cleaner and more efficient. Additionally, new libraries have been added. These enhancements further expand the functionality and versatility of the system.
+Now, with the unification of the FileSystem libraries for macOS, Windows and Linux in a single file, just use `from system import FileSystem`. This simplifies the code, making it cleaner and more efficient. Additionally, new libraries have been added. These enhancements further expand the functionality and versatility of the system.
 
 This version brought a flatter structure, with many libraries now in the root directory. Additionally, the `system` directory has been expanded with new files such as the new `Core.py`, `File.py`, `Requirements.py`, and `[Services].py`.
 
