@@ -11,7 +11,7 @@ from datetime import datetime
 from sys import platform
 
 NAME = "MyCore"
-VERSION = "1.9"
+VERSION = "2.1"
 COPYRIGHT = "Heitor Bisneto"
 TYPE = "Menu Application Loop"
 LICENCE = "MIT"

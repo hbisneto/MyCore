@@ -1,5 +1,5 @@
-import Cli
-from system import FileSystem as fs
+import cli
+from system import filesystem as fs
 import requests
 import shutil
 import time
@@ -14,13 +14,15 @@ DICT_SAMPLES = {
 }
 
 def download_samples():
-    Cli.make_menu("DOWNLOAD SAMPLE CODE", separator_style=">")
+    cli.make_menu("DOWNLOAD SAMPLE CODE", separator_style=">")
     for i in DICT_SAMPLES:
         print(f'[{i+1}] - {DICT_SAMPLES[i][0]}')
     print('[0] - << Go Back')
     print()
-    opc = int(input('>>[!] Type The Item Number: '))
-    Cli.separator(style = "<")
+    opc = int(input('>>[!] Type a number: '))
+    cli.separator(style = "<")
+    if opc == 0:
+        return
 
     # print(UserOption)
     app_name = DICT_SAMPLES[opc-1][0]
@@ -34,7 +36,7 @@ def download_samples():
     download_sample_item(app_name, app_url)
 
 def download_sample_item(appname, url):
-    Cli.make_menu(f"DOWNLOADING: {appname}...", new_line = True)
+    cli.make_menu(f"DOWNLOADING: {appname}...", new_line = True)
     print("[Status]: Starting Download...")
     print('[Status]: Verifying repository to download...')
 
@@ -60,12 +62,12 @@ def download_sample_item(appname, url):
         
     try:
         Path(FROM).rename(TO)
-        Cli.separator()
+        cli.separator()
     except:
         return
     
-    Cli.make_menu(f"EXTRACTING: {appname}...", new_line = True)
+    cli.make_menu(f"EXTRACTING: {appname}...", new_line = True)
     with ZipFile(TO, 'r') as zipObj:
         zipObj.extractall(f'{fs.samples_folder}/{appname}/')
     print(f'[Done]: "{appname}" extraction process complete!')
-    Cli.separator()
+    cli.separator()

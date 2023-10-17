@@ -1,5 +1,5 @@
 ﻿"""
-### Mac.py
+### windows.py
 
 - This file is used to implement code used to run scripts for Mac
 - Codes implemented here, will run before the main script starts running
@@ -13,7 +13,7 @@ import info
 from system import filesystem as fs
 from system import requirements as req
 
-def mac():
+def windows():
    ## NOTE: You can use this function
    ## To load information before the app starts running
 

@@ -1,24 +1,22 @@
-import Info
-import Cli
+import info
+import cli
 import codecs
 import getpass
 import os
 import subprocess
 import sys
 import time
-from system import FileSystem as fs
+from system import filesystem as fs
 from datetime import datetime
-from exception import Exceptions
+from exceptions import exception
 from system import menus
-
-# from system.File import new_app_name
 
 # ProjectType = "Default Project"
 # AppLocation = ""
 # ProjectOption = 0
 
 TweetStr = "{Tweet}"
-repository_folder = f'{fs.documents}/{Info.NAME}/Repository'
+repository_folder = f'{fs.documents}/{info.NAME}/Repository'
 
 LIST_MENU_ITEMS = [
     "New Project",
@@ -59,7 +57,7 @@ LIST_PROJECT_OPTIONS = {
 
 def get_project_list(repository):
     ### List projects PyBridge creates
-    Cli.make_menu("PROJECT LIST", style = "default", new_line = True)
+    cli.make_menu("PROJECT LIST", style = "default", new_line = True)
     count = 0
     for dir in os.listdir(repository):
         if os.path.isdir(os.path.join(repository, dir)):
@@ -67,24 +65,24 @@ def get_project_list(repository):
             print(f'[{count}]: {dir}')
 
     if count == 0:
-      Cli.make_menu(f'>> It`s lonely here', 'Your list of projects is empty', style="short", new_line=True)
+      cli.make_menu(f'>> It`s lonely here', 'Your list of projects is empty', style="short", new_line=True)
     # else:
     #   pass
       # opc = int(input(">> Type a number to get an option or go back: "))
       # if opc != 0:### PENSAR NESSA PARTE
       #   menus.menu_project_options()
-    Cli.separator()
+    cli.separator()
 
 def generate_modules(bridge_name, bridge_location):
     BRIDGE_FOLDERS = {
-        0: "exception",
+        0: "exceptions",
         1: "linux",
         2: "mac",
         3: "system",
         4: "windows"
     }
     ### GENERATE MODULES FOR THE BRIDGE
-    Cli.make_menu(f'>> Creating {bridge_name} Modules')
+    cli.make_menu(f'>> Creating {bridge_name} Modules')
     try:
         for i in BRIDGE_FOLDERS:
             os.mkdir(f'{bridge_location}/{BRIDGE_FOLDERS[i]}')
@@ -104,12 +102,12 @@ def start():
 """
     writer.write(file)
     writer.close()
-  print(f'[ O.K ]: Created "App" Library')
+  print(f'[ O.K ]: Created "app" Library')
 
-def create_exceptions_file(file_location):
+def create_exception_file(file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
     file = """'''
-### Exceptions.py
+### exception.py
 
 - This file contains events raised when the program must to stop:
 
@@ -117,7 +115,7 @@ def create_exceptions_file(file_location):
 from exception import Exceptions
 
 def main():
-  Exceptions.Throw.FileExists()
+  exceptions.Throw.FileExists()
 ```
 Output:
 
@@ -227,7 +225,7 @@ Throw = Raise("")
 """
     writer.write(file)
     writer.close()
-  print(f'[ O.K ]: Created "Exceptions" Library')
+  print(f'[ O.K ]: Created "exception" Library')
 
 def create_filesystem_file(file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
@@ -304,7 +302,7 @@ windows_favorites = f'{user}/Favorites'
 """
     writer.write(file)
     writer.close()
-  print(f'[ O.K ]: Created "FileSystem" Library')
+  print(f'[ O.K ]: Created "filesystem" Library')
 
 def create_info_file(file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
@@ -407,7 +405,7 @@ elif platform == "win32" or platform == "win64":
 """
     writer.write(file)
     writer.close()
-  print(f'[ O.K ]: Created "Info" Library')
+  print(f'[ O.K ]: Created "info" Library')
 
 def create_linux_file(file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
@@ -418,7 +416,7 @@ print("Hello, Linux")
 """
     writer.write(file)
     writer.close()
-  print(f'[ O.K ]: Created "Linux" Library')
+  print(f'[ O.K ]: Created "linux" Library')
 
 def create_mac_file(file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
@@ -453,7 +451,7 @@ def Mac():
 """
     writer.write(file)
     writer.close()
-  print(f'[ O.K ]: Created "Mac" Library')
+  print(f'[ O.K ]: Created "mac" Library')
 
 def create_windows_file(file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
@@ -464,7 +462,7 @@ print("Hello, Windows")
 """
     writer.write(file)
     writer.close()
-  print(f'[ O.K ]: Created "Windows" Library')
+  print(f'[ O.K ]: Created "windows" Library')
 
 def create_readme_file(bridge_name, file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
@@ -496,7 +494,7 @@ Here is some external links that you can use in your `README.md` file.
 
 #
 
-Copyright © {Info.CURRENT_YEAR} {Info.USERNAME_CURRENT}. All rights reserved.
+Copyright © {info.CURRENT_YEAR} {info.USERNAME_CURRENT}. All rights reserved.
 """
     writer.write(readmelib)
     writer.close()
@@ -530,7 +528,7 @@ Twitter = tweepy.API(Auth, wait_on_rate_limit = True)
 """
         writer.write(file)
         writer.close()
-    print(f'[ O.K ]: Created "Tokens" Library (for Twitter)')
+    print(f'[ O.K ]: Created "tokens" Library (for Twitter)')
 
 def create_requirements_file(file_location):
     with codecs.open(file_location, "w", "utf-8-sig") as writer:
@@ -557,9 +555,9 @@ REQUIRE = True
 
 if REQUIRE == True:
   ## Target System
-  target_major = {Info.MAJOR_VERSION}
-  target_minor = {Info.MINOR_VERSION}
-  target_build = {Info.BUILD_VERSION}
+  target_major = {info.MAJOR_VERSION}
+  target_minor = {info.MINOR_VERSION}
+  target_build = {info.BUILD_VERSION}
   target_version = f'{VER_DICT["target"][0]}.{VER_DICT["target"][1]}.{VER_DICT["target"][2]}'
 
   target_ver_str = f'{VER_DICT["target"][0]}{VER_DICT["target"][1]}{VER_DICT["target"][2]}'
@@ -589,7 +587,7 @@ if REQUIRE == True:
 """
         writer.write(file)
         writer.close()
-    print(f'[ O.K ]: Created "Requirements" Library')
+    print(f'[ O.K ]: Created "requirements" Library')
 
 def create_gitignore_file(file_location):
     with codecs.open(file_location, "w", "utf-8-sig") as writer:
@@ -978,18 +976,18 @@ print("Hello, Windows")
 """
         writer.write(file)
         writer.close()
-    print(f'[ O.K ]: Created "Logs" Library')
+    print(f'[ O.K ]: Created "logs" Library')
 
 def create(opt, title):
-    Cli.make_menu("CREATE PROJECT")
+    cli.make_menu("CREATE PROJECT")
     print(f'>> {title} <<')
-    Cli.separator()
+    cli.separator()
     bridge_name = str(input(">>[!] Project Name: "))
 
     ## Root Files
     bridge_app_file = f'{repository_folder}/{bridge_name}/app.py'
     bridge_gitignore_file = f'{repository_folder}/{bridge_name}/.gitignore'
-    bridge_info_file = f'{repository_folder}/{bridge_name}/Info.py'
+    bridge_info_file = f'{repository_folder}/{bridge_name}/info.py'
     bridge_init_file = f'{repository_folder}/{bridge_name}/__init__.py'
     bridge_jupyter_file = f'{repository_folder}/{bridge_name}/{bridge_name}.ipynb'
     bridge_twitter_file = f'{repository_folder}/{bridge_name}twitter.py'
@@ -997,17 +995,19 @@ def create(opt, title):
     ## Root Files
 
     # Nested Files
-    bridge_exceptions_file = f'{repository_folder}/{bridge_name}/exception/Exceptions.py'
+    bridge_exception_file = f'{repository_folder}/{bridge_name}/exceptions/exception.py'
     bridge_linux_file = f'{repository_folder}/{bridge_name}/linux/linux.py'
-    bridge_mac_file = f'{repository_folder}/{bridge_name}/mac/Mac.py'
-    bridge_windows_file = f'{repository_folder}/{bridge_name}/windows/Windows.py'
-    bridge_filesystem_file = f'{repository_folder}/{bridge_name}/system/FileSystem.py'
-    bridge_logs_file = f'{repository_folder}/{bridge_name}/system/Logs.py'
-    bridge_requirements_file = f'{repository_folder}/{bridge_name}/system/Requirements.py'
+    bridge_mac_file = f'{repository_folder}/{bridge_name}/mac/mac.py'
+    bridge_windows_file = f'{repository_folder}/{bridge_name}/windows/windows.py'
+    bridge_filesystem_file = f'{repository_folder}/{bridge_name}/system/filesystem.py'
+    bridge_logs_file = f'{repository_folder}/{bridge_name}/system/logs.py'
+    bridge_requirements_file = f'{repository_folder}/{bridge_name}/system/requirements.py'
     # Nested Files
 
-    print(f'>> Creating bridge to the project "{bridge_name}"...')
-    print("="*80)
+    # print(f'>> Creating bridge to the project "{bridge_name}"...')
+    # print("="*80)
+
+    cli.make_menu(f'>> Creating bridge to the project "{bridge_name}"...')
 
     try:
         bridge_location = f'{repository_folder}/{bridge_name}/'
@@ -1018,14 +1018,15 @@ def create(opt, title):
         print(">> Could not create your project:")
         print(f'> Check if "{bridge_name}" already exists and try again.')
         print("="*80)
-        Exceptions.Throw.project_exists()
+        exception.Throw.project_exists()
 
     generate_modules(bridge_name, bridge_location)
 
     ### CRETE BRIDGE
-    print("=" * 80)
-    print(f'>> Creating {bridge_name} Libraries and Files <<')
-    print("=" * 80)
+    # print("=" * 80)
+    # print(f'>> Creating {bridge_name} Libraries and Files <<')
+    # print("=" * 80)
+    cli.make_menu(f'Creating "{bridge_name}" Libraries and Files')
 
     start_time = time.time()
     ### Creates the main files to the bridge
@@ -1036,7 +1037,7 @@ def create(opt, title):
     create_init_file(bridge_init_file)
     create_readme_file(bridge_name, bridge_readme_file)
     # Exceptions folder
-    create_exceptions_file(bridge_exceptions_file)
+    create_exception_file(bridge_exception_file)
     # System folder
     create_filesystem_file(bridge_filesystem_file)
     create_logs_file(bridge_logs_file)

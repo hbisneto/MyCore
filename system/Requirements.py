@@ -8,7 +8,7 @@
 
 import sys
 import subprocess
-from exception import Exceptions
+from exceptions import exception
 
 ## Change "REQUIRE" to "False" to skip system check
 REQUIRE = True
@@ -39,9 +39,9 @@ if REQUIRE == True:
 
    def check_version():
       if target_ver_int < current_ver_int:
-         Exceptions.Throw.minor_version(current_version, target_version)
+         exception.Throw.minor_version(current_version, target_version)
       elif target_ver_int > current_ver_int:
-         Exceptions.Throw.major_version(current_version, target_version)
+         exception.Throw.major_version(current_version, target_version)
       else:
          pass
 

@@ -15,8 +15,8 @@ from sys import platform
 ### NATIVE LIBRARIES ###
 
 ### PYBRIDGE LIBRARIES
-import Cli
-from exception import Exceptions
+import cli
+from exceptions import exception
 ### PYBRIDGE LIBRARIES
 
 ### GLOBAL VARIABLES ###

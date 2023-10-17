@@ -7,21 +7,15 @@ from sys import platform
 
 ## Linux
 if platform == "linux" or platform == "linux2":
-    # from linux import Linux
-    # Linux.Linux()
-    print("=" * 80)
-    print("[!] THIS SOFTWARE IS NOT COMPATIBLE WITH THIS PLATFORM")
-    print("=" * 80)
+    from linux import linux
+    linux.linux()
 
 ## Mac
 elif platform == "darwin":
-    from mac import Mac
-    Mac.Mac()
+    from mac import mac
+    mac.mac()
     
 ## Windows
 elif platform == "win32" or platform == "win64":
-    # from windows import Windows
-    # Windows.Windows()
-    print("=" * 80)
-    print("[!] THIS SOFTWARE IS NOT COMPATIBLE WITH THIS PLATFORM")
-    print("=" * 80)
+    from windows import windows
+    windows.windows()

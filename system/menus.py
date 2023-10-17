@@ -1,9 +1,9 @@
-import Cli as cli
-import Info as info
-from exception import Exceptions
-from system import Core as core
-from system import FileSystem as fs
-from system import Downloads as downloads
+import cli
+import info
+from exceptions import exception
+from system import core
+from system import filesystem as fs
+from system import downloads
 
 def main_menu():
     loop = True
@@ -20,7 +20,7 @@ def main_menu():
             opt = int(input("[?]: Type the option number: "))
             cli.separator()
             if opt > len(core.LIST_MENU_ITEMS):
-                Exceptions.Throw.invalid_option()
+                exception.Throw.invalid_option()
                 return
 
             if opt == 0:
@@ -29,13 +29,11 @@ def main_menu():
                 exit()
 
             if opt == 1:
-                print(">> Option 1")
                 menu_new_project()
             elif opt == 2:
-                print(">> Option 2")
                 core.get_project_list(fs.repository)
             elif opt == 3:
-                print(">> Option 3")
+                print(">> NOT IMPLEMENTED <<")
             elif opt == 4:
                 downloads.download_samples()
         except:
@@ -53,20 +51,18 @@ def menu_new_project():
     opt = int(input("[?]: Type the option number: "))
     cli.separator()
     if opt > len(core.LIST_PROJECTS):
-        Exceptions.Throw.invalid_option()
+        exception.Throw.invalid_option()
         return
 
     if opt == 0:
         pass
     if opt == 1:
-        print(">> Option 1")
         core.create(opt, "BLANK APPLICATION")
     elif opt == 2:
-        print(">> Option 2")
+        print(">> NOT IMPLEMENTED <<")
     elif opt == 3:
-        print(">> Option 3")
+        print(">> NOT IMPLEMENTED <<")
     elif opt == 4:
-        print(">> Option 4")
         core.create(opt, "JUPYTER NOTEBOOK")
 
 ### FUTURE VERSIONS
