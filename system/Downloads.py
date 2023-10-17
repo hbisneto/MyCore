@@ -34,7 +34,7 @@ def download_samples():
     download_sample_item(app_name, app_url)
 
 def download_sample_item(appname, url):
-    Cli.make_menu(f"DOWNLOADING: {appname}...", newline = True)
+    Cli.make_menu(f"DOWNLOADING: {appname}...", new_line = True)
     print("[Status]: Starting Download...")
     print('[Status]: Verifying repository to download...')
 
@@ -64,7 +64,7 @@ def download_sample_item(appname, url):
     except:
         return
     
-    Cli.make_menu(f"EXTRACTING: {appname}...", newline = True)
+    Cli.make_menu(f"EXTRACTING: {appname}...", new_line = True)
     with ZipFile(TO, 'r') as zipObj:
         zipObj.extractall(f'{fs.samples_folder}/{appname}/')
     print(f'[Done]: "{appname}" extraction process complete!')

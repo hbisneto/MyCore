@@ -9,17 +9,21 @@ def get_terminal_size():
 
 rows, columns = get_terminal_size()
 
+# print(f'Rows: {rows}')
+# print(f'Columns: {columns}')
+
+
 # separator_style = '='*columns
 # print('='*columns)
 # print(columns)
 
-def make_menu(title, text = "", style = "default", newline = True, separator_style = "="):
+def make_menu(title, text = "", style = "default", new_line = True, separator_style = "="):
     """
     A função aceita quatro parâmetros: `title`, `text`, `style` e `newline`.
     Os parâmetros `text`, `style` e `newline` não são obrigatórios.
     """
     
-    if newline == True:
+    if new_line == True:
         print()
     if style == "short":
         # print("1. Short Style Selected")
@@ -40,7 +44,9 @@ def make_menu(title, text = "", style = "default", newline = True, separator_sty
         print(f"{title}")
         print(f'{separator_style}' * columns)
 
-def separator(style = "="):
+def separator(style = "=", new_line = False):
+    if new_line == True:
+        print()
     print(f'{style}' * columns)
 
 ### EXEMPLES OF USE ###

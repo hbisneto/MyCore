@@ -27,9 +27,9 @@ def Mac():
    # Requirements.InstallDependencies()
    ### You just need to run ONCE: Be sure you commented this code after first run
 
-   ### Verify environment folders
-   fs.create_required_folder(f'{fs.documents}/{Info.NAME}', Info.NAME)
-   fs.create_required_folder(f'{fs.documents}/{Info.NAME}/Repository', "Repository")
+   ### Creates all needed folders
+   fs.create_custom_folder(Info.NAME, fs.documents)
+   fs.create_custom_folder("Repository", f'{fs.documents}/{Info.NAME}')
 
    ## Start App for Mac
    app.start()

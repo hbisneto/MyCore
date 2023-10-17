@@ -9,6 +9,7 @@ import time
 from system import FileSystem as fs
 from datetime import datetime
 from exception import Exceptions
+from system import menus
 
 # from system.File import new_app_name
 
@@ -33,6 +34,47 @@ LIST_PROJECTS = [
     "Create a Jupyter Notebook"
 ]
 
+LIST_PROJECT_OPTIONS = {
+    0:[
+        "Create Library", 
+        "Will add a Library in all OS Modules"
+      ],
+    1:[
+        "Create Universal Library",
+        "Will add a new Library on the root of project"
+      ],
+    2:[
+        "Create Module",
+        "Will add a Module in all OS Modules"
+      ],
+    3:[
+        "Create Universal Module",
+        "Will add a new Module on the root of project"
+      ],
+    4:[
+        "Delete Project",
+        "Deletes the project folder and all the contents in it. \nCAUTION: THIS OPERATION CANNOT BE UNDONE!"
+      ]
+}
+
+def get_project_list(repository):
+    ### List projects PyBridge creates
+    Cli.make_menu("PROJECT LIST", style = "default", new_line = True)
+    count = 0
+    for dir in os.listdir(repository):
+        if os.path.isdir(os.path.join(repository, dir)):
+            count+=1
+            print(f'[{count}]: {dir}')
+
+    if count == 0:
+      Cli.make_menu(f'>> It`s lonely here', 'Your list of projects is empty', style="short", new_line=True)
+    # else:
+    #   pass
+      # opc = int(input(">> Type a number to get an option or go back: "))
+      # if opc != 0:### PENSAR NESSA PARTE
+      #   menus.menu_project_options()
+    Cli.separator()
+
 def generate_modules(bridge_name, bridge_location):
     BRIDGE_FOLDERS = {
         0: "exception",
@@ -51,7 +93,6 @@ def generate_modules(bridge_name, bridge_location):
         print(f'[ERROR]: The Module "{BRIDGE_FOLDERS[i]}" could not be created.\n>> Your app may not run.') 
     ### GENERATE MODULES FOR THE BRIDGE
 
-# CREAT - App.py file
 def create_app_file(file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
     file = """

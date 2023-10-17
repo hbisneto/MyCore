@@ -10,11 +10,14 @@ FileSystem.py
 
 ### NATIVE LIBRARIES ###
 import os
-import Cli
 import codecs
-from exception import Exceptions
 from sys import platform
 ### NATIVE LIBRARIES ###
+
+### PYBRIDGE LIBRARIES
+import Cli
+from exception import Exceptions
+### PYBRIDGE LIBRARIES
 
 ### GLOBAL VARIABLES ###
 CURRENT_LOCATION = os.getcwd()
@@ -75,7 +78,7 @@ windows_favorites = f'{user}/Favorites'
 ## MY VARIABLES
 backup_folder = f'{CURRENT_LOCATION}/Backup'
 samples_folder = f'{CURRENT_LOCATION}/Samples'
-list_projects = []
+# list_projects = []
 repository = f'{documents}/MyCore/Repository'
 ## MY VARIABLES
 ### CUSTOM VARIABLES ###
@@ -88,31 +91,6 @@ def create_required_folder(folder_location, folder_name=""):
             print(f'>> {folder_name}: "{folder_location}" created')
     except:
         pass
-
-def get_project_list(repository):
-    # repository = repository_folder
-    list_projects.clear()
-    try:
-        repoList = os.listdir(repository)
-        for project in repoList:
-            list_projects.append(project)
-            if '.DS_Store' in list_projects:
-                list_projects.remove('.DS_Store')
-    except:
-        Exceptions.Throw.projects_load_fail()
-    
-    loop = True
-    while loop == True:
-        Cli.make_menu("PROJECT LIST", style = "default", newline = True)
-        count = 0
-        for app in list_projects:
-            count += 1
-            print(f'[{count}] - {app}')
-        
-        if count == 0:
-            Cli.make_menu(f'>> It`s lonely here', 'Your list of projects is empty', style="short", newline=True)
-        loop = False
-        # ProjOptions()
 
 def create_backup_folder():
     """Creates the 'Backup' folder in the root of the project
