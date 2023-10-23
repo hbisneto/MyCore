@@ -10,6 +10,7 @@
 
 import app
 import info
+from system import core
 from system import filesystem as fs
 from system import requirements as req
 
@@ -17,7 +18,7 @@ def mac():
    ## NOTE: You can use this function
    ## To load information before the app starts running
 
-   ## Lets get Application Info (APPINFO.py)
+   ## Lets get Application Info (info.py)
    info.loadSplashScreen()
 
    ## Lets check system requirements
@@ -28,8 +29,8 @@ def mac():
    ### You just need to run ONCE: Be sure you commented this code after first run
 
    ### Creates all needed folders
-   fs.create_custom_folder(info.NAME, fs.documents)
-   fs.create_custom_folder("Repository", f'{fs.documents}/{info.NAME}')
+   core.create_custom_folder(info.NAME, fs.documents)
+   core.create_custom_folder("Repository", f'{fs.documents}/{info.NAME}')
 
    ## Start App for Mac
    app.start()

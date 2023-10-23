@@ -84,4 +84,4 @@ def menu_project_options():
     opc = int(input(">>[!] Type a number: "))
     print("="*80)
     if opc == 1:
-        fs.create_custom_file("teste.xml", fs.repository, "Deu certo. Mas não era aqui.")
+        core.create_custom_file("teste.xml", core.repository_folder, "Deu certo. Mas não era aqui.")

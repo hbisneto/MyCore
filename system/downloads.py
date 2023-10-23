@@ -1,10 +1,11 @@
 import cli
-from system import filesystem as fs
 import requests
 import shutil
 import time
 from pathlib import Path
 from zipfile import ZipFile
+from system import filesystem as fs
+from system import core
 
 DICT_SAMPLES = {
     0:["GetInfo", "https://github.com/hbisneto/GetInfo/archive/refs/heads/main.zip"],
@@ -24,15 +25,13 @@ def download_samples():
     if opc == 0:
         return
 
-    # print(UserOption)
+    # Get information to download
     app_name = DICT_SAMPLES[opc-1][0]
     app_url = DICT_SAMPLES[opc-1][1]
-    # print(app_name)
-    # print(app_url)
 
     # Verify if Samples folder exists
-    fs.create_samples_folder()
-    fs.create_custom_folder(app_name, fs.samples_folder)
+    core.create_samples_folder()
+    core.create_custom_folder(app_name, core.samples_folder)
     download_sample_item(app_name, app_url)
 
 def download_sample_item(appname, url):
@@ -42,7 +41,7 @@ def download_sample_item(appname, url):
 
     try:
         FROM = f'{fs.CURRENT_LOCATION}/main.zip'
-        TO = f'{fs.samples_folder}/{appname}/{appname}.zip'
+        TO = f'{core.samples_folder}/{appname}/{appname}.zip'
 
         ServerResponse = requests.get(url, stream = True)
         FileName = url.split("/")[-1]
@@ -57,7 +56,7 @@ def download_sample_item(appname, url):
         print("[ERROR]: Could't connect to the server!")
         print(f'[Process]: Cleaning cache...')
         time.sleep(3)
-        shutil.rmtree(f'{fs.samples_folder}/{appname}/')
+        shutil.rmtree(f'{core.samples_folder}/{appname}/')
         print("[Process]: Cache cleaned!")
         
     try:
@@ -68,6 +67,6 @@ def download_sample_item(appname, url):
     
     cli.make_menu(f"EXTRACTING: {appname}...", new_line = True)
     with ZipFile(TO, 'r') as zipObj:
-        zipObj.extractall(f'{fs.samples_folder}/{appname}/')
+        zipObj.extractall(f'{core.samples_folder}/{appname}/')
     print(f'[Done]: "{appname}" extraction process complete!')
     cli.separator()

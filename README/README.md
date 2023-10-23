@@ -33,25 +33,30 @@ This update removes `APPINFO.py` and `SplashScreen.py` from `system` module.
 ```
 .
 ├── __init__.py
-├── exception
-│ ├── Exceptions.py
-├── system
-│ ├── Core.py
-│ ├── FileWriter.py
-│ ├── Requirements.py
-│ ├── [Services].py
-├── linux
-│ ├── Linux.py
-├── mac
-│ ├── Mac.py
-├── windows
-│ ├── Windows.py
 ├── .gitignore
 ├── app.py
-├── APPINFO.py
-├── CLI.py
-├── Core.py
-├── FileSystem.py
-├── Menu.py
+├── cli.py
+├── info.py
+│ 
+├── exceptions
+│ ├── exception.py
+│ 
+├── system
+│ ├── core.py
+│ ├── downloads.py
+│ ├── filesystem.py
+│ ├── logs.py
+│ ├── menus.py
+│ ├── requirements.py
+│ 
+├── linux
+│ ├── linux.py
+│ 
+├── mac
+│ ├── mac.py
+│ 
+├── windows
+│ ├── windows.py
+│ 
 └── README.md
 ```

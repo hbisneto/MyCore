@@ -18,6 +18,77 @@ from system import menus
 TweetStr = "{Tweet}"
 repository_folder = f'{fs.documents}/{info.NAME}/Repository'
 
+# list_projects = []
+backup_folder = f'{fs.CURRENT_LOCATION}/Backup'
+samples_folder = f'{fs.CURRENT_LOCATION}/Samples'
+
+
+
+
+
+
+
+### FUNCTIONS ###
+def create_required_folder(folder_location, folder_name=""):
+    try:
+        os.mkdir(f'{folder_location}')
+        if len(folder_name) != 0:
+            print(f'>> {folder_name}: "{folder_location}" created')
+    except:
+        pass
+
+def create_backup_folder():
+    """Creates the 'Backup' folder in the root of the project
+    """
+    try:
+        os.mkdir(backup_folder)
+    except:
+        pass
+
+def create_samples_folder():
+    try:
+        os.mkdir(samples_folder)
+    except:
+        pass
+
+def create_custom_file(file_name, url, text):
+    """
+        filename: The name of the file you want to create, including its extension.
+        url: The directory where the file will be created.
+        text: The content that will be written into the file.
+    """
+
+    try:
+        with codecs.open(f'{url}/{file_name}', "w", "utf-8-sig") as custom_file:
+            custom_file.write(text)
+            custom_file.close
+    except:
+        pass
+
+def create_custom_folder(folder_name, url):
+    """
+        folder_name: The name of the folder you want to create.
+        url: The path where the folder will be created in.
+        To create a folder called 'Travel' on desktop, the url must point to desktop
+    """
+    try:
+        custom_folder = f'{url}/{folder_name}'
+        os.mkdir(custom_folder)
+    except:
+        pass
+### FUNCTIONS ###
+
+
+
+
+
+
+
+
+
+
+
+
 LIST_MENU_ITEMS = [
     "New Project",
     "Project List",
@@ -73,12 +144,12 @@ def get_project_list(repository):
       #   menus.menu_project_options()
     cli.separator()
 
-def generate_modules(bridge_name, bridge_location):
+def generate_modules(proj_opt, bridge_name, bridge_location):
     BRIDGE_FOLDERS = {
         0: "exceptions",
-        1: "linux",
-        2: "mac",
-        3: "system",
+        1: "system",
+        2: "linux",
+        3: "mac",
         4: "windows"
     }
     ### GENERATE MODULES FOR THE BRIDGE
@@ -231,7 +302,7 @@ def create_filesystem_file(file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
     file = """
 '''
-FileSystem.py
+filesystem.py
 
 - This file contains some default directories of your system
 - You can use this file to implement custom directories used by your application
@@ -241,10 +312,8 @@ FileSystem.py
 ## You can use this file to implement custom directories used by your application
 
 ### NATIVE LIBRARIES ###
-# import APPINFO
 import os
 import codecs
-from exception import Exceptions
 from sys import platform
 ### NATIVE LIBRARIES ###
 
@@ -432,16 +501,16 @@ def create_mac_file(file_location):
 ## Codes implemented here, will run before the main script starts running
 
 import app
-import Info
-from system import FileSystem as fs
-from system import Requirements as req
+import info
+from system import filesystem as fs
+from system import requirements as req
 
-def Mac():
+def mac():
   ## NOTE: You can use this function
   ## To load information before the app starts running
 
-  ## Lets get Application Info (APPINFO.py)
-  Info.loadSplashScreen()
+  ## Lets get Application Info (info.py)
+  info.loadSplashScreen()
 
   ## Lets check system requirements
   req.check_version()
@@ -500,7 +569,7 @@ Copyright © {info.CURRENT_YEAR} {info.USERNAME_CURRENT}. All rights reserved.
     writer.close()
   print(f'[ O.K ]: Created "README" Markdown')
 
-def create_tokens_file(file_location):
+def create_twitter_file(file_location):
     with codecs.open(file_location, "w", "utf-8-sig") as writer:
         file = """
 ## Tokens
@@ -519,7 +588,7 @@ ConsumerSecret = str('')
 AccessToken = str("")
 AccessTokenSecret = str("")
 
-## Authorization
+## Authorisation
 Auth = tweepy.OAuthHandler(ConsumerKey, ConsumerSecret)
 Auth.set_access_token(AccessToken, AccessTokenSecret)
 
@@ -528,7 +597,7 @@ Twitter = tweepy.API(Auth, wait_on_rate_limit = True)
 """
         writer.write(file)
         writer.close()
-    print(f'[ O.K ]: Created "tokens" Library (for Twitter)')
+    print(f'[ O.K ]: Created "twitter" Library (tokens for Twitter)')
 
 def create_requirements_file(file_location):
     with codecs.open(file_location, "w", "utf-8-sig") as writer:
@@ -807,23 +876,9 @@ def create_jupyter_file(file_location):
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## External Packages",    "Packages to set before you go",    "<br>Uncomment the code below to install dependencies"   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# %pip install pandas",    "# %pip install numpy",    "# %pip install qgrid",
-    "# %pip install matplotlib",    "# %pip install seaborn"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## Check PyBridge Libraries",    "Required libraries will be imported before you run your Jupyter Notebook"
+    "## External Packages\n",
+    "Packages to set before you go\n",
+    "<br>Uncomment the code below to install dependencies"
    ]
   },
   {
@@ -832,15 +887,21 @@ def create_jupyter_file(file_location):
    "metadata": {},
    "outputs": [],
    "source": [
-    "try:",    "   ## Imported Libraries",    "   from sys import platform",    "",    "   ## Local Libraries",    "   from exception import Exceptions",    "except:",    "   raise RuntimeError('>> Could not import library: Check if the libraries are installed and run the program again.')"
+    "# %pip install pandas\n",
+    "# %pip install numpy\n",
+    "# %pip install qgrid\n",
+    "# %pip install matplotlib\n",
+    "# %pip install seaborn\n",
+    "from system import filesystem as fs\n",
+    "from exceptions import exception"
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Linux Imports",
-    "Imports to use in Linux Environments"
+    "## Check PyBridge Libraries\n",
+    "Required libraries will be imported before you run your Jupyter Notebook"
    ]
   },
   {
@@ -849,53 +910,15 @@ def create_jupyter_file(file_location):
    "metadata": {},
    "outputs": [],
    "source": [
-    "## Linux",
-    "if platform == 'linux' or platform == 'linux2':",
-    "   from linux import FileSystem"
+    "# from system import filesystem as fs\n",
+    "# from exceptions import exception"
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## macOS Imports",
-    "Imports to use in macOS Environments"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "## Mac",
-    "if platform == 'darwin':",
-    "   from mac import FileSystem"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## Windows Imports",    "Imports to use in Windows Environments"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "## Windows",
-    "if platform == 'win32' or platform == 'win64':",
-    "   from windows import FileSystem"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "# Code Implementation",
+    "# Code Implementation\n",
     "Here you will implement your code to be executed after imports"
    ]
   },
@@ -905,31 +928,31 @@ def create_jupyter_file(file_location):
    "metadata": {},
    "outputs": [],
    "source": [
-    "## Examples to make your journey easier",
-    "## Note: Replace the code below with your implementation",
-    "",
-    "# Get the path of your Desktop folder:",
-    "print('{0}{1}'.format('Your Desktop Folder: ', FileSystem.Desktop))",
-    "",
-    "# Get the path of your Documents folder:",
-    "print(f'Your Documents Folder: {FileSystem.Documents}')",
-    "",
-    "# Hello World!",
-    "print('Hello World!')",
-    "",
-    "# Math Sum",
-    "print('>> 2 + 3 =', 2 + 3)",
-    "",
-    "# Throw an Exception using native library",
-    "Exceptions.Throw.FileExists()"
+    "## Examples to make your journey easier\n",
+    "## Note: Replace the code below with your implementation\n",
+    "\n",
+    "# Get the path of your Desktop folder:\n",
+    "print('{0}{1}'.format('Your Desktop Folder: ', fs.desktop))\n",
+    "\n",
+    "# Get the path of your Documents folder:\n",
+    "print(f'Your Documents Folder: {fs.documents}')\n",
+    "\n",
+    "# Hello World!\n",
+    "print('Hello World!')\n",
+    "\n",
+    "# Math Sum\n",
+    "print('>> 2 + 3 =', 2 + 3)\n",
+    "\n",
+    "# Throw an Exception using native library\n",
+    "exception.Throw.file_exists()"
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "#",
-    "",
+    "#\n",
+    "\n",
     "This project was created using PyBridge. All rights reserved."
    ]
   }
@@ -950,7 +973,7 @@ def create_jupyter_file(file_location):
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.10.5"
+   "version": "3.9.0"
   },
   "orig_nbformat": 4,
   "vscode": {
@@ -978,7 +1001,7 @@ print("Hello, Windows")
         writer.close()
     print(f'[ O.K ]: Created "logs" Library')
 
-def create(opt, title):
+def create(proj_opt, title):
     cli.make_menu("CREATE PROJECT")
     print(f'>> {title} <<')
     cli.separator()
@@ -1020,12 +1043,9 @@ def create(opt, title):
         print("="*80)
         exception.Throw.project_exists()
 
-    generate_modules(bridge_name, bridge_location)
+    generate_modules(proj_opt, bridge_name, bridge_location)
 
     ### CRETE BRIDGE
-    # print("=" * 80)
-    # print(f'>> Creating {bridge_name} Libraries and Files <<')
-    # print("=" * 80)
     cli.make_menu(f'Creating "{bridge_name}" Libraries and Files')
 
     start_time = time.time()
@@ -1034,17 +1054,17 @@ def create(opt, title):
     create_app_file(bridge_app_file)
     create_info_file(bridge_info_file)
     create_gitignore_file(bridge_gitignore_file)
-    create_init_file(bridge_init_file)
+    create_init_file(bridge_init_file) # Do not create in case of Jupyter Notebook
     create_readme_file(bridge_name, bridge_readme_file)
     # Exceptions folder
     create_exception_file(bridge_exception_file)
     # System folder
     create_filesystem_file(bridge_filesystem_file)
     create_logs_file(bridge_logs_file)
-    create_requirements_file(bridge_requirements_file)
+    create_requirements_file(bridge_requirements_file) # Do not create in case of Jupyter Notebook
     ### Creates the main files to the bridge
 
-    if opt == 1:
+    if proj_opt == 1:
         # print("1")
         create_linux_file(bridge_linux_file)
         create_mac_file(bridge_mac_file)
@@ -1055,21 +1075,21 @@ def create(opt, title):
         # CreateLinuxFile(linuxFile)
         # CreateMacFile(macFile)
         # CreateWindowsFile(windowsFile)
-    elif opt == 2:
+    elif proj_opt == 2:
         print("2")
         # CreateInitFile(initFile)
         # CreateLinuxFile(linuxFile)
         # CreateMacFile(macFile)
         # CreateWindowsFile(windowsFile)
-    elif opt == 3:
+    elif proj_opt == 3:
         print("3")
+        create_twitter_file(bridge_twitter_file)
         # CreateInitFile(initFile)
         # CreateTwitterFile(twitterFile)
         # CreateLinuxFile(linuxFile)
         # CreateMacFile(macFile)
         # CreateWindowsFile(windowsFile)
-    elif opt == 4:
-        print("4")
+    elif proj_opt == 4:
         create_jupyter_file(bridge_jupyter_file)
         # CreateJupyterNotebook(jupyterFile)
 
