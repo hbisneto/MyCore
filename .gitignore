@@ -3,8 +3,8 @@
 ## such as folder view options, icon positions, and other visual information.
 .DS_Store
 closed_source_files
-mycorevsconfig.code-workspace
-App_OLD.py
+bin
+include
 ### PYBRIDGE SETS TO IGNORE ###
 
 # Byte-compiled / optimized / DLL files

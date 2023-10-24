@@ -4,8 +4,8 @@ import shutil
 import time
 from pathlib import Path
 from zipfile import ZipFile
-from system import filesystem as fs
-from system import core
+import filesystem as fs
+from filesystem import wrapper as wr
 
 DICT_SAMPLES = {
     0:["GetInfo", "https://github.com/hbisneto/GetInfo/archive/refs/heads/main.zip"],
@@ -13,6 +13,8 @@ DICT_SAMPLES = {
     2:["MyTimeline", "https://github.com/hbisneto/MyTimeline/archive/refs/heads/main.zip"],
     3:["JupyterBridge", "https://github.com/hbisneto/JupyterBridge/archive/refs/heads/main.zip"]
 }
+
+samples_folder = f'{fs.CURRENT_LOCATION}/Samples'
 
 def download_samples():
     cli.make_menu("DOWNLOAD SAMPLE CODE", separator_style=">")
@@ -30,8 +32,8 @@ def download_samples():
     app_url = DICT_SAMPLES[opc-1][1]
 
     # Verify if Samples folder exists
-    core.create_samples_folder()
-    core.create_custom_folder(app_name, core.samples_folder)
+    wr.create_directory(samples_folder)
+    wr.create_directory(f'{samples_folder}/{app_name}')
     download_sample_item(app_name, app_url)
 
 def download_sample_item(appname, url):
@@ -41,7 +43,7 @@ def download_sample_item(appname, url):
 
     try:
         FROM = f'{fs.CURRENT_LOCATION}/main.zip'
-        TO = f'{core.samples_folder}/{appname}/{appname}.zip'
+        TO = f'{samples_folder}/{appname}/{appname}.zip'
 
         ServerResponse = requests.get(url, stream = True)
         FileName = url.split("/")[-1]
@@ -56,7 +58,7 @@ def download_sample_item(appname, url):
         print("[ERROR]: Could't connect to the server!")
         print(f'[Process]: Cleaning cache...')
         time.sleep(3)
-        shutil.rmtree(f'{core.samples_folder}/{appname}/')
+        shutil.rmtree(f'{samples_folder}/{appname}/')
         print("[Process]: Cache cleaned!")
         
     try:
@@ -67,6 +69,6 @@ def download_sample_item(appname, url):
     
     cli.make_menu(f"EXTRACTING: {appname}...", new_line = True)
     with ZipFile(TO, 'r') as zipObj:
-        zipObj.extractall(f'{core.samples_folder}/{appname}/')
+        zipObj.extractall(f'{samples_folder}/{appname}/')
     print(f'[Done]: "{appname}" extraction process complete!')
     cli.separator()

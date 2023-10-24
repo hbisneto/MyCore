@@ -8,11 +8,12 @@
 ## This file is used to implement code used to run scripts for Mac
 ## Codes implemented here, will run before the main script starts running
 
-import app
 import info
+import filesystem as fs
+from filesystem import wrapper as wr
 from system import core
-from system import filesystem as fs
 from system import requirements as req
+import pybridge
 
 def mac():
    ## NOTE: You can use this function
@@ -25,12 +26,11 @@ def mac():
    req.check_version()
 
    ### You just need to run ONCE: Be sure you commented this code after first run
-   # Requirements.InstallDependencies()
+   # req.install_dependencies()
    ### You just need to run ONCE: Be sure you commented this code after first run
 
    ### Creates all needed folders
-   core.create_custom_folder(info.NAME, fs.documents)
-   core.create_custom_folder("Repository", f'{fs.documents}/{info.NAME}')
+   wr.create_directory(f'{fs.documents}/{info.NAME}/Repository')
 
    ## Start App for Mac
-   app.start()
+   pybridge.start()

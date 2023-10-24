@@ -2,7 +2,8 @@ import cli
 import info
 from exceptions import exception
 from system import core
-from system import filesystem as fs
+import filesystem as fs
+from filesystem import wrapper as wr
 from system import downloads
 
 def main_menu():
@@ -31,7 +32,7 @@ def main_menu():
             if opt == 1:
                 menu_new_project()
             elif opt == 2:
-                core.get_project_list(fs.repository)
+                core.get_project_list(core.repository_folder)
             elif opt == 3:
                 print(">> NOT IMPLEMENTED <<")
             elif opt == 4:
@@ -59,7 +60,7 @@ def menu_new_project():
     if opt == 1:
         core.create(opt, "BLANK APPLICATION")
     elif opt == 2:
-        print(">> NOT IMPLEMENTED <<")
+        core.create(opt, "MENU APPLICATION")
     elif opt == 3:
         print(">> NOT IMPLEMENTED <<")
     elif opt == 4:
@@ -84,4 +85,4 @@ def menu_project_options():
     opc = int(input(">>[!] Type a number: "))
     print("="*80)
     if opc == 1:
-        core.create_custom_file("teste.xml", core.repository_folder, "Deu certo. Mas não era aqui.")
+        wr.create_file("test.xml", core.repository_folder, "This is a test output")

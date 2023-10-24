@@ -1,26 +1,23 @@
 import info
 import cli
 import codecs
-import getpass
 import os
-import subprocess
-import sys
 import time
-from system import filesystem as fs
+import filesystem as fs
 from datetime import datetime
 from exceptions import exception
+from filesystem import wrapper as wr
 from system import menus
 
 # ProjectType = "Default Project"
 # AppLocation = ""
 # ProjectOption = 0
 
-TweetStr = "{Tweet}"
+tweet_string = "{tweet}"
 repository_folder = f'{fs.documents}/{info.NAME}/Repository'
 
 # list_projects = []
 backup_folder = f'{fs.CURRENT_LOCATION}/Backup'
-samples_folder = f'{fs.CURRENT_LOCATION}/Samples'
 
 
 
@@ -29,53 +26,15 @@ samples_folder = f'{fs.CURRENT_LOCATION}/Samples'
 
 
 ### FUNCTIONS ###
-def create_required_folder(folder_location, folder_name=""):
-    try:
-        os.mkdir(f'{folder_location}')
-        if len(folder_name) != 0:
-            print(f'>> {folder_name}: "{folder_location}" created')
-    except:
-        pass
 
-def create_backup_folder():
-    """Creates the 'Backup' folder in the root of the project
-    """
-    try:
-        os.mkdir(backup_folder)
-    except:
-        pass
 
-def create_samples_folder():
-    try:
-        os.mkdir(samples_folder)
-    except:
-        pass
-
-def create_custom_file(file_name, url, text):
-    """
-        filename: The name of the file you want to create, including its extension.
-        url: The directory where the file will be created.
-        text: The content that will be written into the file.
-    """
-
-    try:
-        with codecs.open(f'{url}/{file_name}', "w", "utf-8-sig") as custom_file:
-            custom_file.write(text)
-            custom_file.close
-    except:
-        pass
-
-def create_custom_folder(folder_name, url):
-    """
-        folder_name: The name of the folder you want to create.
-        url: The path where the folder will be created in.
-        To create a folder called 'Travel' on desktop, the url must point to desktop
-    """
-    try:
-        custom_folder = f'{url}/{folder_name}'
-        os.mkdir(custom_folder)
-    except:
-        pass
+# def create_backup_folder():
+#     """Creates the 'Backup' folder in the root of the project
+#     """
+#     try:
+#         os.mkdir(backup_folder)
+#     except:
+#         pass
 ### FUNCTIONS ###
 
 
@@ -144,32 +103,98 @@ def get_project_list(repository):
       #   menus.menu_project_options()
     cli.separator()
 
-def generate_modules(proj_opt, bridge_name, bridge_location):
-    BRIDGE_FOLDERS = {
-        0: "exceptions",
-        1: "system",
-        2: "linux",
-        3: "mac",
-        4: "windows"
-    }
-    ### GENERATE MODULES FOR THE BRIDGE
-    cli.make_menu(f'>> Creating {bridge_name} Modules')
-    try:
-        for i in BRIDGE_FOLDERS:
-            os.mkdir(f'{bridge_location}/{BRIDGE_FOLDERS[i]}')
-            print(f'[ O.K ]: Created "{BRIDGE_FOLDERS[i]}" Module')
-    except:
-        print(f'[ERROR]: The Module "{BRIDGE_FOLDERS[i]}" could not be created.\n>> Your app may not run.') 
-    ### GENERATE MODULES FOR THE BRIDGE
+def generate_modules(bridge_name, bridge_location):
+  BRIDGE_FOLDERS = {
+    0: "exceptions",
+    1: "system",
+    2: "linux",
+    3: "mac",
+    4: "windows"
+  }
+  ### GENERATE MODULES FOR THE BRIDGE
+  cli.make_menu(f'>> Creating {bridge_name} Modules')
+  try:
+    for i in BRIDGE_FOLDERS:
+      wr.create_directory(f'{bridge_location}/{BRIDGE_FOLDERS[i]}')
+      print(f'[ O.K ]: Created "{BRIDGE_FOLDERS[i]}" Module')
+    cli.separator()
+  except:
+    print(f'[ERROR]: The Module "{BRIDGE_FOLDERS[i]}" could not be created.\n>> Your app may not run.')
+  ### GENERATE MODULES FOR THE BRIDGE
 
-def create_app_file(file_location):
+def create_app_file(proj_opt, bridge_name, file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
-    file = """
+    if proj_opt == 1:
+      file = f"""
 ### This is the App file
 # Here is where you'll start
 
 def start():
   print("Hello World")
+"""
+    elif proj_opt == 2:
+      file = f"""
+## {bridge_name} File
+## This file is used to implement code used to run application in loop
+
+from exceptions import exception
+
+def start():
+  while True:
+    print("="*80)
+    print(">> Options Menu <<")
+    print(">> 1. Option One")
+    print(">> 2. Option Two")
+    print(">> 3. Option Three")
+
+    try:
+        user_input = int(input(">>[!] Type the option number: "))
+        print("="*80)
+        if user_input == 1:
+          print("> Option 1")
+        elif user_input == 2:
+          print("> Option 2")
+        elif user_input == 3:
+          print("> Option 3")
+        else:
+          print(">> This option is unavailable at this time")
+    except:
+        print("-"*80)
+        print(">> This option is not available")
+        print("-"*80)
+
+start()
+"""    
+    elif proj_opt == 3:
+      file = f"""
+## MacApp File
+## This file is used to implement code used to run scripts for Mac
+
+import tokens
+from exceptions import exception
+
+def start():
+  print("="*80)
+  print("NEW TWEET")
+  print("="*80)
+  tweet = str(input(">>[!] Whats happening? "))
+  print("="*80)
+  print()
+  print("-"*80)
+  print(">> Your tweet was sent")
+  print("-"*80)
+  print()
+  print("="*80)
+
+  try:
+    tokens.twitter.update_status(tweet)
+    print(f'>> Your last tweet:')
+    print(f' > {tweet_string}')
+    print("-" * 80)
+  except:
+    print(">>  Something went wrong: Unabled to connect to Twitter.")
+
+start()
 """
     writer.write(file)
     writer.close()
@@ -570,8 +595,8 @@ Copyright © {info.CURRENT_YEAR} {info.USERNAME_CURRENT}. All rights reserved.
   print(f'[ O.K ]: Created "README" Markdown')
 
 def create_twitter_file(file_location):
-    with codecs.open(file_location, "w", "utf-8-sig") as writer:
-        file = """
+  with codecs.open(file_location, "w", "utf-8-sig") as writer:
+      file = """
 ## Tokens
 ## Setup and connect you Twitter account here!
 # Note: DO NOT share your tokens
@@ -595,17 +620,17 @@ Auth.set_access_token(AccessToken, AccessTokenSecret)
 ## Create an API Object
 Twitter = tweepy.API(Auth, wait_on_rate_limit = True)
 """
-        writer.write(file)
-        writer.close()
-    print(f'[ O.K ]: Created "twitter" Library (tokens for Twitter)')
+      writer.write(file)
+      writer.close()
+  print(f'[ O.K ]: Created "twitter" Library (tokens for Twitter)')
 
 def create_requirements_file(file_location):
-    with codecs.open(file_location, "w", "utf-8-sig") as writer:
-        VER_DICT = {
-            "current" : ["{current_major}", "{current_minor}", "{current_build}", "{current_version}"],
-            "target" : ["{target_major}", "{target_minor}", "{target_build}", "{target_version}"]
-        }
-        file = f"""'''
+  with codecs.open(file_location, "w", "utf-8-sig") as writer:
+      VER_DICT = {
+          "current" : ["{current_major}", "{current_minor}", "{current_build}", "{current_version}"],
+          "target" : ["{target_major}", "{target_minor}", "{target_build}", "{target_version}"]
+      }
+      file = f"""'''
 ### Requirements.py
 
 - This file is used to check if system matches with the minimum requirements to run
@@ -623,44 +648,44 @@ REQUIRE = True
 ## Change "REQUIRE" to "True" to allow system check
 
 if REQUIRE == True:
-  ## Target System
-  target_major = {info.MAJOR_VERSION}
-  target_minor = {info.MINOR_VERSION}
-  target_build = {info.BUILD_VERSION}
-  target_version = f'{VER_DICT["target"][0]}.{VER_DICT["target"][1]}.{VER_DICT["target"][2]}'
+## Target System
+target_major = {info.MAJOR_VERSION}
+target_minor = {info.MINOR_VERSION}
+target_build = {info.BUILD_VERSION}
+target_version = f'{VER_DICT["target"][0]}.{VER_DICT["target"][1]}.{VER_DICT["target"][2]}'
 
-  target_ver_str = f'{VER_DICT["target"][0]}{VER_DICT["target"][1]}{VER_DICT["target"][2]}'
-  target_ver_int = int(target_ver_str)
-  ## Target System
+target_ver_str = f'{VER_DICT["target"][0]}{VER_DICT["target"][1]}{VER_DICT["target"][2]}'
+target_ver_int = int(target_ver_str)
+## Target System
 
-  ## Current System
-  current_major = sys.version_info[0]
-  current_minor = sys.version_info[1]
-  current_build = sys.version_info[2]
-  current_version = f'{VER_DICT["current"][0]}.{VER_DICT["current"][1]}.{VER_DICT["current"][2]}'
-  current_ver_str = f'{VER_DICT["current"][0]}{VER_DICT["current"][1]}{VER_DICT["current"][2]}'
-  current_ver_int = int(current_ver_str)
-  ## Current System
+## Current System
+current_major = sys.version_info[0]
+current_minor = sys.version_info[1]
+current_build = sys.version_info[2]
+current_version = f'{VER_DICT["current"][0]}.{VER_DICT["current"][1]}.{VER_DICT["current"][2]}'
+current_ver_str = f'{VER_DICT["current"][0]}{VER_DICT["current"][1]}{VER_DICT["current"][2]}'
+current_ver_int = int(current_ver_str)
+## Current System
 
-  ## Uncomment to see information about your system
-  ## print(f'>> My system current version: Python {VER_DICT["current"][3]}')
-  ## print(f'>> Required version to run: Python {VER_DICT["target"][3]}')
+## Uncomment to see information about your system
+## print(f'>> My system current version: Python {VER_DICT["current"][3]}')
+## print(f'>> Required version to run: Python {VER_DICT["target"][3]}')
 
-  def check_version():
-    if target_ver_int < current_ver_int:
-        Exceptions.Throw.minor_version(current_version, target_version)
-    elif target_ver_int > current_ver_int:
-        Exceptions.Throw.major_version(current_version, target_version)
-    else:
-        pass
+def check_version():
+  if target_ver_int < current_ver_int:
+      Exceptions.Throw.minor_version(current_version, target_version)
+  elif target_ver_int > current_ver_int:
+      Exceptions.Throw.major_version(current_version, target_version)
+  else:
+      pass
 """
-        writer.write(file)
-        writer.close()
-    print(f'[ O.K ]: Created "requirements" Library')
+      writer.write(file)
+      writer.close()
+  print(f'[ O.K ]: Created "requirements" Library')
 
 def create_gitignore_file(file_location):
-    with codecs.open(file_location, "w", "utf-8-sig") as writer:
-        file = """
+  with codecs.open(file_location, "w", "utf-8-sig") as writer:
+      file = """
 ### PYBRIDGE SETS TO IGNORE ###
 ## .DS_Store: Is a file that stores custom attributes of its containing folder,
 ## such as folder view options, icon positions, and other visual information on macOS
@@ -828,13 +853,13 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 """
-        writer.write(file)
-        writer.close()
-    print(f'[ O.K ]: Created ".gitignore" file')
+      writer.write(file)
+      writer.close()
+  print(f'[ O.K ]: Created ".gitignore" file')
 
 def create_init_file(file_location):
-    with codecs.open(file_location, "w", "utf-8-sig") as writer:
-        file = """
+  with codecs.open(file_location, "w", "utf-8-sig") as writer:
+      file = """
 ## __init__.py File
 ## This file is used to first run your application
 ## Here the contents will be processed to choose the best platform to go
@@ -844,261 +869,266 @@ from sys import platform
 
 ## Linux
 if platform == "linux" or platform == "linux2":
-    # from linux import Linux
-    # Linux.Linux()
-    print("=" * 80)
-    print("[!] THIS SOFTWARE IS NOT COMPATIBLE WITH THIS PLATFORM")
-    print("=" * 80)
+  # from linux import Linux
+  # Linux.Linux()
+  print("=" * 80)
+  print("[!] THIS SOFTWARE IS NOT COMPATIBLE WITH THIS PLATFORM")
+  print("=" * 80)
 
 ## Mac
 elif platform == "darwin":
-    from mac import Mac
-    Mac.Mac()
-    
+  from mac import Mac
+  Mac.Mac()
+  
 ## Windows
 elif platform == "win32" or platform == "win64":
-    # from windows import Windows
-    # Windows.Windows()
-    print("=" * 80)
-    print("[!] THIS SOFTWARE IS NOT COMPATIBLE WITH THIS PLATFORM")
-    print("=" * 80)
+  # from windows import Windows
+  # Windows.Windows()
+  print("=" * 80)
+  print("[!] THIS SOFTWARE IS NOT COMPATIBLE WITH THIS PLATFORM")
+  print("=" * 80)
 """
-        writer.write(file)
-        writer.close()
-    print(f'[ O.K ]: Created "__init__" file')
+      writer.write(file)
+      writer.close()
+  print(f'[ O.K ]: Created "__init__" file')
 
 def create_jupyter_file(file_location):
-    with codecs.open(file_location, "w", "utf-8-sig") as writer:
-        file = '''
+  with codecs.open(file_location, "w", "utf-8-sig") as writer:
+      file = '''
 {
- "cells": [
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## External Packages\n",
-    "Packages to set before you go\n",
-    "<br>Uncomment the code below to install dependencies"
-   ]
+"cells": [
+{
+  "cell_type": "markdown",
+  "metadata": {},
+  "source": [
+  "## External Packages\n",
+  "Packages to set before you go\n",
+  "<br>Uncomment the code below to install dependencies"
+  ]
+},
+{
+  "cell_type": "code",
+  "execution_count": null,
+  "metadata": {},
+  "outputs": [],
+  "source": [
+  "# %pip install pandas\n",
+  "# %pip install numpy\n",
+  "# %pip install qgrid\n",
+  "# %pip install matplotlib\n",
+  "# %pip install seaborn\n",
+  "from system import filesystem as fs\n",
+  "from exceptions import exception"
+  ]
+},
+{
+  "cell_type": "markdown",
+  "metadata": {},
+  "source": [
+  "## Check PyBridge Libraries\n",
+  "Required libraries will be imported before you run your Jupyter Notebook"
+  ]
+},
+{
+  "cell_type": "code",
+  "execution_count": null,
+  "metadata": {},
+  "outputs": [],
+  "source": [
+  "# from system import filesystem as fs\n",
+  "# from exceptions import exception"
+  ]
+},
+{
+  "cell_type": "markdown",
+  "metadata": {},
+  "source": [
+  "# Code Implementation\n",
+  "Here you will implement your code to be executed after imports"
+  ]
+},
+{
+  "cell_type": "code",
+  "execution_count": null,
+  "metadata": {},
+  "outputs": [],
+  "source": [
+  "## Examples to make your journey easier\n",
+  "## Note: Replace the code below with your implementation\n",
+  "\n",
+  "# Get the path of your Desktop folder:\n",
+  "print('{0}{1}'.format('Your Desktop Folder: ', fs.desktop))\n",
+  "\n",
+  "# Get the path of your Documents folder:\n",
+  "print(f'Your Documents Folder: {fs.documents}')\n",
+  "\n",
+  "# Hello World!\n",
+  "print('Hello World!')\n",
+  "\n",
+  "# Math Sum\n",
+  "print('>> 2 + 3 =', 2 + 3)\n",
+  "\n",
+  "# Throw an Exception using native library\n",
+  "exception.Throw.file_exists()"
+  ]
+},
+{
+  "cell_type": "markdown",
+  "metadata": {},
+  "source": [
+  "#\n",
+  "\n",
+  "This project was created using PyBridge. All rights reserved."
+  ]
+}
+],
+"metadata": {
+"kernelspec": {
+  "display_name": "Python 3.9.0 64-bit",
+  "language": "python",
+  "name": "python3"
+},
+"language_info": {
+  "codemirror_mode": {
+  "name": "ipython",
+  "version": 3
   },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# %pip install pandas\n",
-    "# %pip install numpy\n",
-    "# %pip install qgrid\n",
-    "# %pip install matplotlib\n",
-    "# %pip install seaborn\n",
-    "from system import filesystem as fs\n",
-    "from exceptions import exception"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## Check PyBridge Libraries\n",
-    "Required libraries will be imported before you run your Jupyter Notebook"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# from system import filesystem as fs\n",
-    "# from exceptions import exception"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "# Code Implementation\n",
-    "Here you will implement your code to be executed after imports"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "## Examples to make your journey easier\n",
-    "## Note: Replace the code below with your implementation\n",
-    "\n",
-    "# Get the path of your Desktop folder:\n",
-    "print('{0}{1}'.format('Your Desktop Folder: ', fs.desktop))\n",
-    "\n",
-    "# Get the path of your Documents folder:\n",
-    "print(f'Your Documents Folder: {fs.documents}')\n",
-    "\n",
-    "# Hello World!\n",
-    "print('Hello World!')\n",
-    "\n",
-    "# Math Sum\n",
-    "print('>> 2 + 3 =', 2 + 3)\n",
-    "\n",
-    "# Throw an Exception using native library\n",
-    "exception.Throw.file_exists()"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "#\n",
-    "\n",
-    "This project was created using PyBridge. All rights reserved."
-   ]
+  "file_extension": ".py",
+  "mimetype": "text/x-python",
+  "name": "python",
+  "nbconvert_exporter": "python",
+  "pygments_lexer": "ipython3",
+  "version": "3.9.0"
+},
+"orig_nbformat": 4,
+"vscode": {
+  "interpreter": {
+  "hash": "aee8b7b246df8f9039afb4144a1f6fd8d2ca17a180786b69acc140d282b71a49"
   }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3.9.0 64-bit",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.9.0"
-  },
-  "orig_nbformat": 4,
-  "vscode": {
-   "interpreter": {
-    "hash": "aee8b7b246df8f9039afb4144a1f6fd8d2ca17a180786b69acc140d282b71a49"
-   }
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 2
+}
+},
+"nbformat": 4,
+"nbformat_minor": 2
 }
 '''
-        writer.write(file)
-        writer.close()
-    print(f'[ O.K ]: Created "Jupyter Notebook" file')
+      writer.write(file)
+      writer.close()
+  print(f'[ O.K ]: Created "Jupyter Notebook" file')
 
 def create_logs_file(file_location):
-    with codecs.open(file_location, "w", "utf-8-sig") as writer:
-        file = """
+  with codecs.open(file_location, "w", "utf-8-sig") as writer:
+      file = """
 ### This is a Logs lib file. 
 
 print("Hello, Windows")
 """
-        writer.write(file)
-        writer.close()
-    print(f'[ O.K ]: Created "logs" Library')
+      writer.write(file)
+      writer.close()
+  print(f'[ O.K ]: Created "logs" Library')
 
 def create(proj_opt, title):
-    cli.make_menu("CREATE PROJECT")
-    print(f'>> {title} <<')
-    cli.separator()
-    bridge_name = str(input(">>[!] Project Name: "))
+  cli.make_menu("CREATE PROJECT")
+  print(f'>> {title} <<')
+  cli.separator()
+  bridge_name = str(input(">>[!] Project Name: "))
 
-    ## Root Files
-    bridge_app_file = f'{repository_folder}/{bridge_name}/app.py'
-    bridge_gitignore_file = f'{repository_folder}/{bridge_name}/.gitignore'
-    bridge_info_file = f'{repository_folder}/{bridge_name}/info.py'
-    bridge_init_file = f'{repository_folder}/{bridge_name}/__init__.py'
-    bridge_jupyter_file = f'{repository_folder}/{bridge_name}/{bridge_name}.ipynb'
-    bridge_twitter_file = f'{repository_folder}/{bridge_name}twitter.py'
-    bridge_readme_file = f'{repository_folder}/{bridge_name}/README.md'
-    ## Root Files
+  ## Root Files
+  bridge_app_file = f'{repository_folder}/{bridge_name}/{bridge_name}.py'
+  bridge_gitignore_file = f'{repository_folder}/{bridge_name}/.gitignore'
+  bridge_info_file = f'{repository_folder}/{bridge_name}/info.py'
+  bridge_init_file = f'{repository_folder}/{bridge_name}/__init__.py'
+  bridge_jupyter_file = f'{repository_folder}/{bridge_name}/{bridge_name}.ipynb'
+  bridge_twitter_file = f'{repository_folder}/{bridge_name}twitter.py'
+  bridge_readme_file = f'{repository_folder}/{bridge_name}/README.md'
+  ## Root Files
 
-    # Nested Files
-    bridge_exception_file = f'{repository_folder}/{bridge_name}/exceptions/exception.py'
-    bridge_linux_file = f'{repository_folder}/{bridge_name}/linux/linux.py'
-    bridge_mac_file = f'{repository_folder}/{bridge_name}/mac/mac.py'
-    bridge_windows_file = f'{repository_folder}/{bridge_name}/windows/windows.py'
-    bridge_filesystem_file = f'{repository_folder}/{bridge_name}/system/filesystem.py'
-    bridge_logs_file = f'{repository_folder}/{bridge_name}/system/logs.py'
-    bridge_requirements_file = f'{repository_folder}/{bridge_name}/system/requirements.py'
-    # Nested Files
+  # Nested Files
+  bridge_exception_file = f'{repository_folder}/{bridge_name}/exceptions/exception.py'
+  bridge_linux_file = f'{repository_folder}/{bridge_name}/linux/linux.py'
+  bridge_mac_file = f'{repository_folder}/{bridge_name}/mac/mac.py'
+  bridge_windows_file = f'{repository_folder}/{bridge_name}/windows/windows.py'
+  bridge_filesystem_file = f'{repository_folder}/{bridge_name}/system/filesystem.py'
+  bridge_logs_file = f'{repository_folder}/{bridge_name}/system/logs.py'
+  bridge_requirements_file = f'{repository_folder}/{bridge_name}/system/requirements.py'
+  # Nested Files
 
-    # print(f'>> Creating bridge to the project "{bridge_name}"...')
-    # print("="*80)
+  # print(f'>> Creating bridge to the project "{bridge_name}"...')
+  # print("="*80)
 
-    cli.make_menu(f'>> Creating bridge to the project "{bridge_name}"...')
+  cli.make_menu(f'>> Creating bridge to the project "{bridge_name}"...')
 
-    try:
-        bridge_location = f'{repository_folder}/{bridge_name}/'
-        os.mkdir(bridge_location)
-    except:
-        print()
-        print("="*80)
-        print(">> Could not create your project:")
-        print(f'> Check if "{bridge_name}" already exists and try again.')
-        print("="*80)
-        exception.Throw.project_exists()
+  try:
+    bridge_location = f'{repository_folder}/{bridge_name}/'
+    os.mkdir(bridge_location)
+  except:
+    print()
+    print("="*80)
+    print(">> Could not create your project:")
+    print(f'> Check if "{bridge_name}" already exists and try again.')
+    print("="*80)
+    exception.Throw.project_exists()
 
-    generate_modules(proj_opt, bridge_name, bridge_location)
+  generate_modules(bridge_name, bridge_location)
 
-    ### CRETE BRIDGE
-    cli.make_menu(f'Creating "{bridge_name}" Libraries and Files')
+  ### CRETE BRIDGE
+  cli.make_menu(f'Creating "{bridge_name}" Libraries and Files')
 
-    start_time = time.time()
-    ### Creates the main files to the bridge
-    # Root folder
-    create_app_file(bridge_app_file)
-    create_info_file(bridge_info_file)
-    create_gitignore_file(bridge_gitignore_file)
-    create_init_file(bridge_init_file) # Do not create in case of Jupyter Notebook
-    create_readme_file(bridge_name, bridge_readme_file)
-    # Exceptions folder
+  ### Creates the main files to the bridge
+  # Root folder
+  # Exceptions folder
+  # System folder
+  # create_filesystem_file(bridge_filesystem_file)
+  ### Creates the main files to the bridge
+
+  start_time = time.time()
+  if proj_opt == 1:
+    # print("1")
+    create_app_file(proj_opt, bridge_name, bridge_app_file)
     create_exception_file(bridge_exception_file)
-    # System folder
-    create_filesystem_file(bridge_filesystem_file)
+    create_info_file(bridge_info_file)
+    create_init_file(bridge_init_file) # Do not create in case of Jupyter Notebook
+    create_gitignore_file(bridge_gitignore_file)
+    create_readme_file(bridge_name, bridge_readme_file)
     create_logs_file(bridge_logs_file)
     create_requirements_file(bridge_requirements_file) # Do not create in case of Jupyter Notebook
-    ### Creates the main files to the bridge
 
-    if proj_opt == 1:
-        # print("1")
-        create_linux_file(bridge_linux_file)
-        create_mac_file(bridge_mac_file)
-        create_windows_file(bridge_windows_file)
-        # test(bridge_name, readmeFile)
+    create_linux_file(bridge_linux_file)
+    create_mac_file(bridge_mac_file)
+    create_windows_file(bridge_windows_file)
+    # test(bridge_name, readmeFile)
 
-        # CreateInitFile(initFile) ## Hbisneto
-        # CreateLinuxFile(linuxFile)
-        # CreateMacFile(macFile)
-        # CreateWindowsFile(windowsFile)
-    elif proj_opt == 2:
-        print("2")
-        # CreateInitFile(initFile)
-        # CreateLinuxFile(linuxFile)
-        # CreateMacFile(macFile)
-        # CreateWindowsFile(windowsFile)
-    elif proj_opt == 3:
-        print("3")
-        create_twitter_file(bridge_twitter_file)
-        # CreateInitFile(initFile)
-        # CreateTwitterFile(twitterFile)
-        # CreateLinuxFile(linuxFile)
-        # CreateMacFile(macFile)
-        # CreateWindowsFile(windowsFile)
-    elif proj_opt == 4:
-        create_jupyter_file(bridge_jupyter_file)
-        # CreateJupyterNotebook(jupyterFile)
+    # CreateInitFile(initFile) ## Hbisneto
+    # CreateLinuxFile(linuxFile)
+    # CreateMacFile(macFile)
+    # CreateWindowsFile(windowsFile)
+  elif proj_opt == 2:
+    print("2")
+    create_app_file(proj_opt, bridge_name, bridge_app_file)
+    # CreateInitFile(initFile)
+    # CreateLinuxFile(linuxFile)
+    # CreateMacFile(macFile)
+    # CreateWindowsFile(windowsFile)
+  elif proj_opt == 3:
+    print("3")
+    create_app_file(proj_opt, bridge_name, bridge_app_file)
+    create_twitter_file(bridge_twitter_file)
+    # CreateInitFile(initFile)
+    # CreateTwitterFile(twitterFile)
+    # CreateLinuxFile(linuxFile)
+    # CreateMacFile(macFile)
+    # CreateWindowsFile(windowsFile)
+  elif proj_opt == 4:
+    create_jupyter_file(bridge_jupyter_file)
+    # CreateJupyterNotebook(jupyterFile)
 
-    print("="*80)
-    end_time = time.time()
-    time_taken = (end_time - start_time)
+  print("="*80)
+  end_time = time.time()
+  time_taken = (end_time - start_time)
 
-    if time_taken < 1:
-        print(f'[ DONE ]: The bridge to the project "{bridge_name}" was created in less than a second')
-    else:
-        print(f'[ DONE ]: The bridge to the project "{bridge_name}" was created in {time_taken:.2f}')
-    print("="*80)
+  if time_taken < 1:
+    print(f'[ DONE ]: The bridge to the project "{bridge_name}" was created in less than a second')
+    cli.make_menu(text="Algum texto")
+  else:
+    print(f'[ DONE ]: The bridge to the project "{bridge_name}" was created in {time_taken:.2f}')
+    cli.make_menu(text="Algum texto")
+  print("="*80)
