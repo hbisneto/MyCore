@@ -7,26 +7,14 @@ import filesystem as fs
 from datetime import datetime
 from exceptions import exception
 from filesystem import wrapper as wr
-from system import menus
+# from system import menus
 
-# ProjectType = "Default Project"
-# AppLocation = ""
-# ProjectOption = 0
-
+project_type = ""
 tweet_string = "{tweet}"
 repository_folder = f'{fs.documents}/{info.NAME}/Repository'
-
-# list_projects = []
 backup_folder = f'{fs.CURRENT_LOCATION}/Backup'
 
-
-
-
-
-
-
 ### FUNCTIONS ###
-
 
 # def create_backup_folder():
 #     """Creates the 'Backup' folder in the root of the project
@@ -36,17 +24,6 @@ backup_folder = f'{fs.CURRENT_LOCATION}/Backup'
 #     except:
 #         pass
 ### FUNCTIONS ###
-
-
-
-
-
-
-
-
-
-
-
 
 LIST_MENU_ITEMS = [
     "New Project",
@@ -103,7 +80,7 @@ def get_project_list(repository):
       #   menus.menu_project_options()
     cli.separator()
 
-def generate_modules(bridge_name, bridge_location):
+def generate_modules(proj_opt, bridge_name, bridge_location):
   BRIDGE_FOLDERS = {
     0: "exceptions",
     1: "system",
@@ -115,6 +92,9 @@ def generate_modules(bridge_name, bridge_location):
   cli.make_menu(f'>> Creating {bridge_name} Modules')
   try:
     for i in BRIDGE_FOLDERS:
+      if proj_opt == 4 and i == 2:
+          cli.separator()
+          return
       wr.create_directory(f'{bridge_location}/{BRIDGE_FOLDERS[i]}')
       print(f'[ O.K ]: Created "{BRIDGE_FOLDERS[i]}" Module')
     cli.separator()
@@ -162,8 +142,6 @@ def start():
         print("-"*80)
         print(">> This option is not available")
         print("-"*80)
-
-start()
 """    
     elif proj_opt == 3:
       file = f"""
@@ -228,43 +206,37 @@ Exception: >> An Exception occurred: The file already exists
 ## This file contains events that's raised when the program must to stop
 
 class Raise:
-  def MajorVersion(self, CurrentVersion, TargetVersion, TargetMajor):
-    raise Exception(f'>> You cannot run the application because it requires Python {TargetVersion} or later. [Current Version: {CurrentVersion}]')
+  def major_version(self, current_version, target_version):
+    raise Exception(f'>> You cannot run the application because it requires Python {target_version} or later. [Current Version: {current_version}]')
 
-  def MinorVersion(self, CurrentVersion, TargetVersion, TargetMinor):
+  def minor_version(self, current_version, target_version):
     print('=' * 80)
-    print(">> PYBRIDGE <<")
+    print("[ !!! ]: PYBRIDGE - WARNING:")
     print('=' * 80)
-    print(">> WARNING <<")
+    print(f'>> Your appication targets an old version of Python')
+    print('You may get errors during the process')
     print('=' * 80)
-    print(f'>> Your appication targets a version of Python older than the version currently')
-    print('installed. You may get errors during the process')
-    print('=' * 80)
-    print(f'- Current Version: {CurrentVersion}')
-    print(f'- Target Version: {TargetVersion}')
+    print(f'- Current Version: {current_version}')
+    print(f'- Target Version: {target_version}')
     print(f'>> You can change `Requirements.py` on `system` Module')
     print('=' * 80)
-    print()
-
-  def BuildVersion(self, CurrentVersion, TargetVersion, BuildVer):
-    raise Exception(f'>> This application can only run on Python {TargetVersion}. [Current Version: {CurrentVersion}]')
-
+        
   def __init__(self, exctype):
     self.exctype = exctype
 
-  def FileExists(self):
+  def file_exists(self):
     raise Exception(f'{self.exctype} The file already exists')
   
-  def DirectoryExists(self):
+  def directory_exists(self):
     raise Exception(f'{self.exctype} The directory already exists')
   
-  def ProjectExists(self):
+  def project_exists(self):
     raise Exception(f'{self.exctype} The project already exists')
   
-  def ImportLib(self):
+  def import_lib(self):
     raise RuntimeError(">> Could not import library: Check if the libraries are installed and run the program again.")
 
-  def InputFormat(self):
+  def input_format(self):
     print()
     print("=" * 80)
     print(f'{self.exctype} INVALID INPUT')
@@ -272,7 +244,7 @@ class Raise:
     print(">> Your input is not valid: Check your input and try again")
     print("=" * 80)
   
-  def ProgramQuit(self):
+  def program_quit(self):
     print()
     print("=" * 80)
     print(f'{self.exctype} PYBRIDGE HAS QUIT!')
@@ -281,7 +253,7 @@ class Raise:
     print('>> Run the program again!')
     print("=" * 80)
 
-  def InvalidOption(self):
+  def invalid_option(self):
     print()
     print("=" * 80)
     print(f'{self.exctype} INVALID OPTION')
@@ -289,7 +261,7 @@ class Raise:
     print(f'>> You typed an invalid option.')
     print("=" * 80)
 
-  def ProjectsLoadFail(self):
+  def projects_load_fail(self):
     print()
     print("=" * 80)
     print(f'{self.exctype} PROJECT LOADING FAILED!')
@@ -297,7 +269,7 @@ class Raise:
     print(f'>> ERROR: Couldn`t load projects...')
     print("=" * 80)
 
-  def BackupFail(self):
+  def backup_fail(self):
     print()
     print("=" * 80)
     print(f'{self.exctype} BACKUP CREATION FAILED!')
@@ -307,13 +279,13 @@ class Raise:
     print(f'>> Try again later.')
     print("*" * 80)
 
-  def CompressBackupFail(self):
+  def compress_backup_fail(self):
     print()
     print("=" * 80)
     print(f'{self.exctype} COMPRESSED FILE CREATION FAILED!')
     print("=" * 80)
     print("*" * 80)
-    print(f'>> PyBridge could not create a compressed file from your backup')
+    print(f'>> Could not create a compressed file from your backup')
     print(f'>> Try again later.')
     print("*" * 80)
 
@@ -398,11 +370,11 @@ windows_favorites = f'{user}/Favorites'
     writer.close()
   print(f'[ O.K ]: Created "filesystem" Library')
 
-def create_info_file(file_location):
+def create_info_file(project_type, bridge_name, file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
-    file ="""
+    file =f"""
 '''
-### Info.py
+### info.py
 
 - This file contains information about your project
 '''
@@ -413,13 +385,14 @@ from datetime import date
 from datetime import datetime
 from sys import platform
 
-NAME = "MyCore"
-VERSION = "1.9"
-COPYRIGHT = "Heitor Bisneto"
-TYPE = "Menu Application Loop"
+NAME = "{bridge_name}"
+VERSION = "1.0"
+COPYRIGHT = "{fs.USER_NAME}"
+TYPE = "{project_type}"
 LICENCE = "MIT"
 USERNAME_CURRENT = getpass.getuser().capitalize()
-
+"""
+    file += """
 ### Python running version
 MAJOR_VERSION = sys.version_info[0]
 MINOR_VERSION = sys.version_info[1]
@@ -437,7 +410,7 @@ TIME_ACCESS = NOW.strftime("%H:%M:%S")
 # Second = int(Now.strftime("%S"))
 ### UNCOMMENT TO USE VARIABLES
         
-def loadSplashScreen():
+def load_splashscreen():
     print("="*80)
     print(f'[{NAME} for {PLATFORM_NAME}] - Running...')
     print("="*80)
@@ -478,43 +451,49 @@ elif platform == "darwin":
 ## Windows
 elif platform == "win32" or platform == "win64":
     PLATFORM_NAME = "Windows"
-
-# print(NAME)
-# print(VERSION)
-# print(COPYRIGHT)
-# print(TYPE)
-# print(LICENCE)
-# print(USERNAME_CURRENT)
-
-# print(MAJOR_VERSION)
-# print(MINOR_VERSION)
-# print(BUILD_VERSION)
-# print(CURRENT_PYTHON_VERSION)
-
-# print(CURRENT_YEAR)
-# print(NOW)
-# print(HOUR)
-# print(TIME_ACCESS)
-# print(PLATFORM_NAME)
 """
     writer.write(file)
     writer.close()
   print(f'[ O.K ]: Created "info" Library')
 
-def create_linux_file(file_location):
+def create_linux_file(bridge_name, file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
-    file = """
-### This is a linux lib file. 
+    file = f"""
+'''
+### Linux.py
 
-print("Hello, Linux")
+- This file is used to implement code used to run scripts for Linux
+- Codes implemented here, will run before the main script starts running
+'''
+## Mac File
+## This file is used to implement code used to run scripts for Linux
+## Codes implemented here, will run before the main script starts running
+
+import {bridge_name}
+import info
+from system import filesystem as fs
+from system import requirements as req
+
+def linux():
+  ## NOTE: You can use this function
+  ## To load information before the app starts running
+
+  ## Lets get Application Info (info.py)
+  info.load_splashscreen()
+
+  ## Lets check system requirements
+  req.check_version()
+
+  ## Start App for Linux
+  {bridge_name}.start()
 """
     writer.write(file)
     writer.close()
   print(f'[ O.K ]: Created "linux" Library')
 
-def create_mac_file(file_location):
+def create_mac_file(bridge_name, file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
-    file = """
+    file = f"""
 '''
 ### Mac.py
 
@@ -525,7 +504,7 @@ def create_mac_file(file_location):
 ## This file is used to implement code used to run scripts for Mac
 ## Codes implemented here, will run before the main script starts running
 
-import app
+import {bridge_name}
 import info
 from system import filesystem as fs
 from system import requirements as req
@@ -535,24 +514,48 @@ def mac():
   ## To load information before the app starts running
 
   ## Lets get Application Info (info.py)
-  info.loadSplashScreen()
+  info.load_splashscreen()
 
   ## Lets check system requirements
   req.check_version()
 
   ## Start App for Mac
-  app.start()
+  {bridge_name}.start()
 """
     writer.write(file)
     writer.close()
   print(f'[ O.K ]: Created "mac" Library')
 
-def create_windows_file(file_location):
+def create_windows_file(bridge_name, file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
-    file = """
-### This is a windows lib file. 
+    file = f"""
+'''
+### Windows.py
 
-print("Hello, Windows")
+- This file is used to implement code used to run scripts for Windows
+- Codes implemented here, will run before the main script starts running
+'''
+## Mac File
+## This file is used to implement code used to run scripts for Windows
+## Codes implemented here, will run before the main script starts running
+
+import {bridge_name}
+import info
+from system import filesystem as fs
+from system import requirements as req
+
+def windows():
+  ## NOTE: You can use this function
+  ## To load information before the app starts running
+
+  ## Lets get Application Info (info.py)
+  info.load_splashscreen()
+
+  ## Lets check system requirements
+  req.check_version()
+
+  ## Start App for Windows
+  {bridge_name}.start()
 """
     writer.write(file)
     writer.close()
@@ -641,43 +644,43 @@ def create_requirements_file(file_location):
 
 import sys
 import subprocess
-from exception import Exceptions
+from exceptions import exception
 
 ## Change "REQUIRE" to "False" to skip system check
 REQUIRE = True
 ## Change "REQUIRE" to "True" to allow system check
 
 if REQUIRE == True:
-## Target System
-target_major = {info.MAJOR_VERSION}
-target_minor = {info.MINOR_VERSION}
-target_build = {info.BUILD_VERSION}
-target_version = f'{VER_DICT["target"][0]}.{VER_DICT["target"][1]}.{VER_DICT["target"][2]}'
+  ## Target System
+  target_major = {info.MAJOR_VERSION}
+  target_minor = {info.MINOR_VERSION}
+  target_build = {info.BUILD_VERSION}
+  target_version = f'{VER_DICT["target"][0]}.{VER_DICT["target"][1]}.{VER_DICT["target"][2]}'
 
-target_ver_str = f'{VER_DICT["target"][0]}{VER_DICT["target"][1]}{VER_DICT["target"][2]}'
-target_ver_int = int(target_ver_str)
-## Target System
+  target_ver_str = f'{VER_DICT["target"][0]}{VER_DICT["target"][1]}{VER_DICT["target"][2]}'
+  target_ver_int = int(target_ver_str)
+  ## Target System
 
-## Current System
-current_major = sys.version_info[0]
-current_minor = sys.version_info[1]
-current_build = sys.version_info[2]
-current_version = f'{VER_DICT["current"][0]}.{VER_DICT["current"][1]}.{VER_DICT["current"][2]}'
-current_ver_str = f'{VER_DICT["current"][0]}{VER_DICT["current"][1]}{VER_DICT["current"][2]}'
-current_ver_int = int(current_ver_str)
-## Current System
+  ## Current System
+  current_major = sys.version_info[0]
+  current_minor = sys.version_info[1]
+  current_build = sys.version_info[2]
+  current_version = f'{VER_DICT["current"][0]}.{VER_DICT["current"][1]}.{VER_DICT["current"][2]}'
+  current_ver_str = f'{VER_DICT["current"][0]}{VER_DICT["current"][1]}{VER_DICT["current"][2]}'
+  current_ver_int = int(current_ver_str)
+  ## Current System
 
-## Uncomment to see information about your system
-## print(f'>> My system current version: Python {VER_DICT["current"][3]}')
-## print(f'>> Required version to run: Python {VER_DICT["target"][3]}')
+  ## Uncomment to see information about your system
+  ## print(f'>> My system current version: Python {VER_DICT["current"][3]}')
+  ## print(f'>> Required version to run: Python {VER_DICT["target"][3]}')
 
-def check_version():
-  if target_ver_int < current_ver_int:
-      Exceptions.Throw.minor_version(current_version, target_version)
-  elif target_ver_int > current_ver_int:
-      Exceptions.Throw.major_version(current_version, target_version)
-  else:
-      pass
+  def check_version():
+    if target_ver_int < current_ver_int:
+        exception.Throw.minor_version(current_version, target_version)
+    elif target_ver_int > current_ver_int:
+        exception.Throw.major_version(current_version, target_version)
+    else:
+        pass
 """
       writer.write(file)
       writer.close()
@@ -869,21 +872,21 @@ from sys import platform
 
 ## Linux
 if platform == "linux" or platform == "linux2":
-  # from linux import Linux
-  # Linux.Linux()
+  # from linux import linux
+  # linux.linux()
   print("=" * 80)
   print("[!] THIS SOFTWARE IS NOT COMPATIBLE WITH THIS PLATFORM")
   print("=" * 80)
 
 ## Mac
 elif platform == "darwin":
-  from mac import Mac
-  Mac.Mac()
+  from mac import mac
+  mac.mac()
   
 ## Windows
 elif platform == "win32" or platform == "win64":
-  # from windows import Windows
-  # Windows.Windows()
+  # from windows import windows
+  # windows.windows()
   print("=" * 80)
   print("[!] THIS SOFTWARE IS NOT COMPATIBLE WITH THIS PLATFORM")
   print("=" * 80)
@@ -892,124 +895,170 @@ elif platform == "win32" or platform == "win64":
       writer.close()
   print(f'[ O.K ]: Created "__init__" file')
 
-def create_jupyter_file(file_location):
+def create_jupyter_file(bridge_name, file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
       file = '''
 {
-"cells": [
-{
-  "cell_type": "markdown",
-  "metadata": {},
-  "source": [
-  "## External Packages\n",
-  "Packages to set before you go\n",
-  "<br>Uncomment the code below to install dependencies"
-  ]
-},
-{
-  "cell_type": "code",
-  "execution_count": null,
-  "metadata": {},
-  "outputs": [],
-  "source": [
-  "# %pip install pandas\n",
-  "# %pip install numpy\n",
-  "# %pip install qgrid\n",
-  "# %pip install matplotlib\n",
-  "# %pip install seaborn\n",
-  "from system import filesystem as fs\n",
-  "from exceptions import exception"
-  ]
-},
-{
-  "cell_type": "markdown",
-  "metadata": {},
-  "source": [
-  "## Check PyBridge Libraries\n",
-  "Required libraries will be imported before you run your Jupyter Notebook"
-  ]
-},
-{
-  "cell_type": "code",
-  "execution_count": null,
-  "metadata": {},
-  "outputs": [],
-  "source": [
-  "# from system import filesystem as fs\n",
-  "# from exceptions import exception"
-  ]
-},
-{
-  "cell_type": "markdown",
-  "metadata": {},
-  "source": [
-  "# Code Implementation\n",
-  "Here you will implement your code to be executed after imports"
-  ]
-},
-{
-  "cell_type": "code",
-  "execution_count": null,
-  "metadata": {},
-  "outputs": [],
-  "source": [
-  "## Examples to make your journey easier\n",
-  "## Note: Replace the code below with your implementation\n",
-  "\n",
-  "# Get the path of your Desktop folder:\n",
-  "print('{0}{1}'.format('Your Desktop Folder: ', fs.desktop))\n",
-  "\n",
-  "# Get the path of your Documents folder:\n",
-  "print(f'Your Documents Folder: {fs.documents}')\n",
-  "\n",
-  "# Hello World!\n",
-  "print('Hello World!')\n",
-  "\n",
-  "# Math Sum\n",
-  "print('>> 2 + 3 =', 2 + 3)\n",
-  "\n",
-  "# Throw an Exception using native library\n",
-  "exception.Throw.file_exists()"
-  ]
-},
-{
-  "cell_type": "markdown",
-  "metadata": {},
-  "source": [
-  "#\n",
-  "\n",
-  "This project was created using PyBridge. All rights reserved."
-  ]
-}
-],
-"metadata": {
-"kernelspec": {
-  "display_name": "Python 3.9.0 64-bit",
-  "language": "python",
-  "name": "python3"
-},
-"language_info": {
-  "codemirror_mode": {
-  "name": "ipython",
-  "version": 3
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      '''
+      file += f'''
+      "source": [
+        "# {bridge_name}",
+        "",
+        "{bridge_name} is a Jupyter Notebook file created using PyBridge."
+      ]
+      '''
+      file += '''
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Magic Commands",
+        "Magic commands are special features of Jupyter that allow you to control the notebook and its kernel.",
+        "",
+        "A list of magic commands to ease your life:",
+        "",
+        "- `%matplotlib inline`: Allows Matplotlib graphs to be displayed directly in the notebook, without the need to use the `show()` method.",
+        "- `%pip install`: The command `%pip install` in a Jupyter notebook is a way to run the command `pip install` directly inside a cell of the notebook.",
+        "- `%load_ext autoreload`: Loads the autoreload extension, which automatically reloads the imported modules before running the code.",
+        "- `%autoreload 2`: Activates the auto-reload mode for all modules, except those that are defined in `%aimport`.",
+        "- `%lsmagic`: Lists all the available magic commands in the notebook.",
+        "- `%env`: Gets or sets environment variables from the operating system.",
+        "- `%who`: Lists all the interactive variables defined in the notebook.",
+        "- `%history`: Displays the input history of the notebook.",
+        "- `%debug`: Enters the interactive debugging mode after running a cell that raises an exception.",
+        "- `%timeit`: Measures the average execution time of an expression or a cell using multiple repetitions.",
+        "- `%%writefile`: Writes the content of a cell to an external file.",
+        "",
+        "> **You can delete this section if you have knowledge about magic commands.**"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## External Packages",
+        "Packages to set before you go",
+        "<br>Uncomment the code below to install dependencies"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# %pip install numpy",
+        "# %pip install qgrid",
+        "# %pip install pandas",
+        "# %pip install seaborn",
+        "# %pip install matplotlib",
+        "",
+        "## The use of FileSystem is recommended if you want to export data...",
+        "# %pip install filesystempro",
+        "",
+        "# import filesystem as fs",
+        "# from filesystem import wrapper as wr"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Internal Packages",
+        "Packages to set before you go",
+        "<br>Uncomment the code below to install dependencies"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "## The use of FileSystem is recommended if you want to export data...",
+        "from system import filesystem as fs",
+        "from exceptions import exception"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Code Implementation",
+        "Here you will implement your code to be executed after imports",
+        "",
+        "**NOTE: Replace the code below with your implementation**"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "## Examples to make your journey easier",
+        "## Note: Replace the code below with your implementation",
+        "",
+        "# Get the path of your Desktop folder:",
+        "print('{0}{1}'.format('Your Desktop Folder: ', fs.desktop))",
+        "",
+        "# Get the path of your Documents folder:",
+        "print(f'Your Documents Folder: {fs.documents}')",
+        "",
+        "# Hello World!",
+        "print('Hello World!')",
+        "",
+        "# Math Sum",
+        "print('>> 2 + 3 =', 2 + 3)",
+        "",
+        "# Throw an Exception using native library",
+        "exception.Throw.file_exists()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#",
+        "",
+        "This project was created using PyBridge. All rights reserved."
+      ]
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3.9.0 64-bit",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.9.0"
+    },
+    "orig_nbformat": 4,
+    "vscode": {
+      "interpreter": {
+        "hash": "aee8b7b246df8f9039afb4144a1f6fd8d2ca17a180786b69acc140d282b71a49"
+      }
+    }
   },
-  "file_extension": ".py",
-  "mimetype": "text/x-python",
-  "name": "python",
-  "nbconvert_exporter": "python",
-  "pygments_lexer": "ipython3",
-  "version": "3.9.0"
-},
-"orig_nbformat": 4,
-"vscode": {
-  "interpreter": {
-  "hash": "aee8b7b246df8f9039afb4144a1f6fd8d2ca17a180786b69acc140d282b71a49"
-  }
+  "nbformat": 4,
+  "nbformat_minor": 2
 }
-},
-"nbformat": 4,
-"nbformat_minor": 2
-}
+
 '''
       writer.write(file)
       writer.close()
@@ -1068,7 +1117,7 @@ def create(proj_opt, title):
     print("="*80)
     exception.Throw.project_exists()
 
-  generate_modules(bridge_name, bridge_location)
+  generate_modules(proj_opt, bridge_name, bridge_location)
 
   ### CRETE BRIDGE
   cli.make_menu(f'Creating "{bridge_name}" Libraries and Files')
@@ -1077,39 +1126,40 @@ def create(proj_opt, title):
   # Root folder
   # Exceptions folder
   # System folder
-  # create_filesystem_file(bridge_filesystem_file)
+  create_filesystem_file(bridge_filesystem_file)
   ### Creates the main files to the bridge
 
   start_time = time.time()
   if proj_opt == 1:
-    # print("1")
+    project_type = "BLANK APPLICATION"
     create_app_file(proj_opt, bridge_name, bridge_app_file)
     create_exception_file(bridge_exception_file)
-    create_info_file(bridge_info_file)
+    create_info_file(project_type, bridge_name, bridge_info_file)
     create_init_file(bridge_init_file) # Do not create in case of Jupyter Notebook
     create_gitignore_file(bridge_gitignore_file)
     create_readme_file(bridge_name, bridge_readme_file)
     create_logs_file(bridge_logs_file)
     create_requirements_file(bridge_requirements_file) # Do not create in case of Jupyter Notebook
 
-    create_linux_file(bridge_linux_file)
-    create_mac_file(bridge_mac_file)
-    create_windows_file(bridge_windows_file)
-    # test(bridge_name, readmeFile)
-
-    # CreateInitFile(initFile) ## Hbisneto
-    # CreateLinuxFile(linuxFile)
-    # CreateMacFile(macFile)
-    # CreateWindowsFile(windowsFile)
+    create_linux_file(bridge_name, bridge_linux_file)
+    create_mac_file(bridge_name, bridge_mac_file)
+    create_windows_file(bridge_name, bridge_windows_file)
   elif proj_opt == 2:
-    print("2")
+    project_type = "MENU APPLICATION"
     create_app_file(proj_opt, bridge_name, bridge_app_file)
-    # CreateInitFile(initFile)
-    # CreateLinuxFile(linuxFile)
-    # CreateMacFile(macFile)
-    # CreateWindowsFile(windowsFile)
+    create_exception_file(bridge_exception_file)
+    create_info_file(project_type, bridge_name, bridge_info_file)
+    create_init_file(bridge_init_file) # Do not create in case of Jupyter Notebook
+    create_gitignore_file(bridge_gitignore_file)
+    create_readme_file(bridge_name, bridge_readme_file)
+    create_logs_file(bridge_logs_file)
+    create_requirements_file(bridge_requirements_file) # Do not create in case of Jupyter Notebook
+
+    create_linux_file(bridge_name, bridge_linux_file)
+    create_mac_file(bridge_name, bridge_mac_file)
+    create_windows_file(bridge_name, bridge_windows_file)
   elif proj_opt == 3:
-    print("3")
+    project_type = "TWITTER APPLICATION"
     create_app_file(proj_opt, bridge_name, bridge_app_file)
     create_twitter_file(bridge_twitter_file)
     # CreateInitFile(initFile)
@@ -1118,17 +1168,21 @@ def create(proj_opt, title):
     # CreateMacFile(macFile)
     # CreateWindowsFile(windowsFile)
   elif proj_opt == 4:
-    create_jupyter_file(bridge_jupyter_file)
-    # CreateJupyterNotebook(jupyterFile)
+    project_type = "JUPYTER NOTEBOOK"
+    create_jupyter_file(bridge_name, bridge_jupyter_file)
+    create_exception_file(bridge_exception_file)
+    create_info_file(project_type, bridge_name, bridge_info_file)
+    create_gitignore_file(bridge_gitignore_file)
+    create_readme_file(bridge_name, bridge_readme_file)
+    create_logs_file(bridge_logs_file)
 
-  print("="*80)
+  cli.separator()
   end_time = time.time()
   time_taken = (end_time - start_time)
 
   if time_taken < 1:
     print(f'[ DONE ]: The bridge to the project "{bridge_name}" was created in less than a second')
-    cli.make_menu(text="Algum texto")
+    cli.separator()
   else:
     print(f'[ DONE ]: The bridge to the project "{bridge_name}" was created in {time_taken:.2f}')
-    cli.make_menu(text="Algum texto")
-  print("="*80)
+    cli.separator()

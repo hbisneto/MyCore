@@ -11,7 +11,6 @@
 import info
 import filesystem as fs
 from filesystem import wrapper as wr
-from system import core
 from system import requirements as req
 import pybridge
 
@@ -20,7 +19,7 @@ def mac():
    ## To load information before the app starts running
 
    ## Lets get Application Info (info.py)
-   info.loadSplashScreen()
+   info.load_splashscreen()
 
    ## Lets check system requirements
    req.check_version()

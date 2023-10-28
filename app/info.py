@@ -34,7 +34,7 @@ TIME_ACCESS = NOW.strftime("%H:%M:%S")
 # Second = int(Now.strftime("%S"))
 ### UNCOMMENT TO USE VARIABLES
         
-def loadSplashScreen():
+def load_splashscreen():
     print("="*80)
     print(f'[{NAME} for {PLATFORM_NAME}] - Running...')
     print("="*80)

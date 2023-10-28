@@ -1,5 +1,5 @@
 ﻿"""
-### Exceptions.py
+### exception.py
 
 - This file contains events raised when the program must to stop:
 
@@ -28,7 +28,7 @@ class Raise:
     raise Exception(f'>> You cannot run the application because it requires Python {target_version} or later. [Current Version: {current_version}]')
 
   def minor_version(self, current_version, target_version):
-    print(f'\n{"="*80}')
+    print('=' * 80)
     print("[ !!! ]: PYBRIDGE - WARNING:")
     print('=' * 80)
     print(f'>> Your appication targets an old version of Python')
@@ -62,7 +62,7 @@ class Raise:
     print(">> Your input is not valid: Check your input and try again")
     print("=" * 80)
   
-  def programq_quit(self):
+  def program_quit(self):
     print()
     print("=" * 80)
     print(f'{self.exctype} PYBRIDGE HAS QUIT!')
@@ -103,7 +103,7 @@ class Raise:
     print(f'{self.exctype} COMPRESSED FILE CREATION FAILED!')
     print("=" * 80)
     print("*" * 80)
-    print(f'>> PyBridge could not create a compressed file from your backup')
+    print(f'>> Could not create a compressed file from your backup')
     print(f'>> Try again later.')
     print("*" * 80)
 

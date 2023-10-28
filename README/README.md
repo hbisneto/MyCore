@@ -1,4 +1,4 @@
-# MyCore 1.8
+# MyCore 2.2
 
 This version is designed to speed up access to project information.
 Now, with the unification of the FileSystem libraries for macOS, Windows and Linux in a single file, just use `from system import FileSystem`. This simplifies the code, making it cleaner and more efficient. Additionally, new libraries have been added. These enhancements further expand the functionality and versatility of the system.
@@ -23,7 +23,7 @@ Version 1.7:
 - Added Menu.py
 - Changes in README.md
 - Exceptions: Each function will run after a new line
-- Mac.py: Removed `from system import SplashScreen` and added `APPINFO.loadSplashScreen()` on `Mac()` function
+- Mac.py: Removed `from system import SplashScreen` and added `info.load_splashscreen()` on `Mac()` function
 - Requirements: Added a new line when running `InstallDependencies()` function
 
 This update removes `APPINFO.py` and `SplashScreen.py` from `system` module.

@@ -68,19 +68,12 @@ def menu_new_project():
 
 ### FUTURE VERSIONS
 def menu_project_options():
-    # print("="*80)
-    # print(">> Management Options <<")
-    # print("="*80)
     cli.make_menu("MANAGEMENT OPTION")
     count = 0
     for i in core.LIST_PROJECT_OPTIONS:
         count += 1
         print(f"[{count}]: {core.LIST_PROJECT_OPTIONS[i][0]}\n— {core.LIST_PROJECT_OPTIONS[i][1]}")
         cli.separator()
-
-    # print("[0] - Go Back")
-    # print("Navigate back to the main menu")
-    # print("="*80)
     
     opc = int(input(">>[!] Type a number: "))
     print("="*80)
