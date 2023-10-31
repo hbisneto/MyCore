@@ -62,7 +62,7 @@ def menu_new_project():
     elif opt == 2:
         core.create(opt, "MENU APPLICATION")
     elif opt == 3:
-        print(">> NOT IMPLEMENTED <<")
+        core.create(opt, "TWITTER APPLICATION")
     elif opt == 4:
         core.create(opt, "JUPYTER NOTEBOOK")
 
@@ -76,6 +76,6 @@ def menu_project_options():
         cli.separator()
     
     opc = int(input(">>[!] Type a number: "))
-    print("="*80)
+    cli.separator()
     if opc == 1:
         wr.create_file("test.xml", core.repository_folder, "This is a test output")

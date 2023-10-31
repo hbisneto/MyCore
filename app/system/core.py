@@ -145,31 +145,27 @@ def start():
 """    
     elif proj_opt == 3:
       file = f"""
-## MacApp File
+## {bridge_name} File
 ## This file is used to implement code used to run scripts for Mac
 
-import tokens
+import twitter
 from exceptions import exception
 
 def start():
-  print("="*80)
-  print("NEW TWEET")
-  print("="*80)
-  tweet = str(input(">>[!] Whats happening? "))
-  print("="*80)
-  print()
-  print("-"*80)
-  print(">> Your tweet was sent")
-  print("-"*80)
-  print()
-  print("="*80)
+  ## Let's write a post
+  tweet = str(input(f">>[!] What's happening? "))
 
   try:
-    tokens.twitter.update_status(tweet)
-    print(f'>> Your last tweet:')
+    ## Check credentials and post to the platform
+    twitter.twitter.update_status(tweet)
+    
+    ## Prints a message that confirms your tweet has been sent
+    print(">> Your tweet was sent")
+
+    ## Prints your latest sent tweet
     print(f' > {tweet_string}')
-    print("-" * 80)
   except:
+    ## Prints an error message
     print(">>  Something went wrong: Unabled to connect to Twitter.")
 
 start()
@@ -600,28 +596,28 @@ Copyright © {info.CURRENT_YEAR} {info.USERNAME_CURRENT}. All rights reserved.
 def create_twitter_file(file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
       file = """
-## Tokens
+### Twitter Tokens
 ## Setup and connect you Twitter account here!
-# Note: DO NOT share your tokens
-## You can generate and regenerate tokens on Twitter Developer Platform
+## Note: DO NOT share your tokens
+### You can generate and regenerate tokens on Twitter Developer Platform
 
 import tweepy
 from tweepy import OAuthHandler
 
 ## API Key and API Key Secret
-ConsumerKey = str('')
-ConsumerSecret = str('')
+consumer_key = str('')
+consumer_secret = str('')
 
 ## Access Token and Access Token Secret
-AccessToken = str("")
-AccessTokenSecret = str("")
+access_token = str("")
+access_token_secret = str("")
 
-## Authorisation
-Auth = tweepy.OAuthHandler(ConsumerKey, ConsumerSecret)
-Auth.set_access_token(AccessToken, AccessTokenSecret)
+## Authorization
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
 
 ## Create an API Object
-Twitter = tweepy.API(Auth, wait_on_rate_limit = True)
+twitter = tweepy.API(auth, wait_on_rate_limit = True)
 """
       writer.write(file)
       writer.close()
@@ -952,17 +948,16 @@ def create_jupyter_file(bridge_name, file_location):
       "metadata": {},
       "outputs": [],
       "source": [
+        "### UNCOMMENT TO INSTALL DEPENDENCY",
         "# %pip install numpy",
         "# %pip install qgrid",
         "# %pip install pandas",
         "# %pip install seaborn",
         "# %pip install matplotlib",
         "",
+        "### FILESYSTEMPRO:",
         "## The use of FileSystem is recommended if you want to export data...",
-        "# %pip install filesystempro",
-        "",
-        "# import filesystem as fs",
-        "# from filesystem import wrapper as wr"
+        "# %pip install filesystempro"
       ]
     },
     {
@@ -971,7 +966,8 @@ def create_jupyter_file(bridge_name, file_location):
       "source": [
         "## Internal Packages",
         "Packages to set before you go",
-        "<br>Uncomment the code below to install dependencies"
+        "<br>Uncomment the code below to install dependencies.",
+        "<br>It's recommended **Visual Studio Code** to run Jupyter Notebooks"
       ]
     },
     {
@@ -980,8 +976,13 @@ def create_jupyter_file(bridge_name, file_location):
       "metadata": {},
       "outputs": [],
       "source": [
+        "### LOCAL FILESYSTEMPRO",
         "## The use of FileSystem is recommended if you want to export data...",
+        "## To access FileSystem Wrapper to create, read, ",
+        "## update and delete files and folder, install external package.",
         "from system import filesystem as fs",
+        "",
+        "### NATIVE EXCEPTIONS",
         "from exceptions import exception"
       ]
     },
@@ -1001,22 +1002,22 @@ def create_jupyter_file(bridge_name, file_location):
       "metadata": {},
       "outputs": [],
       "source": [
-        "## Examples to make your journey easier",
-        "## Note: Replace the code below with your implementation",
+        "### Examples to make your journey easier",
+        "### Note: Replace the code below with your implementation",
         "",
-        "# Get the path of your Desktop folder:",
+        "## Get the path of your Desktop folder:",
         "print('{0}{1}'.format('Your Desktop Folder: ', fs.desktop))",
         "",
-        "# Get the path of your Documents folder:",
+        "## Get the path of your Documents folder:",
         "print(f'Your Documents Folder: {fs.documents}')",
         "",
-        "# Hello World!",
+        "## Hello World!",
         "print('Hello World!')",
         "",
-        "# Math Sum",
+        "## Math Sum",
         "print('>> 2 + 3 =', 2 + 3)",
         "",
-        "# Throw an Exception using native library",
+        "## Throw an Exception using native library",
         "exception.Throw.file_exists()"
       ]
     },
@@ -1058,7 +1059,6 @@ def create_jupyter_file(bridge_name, file_location):
   "nbformat": 4,
   "nbformat_minor": 2
 }
-
 '''
       writer.write(file)
       writer.close()
@@ -1087,7 +1087,7 @@ def create(proj_opt, title):
   bridge_info_file = f'{repository_folder}/{bridge_name}/info.py'
   bridge_init_file = f'{repository_folder}/{bridge_name}/__init__.py'
   bridge_jupyter_file = f'{repository_folder}/{bridge_name}/{bridge_name}.ipynb'
-  bridge_twitter_file = f'{repository_folder}/{bridge_name}twitter.py'
+  bridge_twitter_file = f'{repository_folder}/{bridge_name}/twitter.py'
   bridge_readme_file = f'{repository_folder}/{bridge_name}/README.md'
   ## Root Files
 
@@ -1160,13 +1160,19 @@ def create(proj_opt, title):
     create_windows_file(bridge_name, bridge_windows_file)
   elif proj_opt == 3:
     project_type = "TWITTER APPLICATION"
-    create_app_file(proj_opt, bridge_name, bridge_app_file)
     create_twitter_file(bridge_twitter_file)
-    # CreateInitFile(initFile)
-    # CreateTwitterFile(twitterFile)
-    # CreateLinuxFile(linuxFile)
-    # CreateMacFile(macFile)
-    # CreateWindowsFile(windowsFile)
+    create_app_file(proj_opt, bridge_name, bridge_app_file)
+    create_exception_file(bridge_exception_file)
+    create_info_file(project_type, bridge_name, bridge_info_file)
+    create_init_file(bridge_init_file) # Do not create in case of Jupyter Notebook
+    create_gitignore_file(bridge_gitignore_file)
+    create_readme_file(bridge_name, bridge_readme_file)
+    create_logs_file(bridge_logs_file)
+    create_requirements_file(bridge_requirements_file) # Do not create in case of Jupyter Notebook
+
+    create_linux_file(bridge_name, bridge_linux_file)
+    create_mac_file(bridge_name, bridge_mac_file)
+    create_windows_file(bridge_name, bridge_windows_file)
   elif proj_opt == 4:
     project_type = "JUPYTER NOTEBOOK"
     create_jupyter_file(bridge_name, bridge_jupyter_file)
