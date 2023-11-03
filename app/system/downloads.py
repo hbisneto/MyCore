@@ -1,11 +1,14 @@
 import cli
+import filesystem as fs
 import requests
 import shutil
 import time
+from exceptions import exception
+from filesystem import wrapper as wr
 from pathlib import Path
 from zipfile import ZipFile
-import filesystem as fs
-from filesystem import wrapper as wr
+
+samples_folder = f'{fs.CURRENT_LOCATION}/Samples'
 
 DICT_SAMPLES = {
     0:["GetInfo", "https://github.com/hbisneto/GetInfo/archive/refs/heads/main.zip"],
@@ -14,22 +17,26 @@ DICT_SAMPLES = {
     3:["JupyterBridge", "https://github.com/hbisneto/JupyterBridge/archive/refs/heads/main.zip"]
 }
 
-samples_folder = f'{fs.CURRENT_LOCATION}/Samples'
-
 def download_samples():
     cli.make_menu("DOWNLOAD SAMPLE CODE", separator_style=">")
     for i in DICT_SAMPLES:
         print(f'[{i+1}] - {DICT_SAMPLES[i][0]}')
     print('[0] - << Go Back')
     print()
-    opc = int(input('>>[!] Type a number: '))
-    cli.separator(style = "<")
-    if opc == 0:
+
+    opt = int(input("[?]: Type the option number: "))
+    cli.separator(style="<")
+
+    if opt > len(DICT_SAMPLES):
+        exception.Throw.invalid_option()
+        return
+    
+    if opt == 0:
         return
 
     # Get information to download
-    app_name = DICT_SAMPLES[opc-1][0]
-    app_url = DICT_SAMPLES[opc-1][1]
+    app_name = DICT_SAMPLES[opt-1][0]
+    app_url = DICT_SAMPLES[opt-1][1]
 
     # Verify if Samples folder exists
     wr.create_directory(samples_folder)

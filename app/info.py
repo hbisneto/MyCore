@@ -10,19 +10,19 @@ from datetime import date
 from datetime import datetime
 from sys import platform
 
-NAME = "MyCore"
-VERSION = "2.1"
+NAME = "PyBridge"
+VERSION = "3.0"
 COPYRIGHT = "Heitor Bisneto"
 TYPE = "Menu Application Loop"
 LICENCE = "MIT"
 USERNAME_CURRENT = getpass.getuser().capitalize()
 
-### Python running version
+### PYTHON RUNNING VERSION
 MAJOR_VERSION = sys.version_info[0]
 MINOR_VERSION = sys.version_info[1]
 BUILD_VERSION = sys.version_info[2]
 CURRENT_PYTHON_VERSION = f'{MAJOR_VERSION}.{MINOR_VERSION}.{BUILD_VERSION}'
-### Python running version
+### PYTHON RUNNING VERSION
 
 CURRENT_YEAR = date.today().year
 NOW = datetime.now()
@@ -75,21 +75,3 @@ elif platform == "darwin":
 ## Windows
 elif platform == "win32" or platform == "win64":
     PLATFORM_NAME = "Windows"
-
-# print(NAME)
-# print(VERSION)
-# print(COPYRIGHT)
-# print(TYPE)
-# print(LICENCE)
-# print(USERNAME_CURRENT)
-
-# print(MAJOR_VERSION)
-# print(MINOR_VERSION)
-# print(BUILD_VERSION)
-# print(CURRENT_PYTHON_VERSION)
-
-# print(CURRENT_YEAR)
-# print(NOW)
-# print(HOUR)
-# print(TIME_ACCESS)
-# print(PLATFORM_NAME)

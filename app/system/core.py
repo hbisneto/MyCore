@@ -94,21 +94,16 @@ def backup_projects(compressed = False):
     cli.separator(style="<")
 
 def get_project_list(repository):
-  ### List projects PyBridge creates
   cli.make_menu("PROJECT LIST", style = "default", new_line = True)
   count = 0
   for dir in os.listdir(repository):
-      if os.path.isdir(os.path.join(repository, dir)):
-          count+=1
-          print(f'[{count}]: {dir}')
+    if os.path.isdir(os.path.join(repository, dir)):
+      count+=1
+      print(f'[{count}]: {dir}')
 
   if count == 0:
     cli.make_menu(f'>> It`s lonely here', 'Your list of projects is empty', style="short", new_line=True)
-  # else:
-  #   pass
-    # opc = int(input(">> Type a number to get an option or go back: "))
-    # if opc != 0:### PENSAR NESSA PARTE
-    #   menus.menu_project_options()
+  
   cli.separator()
 
 def generate_modules(proj_opt, bridge_name, bridge_location):
@@ -124,8 +119,8 @@ def generate_modules(proj_opt, bridge_name, bridge_location):
   try:
     for i in BRIDGE_FOLDERS:
       if proj_opt == 4 and i == 2:
-          cli.separator()
-          return
+        cli.separator()
+        return
       wr.create_directory(f'{bridge_location}/{BRIDGE_FOLDERS[i]}')
       print(f'[ O.K ]: Created "{BRIDGE_FOLDERS[i]}" Module')
     cli.separator()
@@ -159,20 +154,20 @@ def start():
     print(">> 3. Option Three")
 
     try:
-        user_input = int(input(">>[!] Type the option number: "))
-        print("="*80)
-        if user_input == 1:
-          print("> Option 1")
-        elif user_input == 2:
-          print("> Option 2")
-        elif user_input == 3:
-          print("> Option 3")
-        else:
-          print(">> This option is unavailable at this time")
+      user_input = int(input(">>[!] Type the option number: "))
+      print("="*80)
+      if user_input == 1:
+        print("> Option 1")
+      elif user_input == 2:
+        print("> Option 2")
+      elif user_input == 3:
+        print("> Option 3")
+      else:
+        print(">> This option is unavailable at this time")
     except:
-        print("-"*80)
-        print(">> This option is not available")
-        print("-"*80)
+      print("-"*80)
+      print(">> This option is not available")
+      print("-"*80)
 """    
     elif proj_opt == 3:
       file = f"""
@@ -347,37 +342,37 @@ CURRENT_LOCATION = os.getcwd()
 
 ## LINUX
 if platform == "linux" or platform == "linux2":
-    PLATFORM_NAME = "Linux"
-    user = f'/home/{os.environ["USER"]}'
-    desktop = f'{user}/Desktop'
-    documents = f'{user}/Documents'
-    downloads = f'{user}/Downloads'
-    music = f'{user}/Music'
-    pictures = f'{user}/Pictures'
-    public = f'{user}/Public'
-    videos = f'{user}/Videos'
+  PLATFORM_NAME = "Linux"
+  user = f'/home/{os.environ["USER"]}'
+  desktop = f'{user}/Desktop'
+  documents = f'{user}/Documents'
+  downloads = f'{user}/Downloads'
+  music = f'{user}/Music'
+  pictures = f'{user}/Pictures'
+  public = f'{user}/Public'
+  videos = f'{user}/Videos'
 ## MAC
 elif platform == "darwin":
-    PLATFORM_NAME = "Mac"
-    user = f'/Users/{os.environ["USER"]}'
-    desktop = f'{user}/Desktop'
-    documents = f'{user}/Documents'
-    downloads = f'{user}/Downloads'
-    music = f'{user}/Music'
-    pictures = f'{user}/Pictures'
-    public = f'{user}/Public'
-    videos = f'{user}/Movies' ## POINT TO MOVIES FOLDER ON macOS
+  PLATFORM_NAME = "Mac"
+  user = f'/Users/{os.environ["USER"]}'
+  desktop = f'{user}/Desktop'
+  documents = f'{user}/Documents'
+  downloads = f'{user}/Downloads'
+  music = f'{user}/Music'
+  pictures = f'{user}/Pictures'
+  public = f'{user}/Public'
+  videos = f'{user}/Movies' ## POINT TO MOVIES FOLDER ON macOS
 ## WINDOWS
 elif platform == "win32" or platform == "win64":
-    PLATFORM_NAME = "Windows"
-    user = os.environ['USERPROFILE']
-    desktop = f'{user}/Desktop'
-    documents = f'{user}/Documents'
-    downloads = f'{user}/Downloads'
-    music = f'{user}/Music'
-    pictures = f'{user}/Pictures'
-    public = os.environ['PUBLIC']
-    videos = f'{user}/Videos'
+  PLATFORM_NAME = "Windows"
+  user = os.environ['USERPROFILE']
+  desktop = f'{user}/Desktop'
+  documents = f'{user}/Documents'
+  downloads = f'{user}/Downloads'
+  music = f'{user}/Music'
+  pictures = f'{user}/Pictures'
+  public = os.environ['PUBLIC']
+  videos = f'{user}/Videos'
 
 ### CUSTOM VARIABLES ###
 ## LINUX
@@ -438,46 +433,46 @@ TIME_ACCESS = NOW.strftime("%H:%M:%S")
 ### UNCOMMENT TO USE VARIABLES
         
 def load_splashscreen():
+  print("="*80)
+  print(f'[{NAME} for {PLATFORM_NAME}] - Running...')
+  print("="*80)
+
+  print(f'Name: {NAME}')
+  print(f'Version: {VERSION}')
+  print(f'Created By: {COPYRIGHT}')
+
+  if CURRENT_YEAR == 2023:
+    print(f'Copyright © {CURRENT_YEAR} | {COPYRIGHT}. All rights reserved.')
     print("="*80)
-    print(f'[{NAME} for {PLATFORM_NAME}] - Running...')
+  else:
+    print(f'Copyright © 2023 - {CURRENT_YEAR} | {COPYRIGHT}. All rights reserved.')
     print("="*80)
 
-    print(f'Name: {NAME}')
-    print(f'Version: {VERSION}')
-    print(f'Created By: {COPYRIGHT}')
-
-    if CURRENT_YEAR == 2023:
-        print(f'Copyright © {CURRENT_YEAR} | {COPYRIGHT}. All rights reserved.')
-        print("="*80)
-    else:
-        print(f'Copyright © 2023 - {CURRENT_YEAR} | {COPYRIGHT}. All rights reserved.')
-        print("="*80)
-
-    if HOUR >= 6 and HOUR < 12:
-        DAY_PERIOD = "Morning"
-        print(f'Hello {USERNAME_CURRENT}. Good {DAY_PERIOD}! - {TIME_ACCESS}')
-        print("="*80)
-    elif HOUR >= 12 and HOUR < 18:
-        DAY_PERIOD = "Afternoon"
-        print(f'Hello {USERNAME_CURRENT}. Good {DAY_PERIOD}! - {TIME_ACCESS}')
-        print("="*80)
-    elif HOUR >= 18 and HOUR != 0:
-        DAY_PERIOD = "Evening"
-        print(f'Hello {USERNAME_CURRENT}. Good {DAY_PERIOD}! - {TIME_ACCESS}')
-        print("="*80)
-    else:
-        print(f'Hello {USERNAME_CURRENT}. Nice to see you! - {TIME_ACCESS}')
-        print("="*80)
+  if HOUR >= 6 and HOUR < 12:
+    DAY_PERIOD = "Morning"
+    print(f'Hello {USERNAME_CURRENT}. Good {DAY_PERIOD}! - {TIME_ACCESS}')
+    print("="*80)
+  elif HOUR >= 12 and HOUR < 18:
+    DAY_PERIOD = "Afternoon"
+    print(f'Hello {USERNAME_CURRENT}. Good {DAY_PERIOD}! - {TIME_ACCESS}')
+    print("="*80)
+  elif HOUR >= 18 and HOUR != 0:
+    DAY_PERIOD = "Evening"
+    print(f'Hello {USERNAME_CURRENT}. Good {DAY_PERIOD}! - {TIME_ACCESS}')
+    print("="*80)
+  else:
+    print(f'Hello {USERNAME_CURRENT}. Nice to see you! - {TIME_ACCESS}')
+    print("="*80)
 
 ## Linux
 if platform == "linux" or platform == "linux2":
-    PLATFORM_NAME = "Linux"
+  PLATFORM_NAME = "Linux"
 ## Mac
 elif platform == "darwin":
-    PLATFORM_NAME = "Mac"
+  PLATFORM_NAME = "Mac"
 ## Windows
 elif platform == "win32" or platform == "win64":
-    PLATFORM_NAME = "Windows"
+  PLATFORM_NAME = "Windows"
 """
     writer.write(file)
     writer.close()
@@ -626,7 +621,7 @@ Copyright © {info.CURRENT_YEAR} {info.USERNAME_CURRENT}. All rights reserved.
 
 def create_twitter_file(file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
-      file = """
+    file = """
 ### Twitter Tokens
 ## Setup and connect you Twitter account here!
 ## Note: DO NOT share your tokens
@@ -650,15 +645,15 @@ auth.set_access_token(access_token, access_token_secret)
 ## Create an API Object
 twitter = tweepy.API(auth, wait_on_rate_limit = True)
 """
-      writer.write(file)
-      writer.close()
+    writer.write(file)
+    writer.close()
   print(f'[ O.K ]: Created "twitter" Library (tokens for Twitter)')
 
 def create_requirements_file(file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
       VER_DICT = {
-          "current" : ["{current_major}", "{current_minor}", "{current_build}", "{current_version}"],
-          "target" : ["{target_major}", "{target_minor}", "{target_build}", "{target_version}"]
+        "current" : ["{current_major}", "{current_minor}", "{current_build}", "{current_version}"],
+        "target" : ["{target_major}", "{target_minor}", "{target_build}", "{target_version}"]
       }
       file = f"""'''
 ### Requirements.py
@@ -703,11 +698,11 @@ if REQUIRE == True:
 
   def check_version():
     if target_ver_int < current_ver_int:
-        exception.Throw.minor_version(current_version, target_version)
+      exception.Throw.minor_version(current_version, target_version)
     elif target_ver_int > current_ver_int:
-        exception.Throw.major_version(current_version, target_version)
+      exception.Throw.major_version(current_version, target_version)
     else:
-        pass
+      pass
 """
       writer.write(file)
       writer.close()
@@ -715,7 +710,7 @@ if REQUIRE == True:
 
 def create_gitignore_file(file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
-      file = """
+    file = """
 ### PYBRIDGE SETS TO IGNORE ###
 ## .DS_Store: Is a file that stores custom attributes of its containing folder,
 ## such as folder view options, icon positions, and other visual information on macOS
@@ -883,13 +878,13 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 """
-      writer.write(file)
-      writer.close()
+    writer.write(file)
+    writer.close()
   print(f'[ O.K ]: Created ".gitignore" file')
 
 def create_init_file(file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
-      file = """
+    file = """
 ## __init__.py File
 ## This file is used to first run your application
 ## Here the contents will be processed to choose the best platform to go
@@ -899,46 +894,40 @@ from sys import platform
 
 ## Linux
 if platform == "linux" or platform == "linux2":
-  # from linux import linux
-  # linux.linux()
-  print("=" * 80)
-  print("[!] THIS SOFTWARE IS NOT COMPATIBLE WITH THIS PLATFORM")
-  print("=" * 80)
+  from linux import linux
+  linux.linux()
 
 ## Mac
 elif platform == "darwin":
   from mac import mac
   mac.mac()
-  
+    
 ## Windows
 elif platform == "win32" or platform == "win64":
-  # from windows import windows
-  # windows.windows()
-  print("=" * 80)
-  print("[!] THIS SOFTWARE IS NOT COMPATIBLE WITH THIS PLATFORM")
-  print("=" * 80)
+  from windows import windows
+  windows.windows()
 """
-      writer.write(file)
-      writer.close()
+    writer.write(file)
+    writer.close()
   print(f'[ O.K ]: Created "__init__" file')
 
 def create_jupyter_file(bridge_name, file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
-      file = '''
+    file = '''
 {
   "cells": [
     {
       "cell_type": "markdown",
       "metadata": {},
       '''
-      file += f'''
+    file += f'''
       "source": [
         "# {bridge_name}",
         "",
         "{bridge_name} is a Jupyter Notebook file created using PyBridge."
       ]
       '''
-      file += '''
+    file += '''
     },
     {
       "cell_type": "markdown",
@@ -1091,19 +1080,19 @@ def create_jupyter_file(bridge_name, file_location):
   "nbformat_minor": 2
 }
 '''
-      writer.write(file)
-      writer.close()
+    writer.write(file)
+    writer.close()
   print(f'[ O.K ]: Created "Jupyter Notebook" file')
 
 def create_logs_file(file_location):
   with codecs.open(file_location, "w", "utf-8-sig") as writer:
-      file = """
+    file = """
 ### This is a Logs lib file. 
 
 print("Hello, Windows")
 """
-      writer.write(file)
-      writer.close()
+    writer.write(file)
+    writer.close()
   print(f'[ O.K ]: Created "logs" Library')
 
 def create(proj_opt, title):
@@ -1132,9 +1121,6 @@ def create(proj_opt, title):
   bridge_requirements_file = f'{repository_folder}/{bridge_name}/system/requirements.py'
   # Nested Files
 
-  # print(f'>> Creating bridge to the project "{bridge_name}"...')
-  # print("="*80)
-
   cli.make_menu(f'>> Creating bridge to the project "{bridge_name}"...')
 
   try:
@@ -1150,7 +1136,7 @@ def create(proj_opt, title):
 
   generate_modules(proj_opt, bridge_name, bridge_location)
 
-  ### CRETE BRIDGE
+  ### CREATE BRIDGE
   cli.make_menu(f'Creating "{bridge_name}" Libraries and Files')
 
   ### Creates the main files to the bridge
