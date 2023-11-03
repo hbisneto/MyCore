@@ -34,7 +34,7 @@ def main_menu():
             elif opt == 2:
                 core.get_project_list(core.repository_folder)
             elif opt == 3:
-                print(">> NOT IMPLEMENTED <<")
+                menu_backup()
             elif opt == 4:
                 downloads.download_samples()
         except:
@@ -56,7 +56,7 @@ def menu_new_project():
         return
 
     if opt == 0:
-        pass
+        return
     if opt == 1:
         core.create(opt, "BLANK APPLICATION")
     elif opt == 2:
@@ -65,6 +65,30 @@ def menu_new_project():
         core.create(opt, "TWITTER APPLICATION")
     elif opt == 4:
         core.create(opt, "JUPYTER NOTEBOOK")
+
+def menu_backup():
+    cli.make_menu("BACKUP", style = "default", new_line = True)
+    count = 0
+    for i in core.LIST_BACKUP_OPTIONS:
+        count += 1
+        print(f'[{count}] - {core.LIST_BACKUP_OPTIONS[count-1]}')
+    print(f'[0] << Go Back')
+    print()
+
+    opt = int(input("[?]: Type the option number: "))
+    cli.separator()
+    if opt > len(core.LIST_PROJECTS):
+        exception.Throw.invalid_option()
+        return
+
+    if opt == 0:
+        return
+    if opt == 1:
+        ## BACKUP ONLY
+        core.backup_projects(compressed = False)
+    elif opt == 2:
+        ## BACKUP AS COMPRESSED FILE
+        core.backup_projects(compressed = True)
 
 ### FUTURE VERSIONS
 def menu_project_options():

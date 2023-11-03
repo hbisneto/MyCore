@@ -1,3 +1,4 @@
+import shutil
 import info
 import cli
 import codecs
@@ -7,78 +8,108 @@ import filesystem as fs
 from datetime import datetime
 from exceptions import exception
 from filesystem import wrapper as wr
-# from system import menus
 
 project_type = ""
 tweet_string = "{tweet}"
 repository_folder = f'{fs.documents}/{info.NAME}/Repository'
-backup_folder = f'{fs.CURRENT_LOCATION}/Backup'
-
-### FUNCTIONS ###
-
-# def create_backup_folder():
-#     """Creates the 'Backup' folder in the root of the project
-#     """
-#     try:
-#         os.mkdir(backup_folder)
-#     except:
-#         pass
-### FUNCTIONS ###
+  
+LIST_BACKUP_OPTIONS = [
+  "Backup only",
+  "Backup as compressed file (.zip)"
+]
 
 LIST_MENU_ITEMS = [
-    "New Project",
-    "Project List",
-    "Backup Projects",
-    "Sample Projects"
+  "New Project",
+  "Project List",
+  "Backup Projects",
+  "Sample Projects"
 ]
 
 LIST_PROJECTS = [
-    "Create Blank Project",
-    "Create a Menu Application",
-    "Create a Twitter Application",
-    "Create a Jupyter Notebook"
+  "Create Blank Project",
+  "Create a Menu Application",
+  "Create a Twitter Application",
+  "Create a Jupyter Notebook"
 ]
 
 LIST_PROJECT_OPTIONS = {
-    0:[
-        "Create Library", 
-        "Will add a Library in all OS Modules"
-      ],
-    1:[
-        "Create Universal Library",
-        "Will add a new Library on the root of project"
-      ],
-    2:[
-        "Create Module",
-        "Will add a Module in all OS Modules"
-      ],
-    3:[
-        "Create Universal Module",
-        "Will add a new Module on the root of project"
-      ],
-    4:[
-        "Delete Project",
-        "Deletes the project folder and all the contents in it. \nCAUTION: THIS OPERATION CANNOT BE UNDONE!"
-      ]
+  0:[
+    "Create Library", 
+    "Will add a Library in all OS Modules"
+    ],
+  1:[
+    "Create Universal Library",
+    "Will add a new Library on the root of project"
+    ],
+  2:[
+    "Create Module",
+    "Will add a Module in all OS Modules"
+    ],
+  3:[
+    "Create Universal Module",
+    "Will add a new Module on the root of project"
+    ],
+  4:[
+    "Delete Project",
+    "Deletes the project folder and all the contents in it. \nCAUTION: THIS OPERATION CANNOT BE UNDONE!"
+    ]
 }
 
-def get_project_list(repository):
-    ### List projects PyBridge creates
-    cli.make_menu("PROJECT LIST", style = "default", new_line = True)
-    count = 0
-    for dir in os.listdir(repository):
-        if os.path.isdir(os.path.join(repository, dir)):
-            count+=1
-            print(f'[{count}]: {dir}')
+def backup_projects(compressed = False):
+  day = datetime.now().day
+  month = datetime.now().month
+  year = datetime.now().year
+  hour = datetime.now().hour
+  minute = datetime.now().minute
+  second = datetime.now().second
 
-    if count == 0:
-      cli.make_menu(f'>> It`s lonely here', 'Your list of projects is empty', style="short", new_line=True)
-    # else:
-    #   pass
-      # opc = int(input(">> Type a number to get an option or go back: "))
-      # if opc != 0:### PENSAR NESSA PARTE
-      #   menus.menu_project_options()
+  name_format = f'BKP_{year}{month}{day}_{hour}{minute}{second}'
+  source = f'{repository_folder}'
+  target = f'{fs.CURRENT_LOCATION}/Backup/{name_format}'
+
+  try:
+    start = datetime.now()
+    print("[PyBridge]: Backing up...")
+
+    if compressed == True:
+      wr.make_zip(source, f'{target}.zip')
+    else:  
+      shutil.copytree(source, target)
+    
+    print("[PyBridge]: Backup creation done!")
+    end = datetime.now()
+    time = end - start
+    print(f'>> Operation completed in: {time}')
     cli.separator()
+  
+  except shutil.Error as e:
+    cli.separator(style=">")
+    print("[ERROR]:", e)
+    exception.Throw.backup_fail()
+    cli.separator(style="<")
+  except OSError as os_e:
+    cli.separator(style=">")
+    print("[ERROR]:", os_e)
+    exception.Throw.backup_fail()
+    cli.separator(style="<")
+
+def get_project_list(repository):
+  ### List projects PyBridge creates
+  cli.make_menu("PROJECT LIST", style = "default", new_line = True)
+  count = 0
+  for dir in os.listdir(repository):
+      if os.path.isdir(os.path.join(repository, dir)):
+          count+=1
+          print(f'[{count}]: {dir}')
+
+  if count == 0:
+    cli.make_menu(f'>> It`s lonely here', 'Your list of projects is empty', style="short", new_line=True)
+  # else:
+  #   pass
+    # opc = int(input(">> Type a number to get an option or go back: "))
+    # if opc != 0:### PENSAR NESSA PARTE
+    #   menus.menu_project_options()
+  cli.separator()
 
 def generate_modules(proj_opt, bridge_name, bridge_location):
   BRIDGE_FOLDERS = {
@@ -415,11 +446,11 @@ def load_splashscreen():
     print(f'Version: {VERSION}')
     print(f'Created By: {COPYRIGHT}')
 
-    if CURRENT_YEAR == 2021:
+    if CURRENT_YEAR == 2023:
         print(f'Copyright © {CURRENT_YEAR} | {COPYRIGHT}. All rights reserved.')
         print("="*80)
     else:
-        print(f'Copyright © 2021 - {CURRENT_YEAR} | {COPYRIGHT}. All rights reserved.')
+        print(f'Copyright © 2023 - {CURRENT_YEAR} | {COPYRIGHT}. All rights reserved.')
         print("="*80)
 
     if HOUR >= 6 and HOUR < 12:
