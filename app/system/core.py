@@ -96,10 +96,13 @@ def backup_projects(compressed = False):
 def get_project_list(repository):
   cli.make_menu("PROJECT LIST", style = "default", new_line = True)
   count = 0
-  for dir in os.listdir(repository):
-    if os.path.isdir(os.path.join(repository, dir)):
-      count+=1
-      print(f'[{count}]: {dir}')
+  
+  directories = [d for d in os.listdir(repository) if os.path.isdir(os.path.join(repository, d))]
+  directories.sort()
+  
+  for directory in directories:
+    count+= 1
+    print(f'[{count}]: {directory}')
 
   if count == 0:
     cli.make_menu(f'>> It`s lonely here', 'Your list of projects is empty', style="short", new_line=True)
