@@ -1,3 +1,9 @@
+"""
+### core.py
+
+- This library will process every step of file creation
+"""
+
 import shutil
 import info
 import cli

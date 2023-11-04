@@ -1,6 +1,8 @@
-﻿## __init__.py File
+﻿"""
+### __init__.py File
 ## This file is used to first run your application
 ## Here the contents will be processed to choose the best platform to go
+"""
 
 ## Native Libraries
 from sys import platform

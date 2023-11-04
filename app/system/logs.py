@@ -1,5 +1,10 @@
-## Logs File
-## This file is used to store logs from your system when running
+"""
+### logs.py
+
+- This file is used to store logs from your system when running
+
+> This linrary is still in tests. Send your pull-request
+"""
 
 import codecs
 import os

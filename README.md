@@ -1,226 +1,59 @@
----
-This project was created using [PyBridge](https://github.com/hbisneto/PyBridge)
+# PyBridge
 
----
+PyBridge é um aplicativo gerador de arquivos de código e Jupyter NoteBooks com facilidade e eficiência.
 
-# MyCore
+## Requisitos
 
-### Novidades dessa versão
----
+- Python 3.9 ou superior
 
-```
-.
-├── __init__.py
-├── exception
-│ ├── Exceptions.py
-├── system
-│ ├── SystemRequirements.py
-├── linux
-│ ├── Linux.py
-│ ├── LinuxApp.py
-│ ├── FileSystem.py
-│ └── SplashScreen.py
-├── mac
-│ ├── Mac.py
-│ ├── MacApp.py
-│ ├── FileSystem.py
-│ └── SplashScreen.py
-├── windows
-│ ├── Windows.py
-│ ├── WindowsApp.py
-│ ├── FileSystem.py
-│ └── SplashScreen.py
-├── twitter.py
-└── README.md
+## Instalação
+
+Você pode instalar o PyBridge usando o pip, que é um gerenciador de pacotes para Python. Abra o terminal e digite o seguinte comando:
+
+```bash
+pip install PyBridge
 ```
 
-**Environment**
+## Interface de Linha de Comando (CLI)
 
-- Improvements in CLI (Command Line Interface)
-- Improved System Logs (in Logs.py)
-- Improved Jupyter Notebooks file
+Uma das principais características do PyBridge é a sua interface de linha de comando (CLI) fácil de usar. A CLI foi projetada para ajudar você a tomar decisões rápidas na hora de criar seus códigos.
 
-**Core**
+Ao iniciar o PyBridge, você será apresentado a um menu de escolha numérica. Cada número corresponde a um tipo diferente de projeto que você pode criar:
 
-A biblioteca **Core.py** foi realocada para o módulo system.
-<br>
-Isso permitiu que o código fosse implementado apenas uma vez, tornando o processo mais eficiente.
+1. Blank Application
+2. Menu Loop Application
+3. Twitter Application
+4. Jupyter NOTEBOOK
 
-- Fixed a bug when user input text instead of a number in MenuOption
+Basta escolher a opção que corresponde ao tipo de projeto que você deseja criar e o PyBridge cuidará do resto, criando todos os arquivos necessários para você. Isso torna o processo de criação de código mais eficiente e menos propenso a erros. Aproveite a facilidade que o PyBridge oferece para suas necessidades de codificação!
 
-**Requirements**
+## Backup de Projetos
 
-- Improved System Requirements (in Requirements.py):
-- Added new InstallDependencies function.
-- Removed CheckMajorVersion and CheckMinorVersion functions from library (added CheckVersion function instead)
- 
-**FileSystem**
+O PyBridge não apenas ajuda você a criar projetos, mas também se preocupa com a segurança deles. Ele possui uma funcionalidade de backup que permite compactar seus projetos em um arquivo .zip ou simplesmente salvar os projetos na pasta "Backup".
 
-A biblioteca **FileSystem.py**, presente em todos os módulos de sistema, foi reestruturada.
-<br>
-Nessa versão, a biblioteca FileSystem.py foi elevada, possibilitando o suporte para mais de um sistema operacional sem a necessidade de multiplas implementações. Independente da plataforma.
+Sempre que você quiser fazer um backup de seu projeto, o PyBridge irá apresentar um menu com duas opções:
 
-- Padronização dos diretórios no sistema
-- A pasta do usuário "Music" do Windows foi adicionado ao FileSystem.py 
-- As URLs do sistema de arquivos foram padronizadas: Terminando sem a barra (/)
+1. Backup Only
+2. Backup as compressed file (.zip)
 
-A estrutura da biblioteca foi organizada da seguinte maneira:
+Ambas as opções armazenam os arquivos de backup na pasta "Backup", que está localizada no mesmo diretório em que o PyBridge está sendo executado.
 
-```
-## FileSystem
-## This file contains some default directories of your system
-## You can use this file to implement custom directories used by your application
+Essa funcionalidade proporciona uma camada extra de segurança para seus projetos, permitindo que você tenha sempre uma cópia segura de seu trabalho. Com o PyBridge, você pode se concentrar em criar, sabendo que seus projetos estão seguros.
 
-### NATIVE LIBRARIES ###
-import os
-from sys import platform
-from system import APPINFO
-### NATIVE LIBRARIES ###
+## Códigos de Exemplo
 
-### GLOBAL VARIABLES ###
-CurrentPath = os.getcwd()
-### GLOBAL VARIABLES ###
+O PyBridge também oferece a possibilidade de baixar códigos de exemplo. Estes são projetos gerados pelo próprio PyBridge e servem para demonstrar suas funcionalidades.
 
-## LINUX
-if platform == "linux" or platform == "linux2":
-    User = f'/home/{os.environ["USER"]}'
-    Desktop = f'{User}/Desktop'
-    Documents = f'{User}/Documents'
-    Downloads = f'{User}/Downloads'
-    Music = f'{User}/Music'
-    Pictures = f'{User}/Pictures'
-    Public = f'{User}/Public'
-    Videos = f'{User}/Videos'
-## MAC
-elif platform == "darwin":
-    User = f'/Users/{os.environ["USER"]}'
-    Desktop = f'{User}/Desktop'
-    Documents = f'{User}/Documents'
-    Downloads = f'{User}/Downloads'
-    Music = f'{User}/Music'
-    Pictures = f'{User}/Pictures'
-    Public = f'{User}/Public'
-    Videos = f'{User}/Movies' ## POINT TO MOVIES FOLDER ON macOS
-## WINDOWS
-elif platform == "win32" or platform == "win64":
-    User = os.environ['USERPROFILE']
-    Desktop = f'{User}/Desktop'
-    Documents = f'{User}/Documents'
-    Downloads = f'{User}/Downloads'
-    Music = f'{User}/Music'
-    Pictures = f'{User}/Pictures'
-    Public = os.environ['PUBLIC']
-    Videos = f'{User}/Videos'
+Você tem a opção de baixar quatro projetos de exemplo diferentes. Cada um desses projetos demonstra um tipo diferente de projeto que você pode criar com o PyBridge:
 
-### CUSTOM VARIABLES ###
-## LINUX
-linux_Templates = f'{User}/Templates'
+1. App1: A Blank Application sample
+2. App2: a Menu Loop Application sample
+3. App3: A Twitter Application sample
+4. App4: A Jupyter NOTEBOOK sample
 
-## MAC
-mac_Applications = f'{User}/Applications'
-mac_Movies = f'{User}/Movies' # JUST IN CASE...
-
-## WINDOWS
-windows_ApplicationData = f'{User}/AppData/Roaming'
-windows_LocalAppData = f'{User}/AppData/Local'
-windows_Temp = f'{windows_LocalAppData}/Temp'
-windows_Favorites = f'{User}/Favorites'
-
-## MY VARIABLES
-AppFolder = f'{Documents}/{APPINFO.NAME}'
-Repository = f'{AppFolder}/Repository'
-## MY VARIABLES
-### CUSTOM VARIABLES ###
-
-```
-
-Dessa forma, diretórios padrões como Desktop e Documents serão carregados quando o programa estiver em execução independente do sistema operacional usado.
-<br>
-Também foram incluidos diretórios únicos de cada sistema operacional como o diretório Templates no Linux, Applications no macOS, e Favorites no Windows.
-
-Algumas bibliotecas foram realocadas no sistema:
-
-```
-
-```
+Esses códigos de exemplo podem ser muito úteis para entender melhor como o PyBridge funciona e para se inspirar para seus próprios projetos. Aproveite esta funcionalidade para explorar ainda mais as possibilidades com o PyBridge!
 
 
-## Requirements
-
-MyCore requires Python 3.9.0 or later to run
-
-## Installation
-
-```
-pip install MyCore
-```
-
-## External Links
-
-Here is some external links that you can use in your `README.md` file.
-
-- [First Link](https://google.com)
-- [Second Link](https://google.com)
-- [Third Link](https://google.com)
-
-#
-
-Copyright © 2023 Heitor. All rights reserved.
-
-
-
-
-
-"""
-### Core.py
-
-This is where all the resources of each platform will work.
-You can use and customize default functions to fit your work. 
-
-### Functions you can call:
-
-`CreateExceptionsFile()`: This is something.
-
-`CreateGitIgnoreFile()`:
-
-`CreateInitFile()`:
-
-`CreateJupyterNotebook()`:
-
-`CreateReadmeFile()`:
-
-`CreateRequirementsFile()`:
-
-`CreateTwitterFile()`:
-
-
-#### Linux Functions
-
-`CreateLinuxAppFile()`:
-
-`CreateLinuxFile()`:
-
-`CreateLinuxFileSystem()`:
-
-`CreateLinuxSplashScreen()`:
-
-#### macOS Functions:
-
-`CreateMacAppFile()`:
-
-`CreateMacFile()`:
-
-`CreateMacFileSystem()`:
-
-`CreateMacSplashScreen()`:
-
-#### Windows Functions:
-
-`CreateWindowsAppFile()`:
-
-`CreateWindowsFile()`:
-
-`CreateWindowsFileSystem()`:
-
-`CreateWindowsSplashScreen()`:
-"""
+>
+Após a instalação, você pode começar a usar o PyBridge para criar seus arquivos de código e Jupyter NoteBooks.
+Esperamos que você aproveite o uso do PyBridge para todas as suas necessidades de codificação! Se você tiver alguma dúvida ou problema, não hesite em nos contatar.

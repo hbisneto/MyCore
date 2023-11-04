@@ -1,3 +1,9 @@
+"""
+### menus.py
+
+- This library was designed to show CLI Menus to the user
+"""
+
 import cli
 import info
 from exceptions import exception

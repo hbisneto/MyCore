@@ -1,3 +1,8 @@
+"""
+### downloads.py
+
+- This library was designed to download sample codes
+"""
 import cli
 import filesystem as fs
 import requests

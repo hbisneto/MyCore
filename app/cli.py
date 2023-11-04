@@ -1,5 +1,8 @@
-## CLI.py File
-## This file is used to implement the CLI styles for users
+"""
+### cli.py
+
+- This library was designed to implement CLI styles for users
+"""
 
 import os
 
@@ -7,21 +10,12 @@ def get_terminal_size():
     size = os.get_terminal_size()
     return size.lines, size.columns
 
-rows, columns = get_terminal_size()
-
-# print(f'Rows: {rows}')
-# print(f'Columns: {columns}')
-
-
-# separator_style = '='*columns
-# print('='*columns)
-# print(columns)
-
 def make_menu(title, text = "", style = "default", new_line = True, separator_style = "="):
     """
-    A função aceita quatro parâmetros: `title`, `text`, `style` e `newline`.
-    Os parâmetros `text`, `style` e `newline` não são obrigatórios.
+    The function accepts 4 parameters: `title`, `text`, `style` and `newline`.
+    The parameters `text`, `style` e `newline` are not mandatory.
     """
+    rows, columns = get_terminal_size()
     
     if new_line == True:
         print()
@@ -45,12 +39,13 @@ def make_menu(title, text = "", style = "default", new_line = True, separator_st
         print(f'{separator_style}' * columns)
 
 def separator(style = "=", new_line = False):
+    rows, columns = get_terminal_size()
     if new_line == True:
         print()
     print(f'{style}' * columns)
 
-### EXEMPLES OF USE ###
+### EXAMPLE OF USE ###
     # make_menu("1. Title", "Short description", "short", True)
     # make_menu("2. Title", "Long description", "long", newline=True)
     # make_menu("3. Title")
-### EXEMPLES OF USE ###
+### EXAMPLE OF USE ###
