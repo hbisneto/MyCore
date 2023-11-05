@@ -12,7 +12,7 @@ import os
 import time
 import filesystem as fs
 from datetime import datetime
-from exceptions import exception
+from exceptions import exception as ex
 from filesystem import wrapper as wr
 
 project_type = ""
@@ -91,12 +91,12 @@ def backup_projects(compressed = False):
   except shutil.Error as e:
     cli.separator(style=">")
     print("[ERROR]:", e)
-    exception.Throw.backup_fail()
+    ex.throw.backup_fail()
     cli.separator(style="<")
   except OSError as os_e:
     cli.separator(style=">")
     print("[ERROR]:", os_e)
-    exception.Throw.backup_fail()
+    ex.throw.backup_fail()
     cli.separator(style="<")
 
 def get_project_list(repository):
@@ -152,8 +152,6 @@ def start():
 ## {bridge_name} File
 ## This file is used to implement code used to run application in loop
 
-from exceptions import exception
-
 def start():
   while True:
     print("="*80)
@@ -184,7 +182,6 @@ def start():
 ## This file is used to implement code used to run scripts for Mac
 
 import twitter
-from exceptions import exception
 
 def start():
   ## Let's write a post
@@ -217,26 +214,24 @@ def create_exception_file(file_location):
 - This file contains events raised when the program must to stop:
 
 ```
-from exception import Exceptions
+from exception import Exceptions as ex
 
 def main():
-  exceptions.Throw.FileExists()
+  ex.throw.file_exists()
 ```
 Output:
 
 ```
 Traceback (most recent call last):
-  File "/YourProject/mac/MacApp.py", line 11, in Main
-    Exceptions.Throw.FileExists()
-  File "/YourProject/exception/Exceptions.py", line 53, in FileExists
+  File "/your_project/mac/MacApp.py", line 11, in Main
+    ex.throw.file_exists()
+  File "/your_project/exceptions/exception.py", line 53, in file_exists
     raise Exception(f'{self.exctype} The file already exists')
 Exception: >> An Exception occurred: The file already exists
 ```
 '''
-## Exceptions File
-## This file contains events that's raised when the program must to stop
 
-class Raise:
+class SystemException:
   def major_version(self, current_version, target_version):
     raise Exception(f'>> You cannot run the application because it requires Python {target_version} or later. [Current Version: {current_version}]')
 
@@ -249,7 +244,7 @@ class Raise:
     print('=' * 80)
     print(f'- Current Version: {current_version}')
     print(f'- Target Version: {target_version}')
-    print(f'>> You can change `Requirements.py` on `system` Module')
+    print(f'>> You can change `requirements.py` on `system` Module')
     print('=' * 80)
         
   def __init__(self, exctype):
@@ -320,7 +315,7 @@ class Raise:
     print(f'>> Try again later.')
     print("*" * 80)
 
-Throw = Raise("")
+throw = SystemException("")
 """
     writer.write(file)
     writer.close()
@@ -675,7 +670,7 @@ def create_requirements_file(file_location):
 
 import sys
 import subprocess
-from exceptions import exception
+from exceptions import exception as ex
 
 ## Change "REQUIRE" to "False" to skip system check
 REQUIRE = True
@@ -707,9 +702,9 @@ if REQUIRE == True:
 
   def check_version():
     if target_ver_int < current_ver_int:
-      exception.Throw.minor_version(current_version, target_version)
+      ex.throw.minor_version(current_version, target_version)
     elif target_ver_int > current_ver_int:
-      exception.Throw.major_version(current_version, target_version)
+      ex.throw.major_version(current_version, target_version)
     else:
       pass
 """
@@ -1012,7 +1007,7 @@ def create_jupyter_file(bridge_name, file_location):
         "from system import filesystem as fs",
         "",
         "### NATIVE EXCEPTIONS",
-        "from exceptions import exception"
+        "from exceptions import exception as ex"
       ]
     },
     {
@@ -1047,7 +1042,7 @@ def create_jupyter_file(bridge_name, file_location):
         "print('>> 2 + 3 =', 2 + 3)",
         "",
         "## Throw an Exception using native library",
-        "exception.Throw.file_exists()"
+        "ex.throw.file_exists()"
       ]
     },
     {
@@ -1130,18 +1125,17 @@ def create(proj_opt, title):
   bridge_requirements_file = f'{repository_folder}/{bridge_name}/system/requirements.py'
   # Nested Files
 
-  cli.make_menu(f'>> Creating bridge to the project "{bridge_name}"...')
-
+  ### Try to create bridge location
   try:
     bridge_location = f'{repository_folder}/{bridge_name}/'
-    os.mkdir(bridge_location)
+    wr.create_directory(bridge_location, False)
+    cli.make_menu(f'>> Creating bridge to the project "{bridge_name}"...')
   except:
-    print()
-    print("="*80)
-    print(">> Could not create your project:")
-    print(f'> Check if "{bridge_name}" already exists and try again.')
-    print("="*80)
-    exception.Throw.project_exists()
+    cli.make_menu(
+      "CREATION FAILED", 
+      f"Couldn't create your project.\nCheck if '{bridge_name}' already exists and try again",
+      "long")
+    ex.throw.project_exists()
 
   generate_modules(proj_opt, bridge_name, bridge_location)
 

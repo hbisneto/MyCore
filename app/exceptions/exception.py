@@ -4,26 +4,24 @@
 - This file contains events raised when the program must to stop:
 
 ```
-from exception import Exceptions
+from exception import Exceptions as ex
 
 def main():
-  Exceptions.Throw.FileExists()
+  ex.throw.file_exists()
 ```
 Output:
 
 ```
 Traceback (most recent call last):
-  File "/YourProject/mac/MacApp.py", line 11, in Main
-    Exceptions.Throw.FileExists()
-  File "/YourProject/exception/Exceptions.py", line 53, in FileExists
+  File "/your_project/mac/MacApp.py", line 11, in Main
+    ex.throw.file_exists()
+  File "/your_project/exceptions/exception.py", line 53, in file_exists
     raise Exception(f'{self.exctype} The file already exists')
 Exception: >> An Exception occurred: The file already exists
 ```
 """
-## Exceptions File
-## This file contains events that's raised when the program must to stop
 
-class Raise:
+class SystemException:
   def major_version(self, current_version, target_version):
     raise Exception(f'>> You cannot run the application because it requires Python {target_version} or later. [Current Version: {current_version}]')
 
@@ -36,7 +34,7 @@ class Raise:
     print('=' * 80)
     print(f'- Current Version: {current_version}')
     print(f'- Target Version: {target_version}')
-    print(f'>> You can change `Requirements.py` on `system` Module')
+    print(f'>> You can change `requirements.py` on `system` Module')
     print('=' * 80)
         
   def __init__(self, exctype):
@@ -107,6 +105,4 @@ class Raise:
     print(f'>> Try again later.')
     print("*" * 80)
 
-Throw = Raise("")
-
-# Throw.CompressBackupFail() # REMOVE THIS LINE
+throw = SystemException("")

@@ -6,7 +6,7 @@
 
 import cli
 import info
-from exceptions import exception
+from exceptions import exception as ex
 from system import core
 import filesystem as fs
 from filesystem import wrapper as wr
@@ -27,7 +27,7 @@ def main_menu():
             opt = int(input("[?]: Type the option number: "))
             cli.separator()
             if opt > len(core.LIST_MENU_ITEMS):
-                exception.Throw.invalid_option()
+                ex.throw.invalid_option()
                 return
 
             if opt == 0:
@@ -58,7 +58,7 @@ def menu_new_project():
     opt = int(input("[?]: Type the option number: "))
     cli.separator()
     if opt > len(core.LIST_PROJECTS):
-        exception.Throw.invalid_option()
+        ex.throw.invalid_option()
         return
 
     if opt == 0:
@@ -84,7 +84,7 @@ def menu_backup():
     opt = int(input("[?]: Type the option number: "))
     cli.separator()
     if opt > len(core.LIST_PROJECTS):
-        exception.Throw.invalid_option()
+        ex.throw.invalid_option()
         return
 
     if opt == 0:

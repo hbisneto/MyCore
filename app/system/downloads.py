@@ -8,7 +8,7 @@ import filesystem as fs
 import requests
 import shutil
 import time
-from exceptions import exception
+from exceptions import exception as ex
 from filesystem import wrapper as wr
 from pathlib import Path
 from zipfile import ZipFile
@@ -33,7 +33,7 @@ def download_samples():
     cli.separator(style="<")
 
     if opt > len(DICT_SAMPLES):
-        exception.Throw.invalid_option()
+        ex.throw.invalid_option()
         return
     
     if opt == 0:
