@@ -1,18 +1,15 @@
 ﻿"""
 ### windows.py
 
-- This file is used to implement code used to run scripts for Windows
+- This file is used to implement code used to run scripts for windows
 - Codes implemented here, will run before the main script starts running
 """
-## Windows File
-## This file is used to implement code used to run scripts for Windows
-## Codes implemented here, will run before the main script starts running
 
+import pybridge
 import info
 import filesystem as fs
 from filesystem import wrapper as wr
 from system import requirements as req
-import pybridge
 
 def windows():
    ## NOTE: You can use this function
@@ -31,5 +28,5 @@ def windows():
    ### Creates all needed folders
    wr.create_directory(f'{fs.documents}/{info.NAME}/Repository')
 
-   ## Start App for Mac
+   ## Start App for windows
    pybridge.start()

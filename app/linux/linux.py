@@ -1,18 +1,15 @@
 ﻿"""
 ### linux.py
 
-- This file is used to implement code used to run scripts for Linux
+- This file is used to implement code used to run scripts for linux
 - Codes implemented here, will run before the main script starts running
 """
-## Linux File
-## This file is used to implement code used to run scripts for Linux
-## Codes implemented here, will run before the main script starts running
 
+import pybridge
 import info
 import filesystem as fs
 from filesystem import wrapper as wr
 from system import requirements as req
-import pybridge
 
 def linux():
    ## NOTE: You can use this function
@@ -31,5 +28,5 @@ def linux():
    ### Creates all needed folders
    wr.create_directory(f'{fs.documents}/{info.NAME}/Repository')
 
-   ## Start App for Mac
+   ## Start App for linux
    pybridge.start()

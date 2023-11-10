@@ -4,13 +4,13 @@
 - This library will process every step of file creation
 """
 
-import shutil
-import info
-import cli
 import codecs
-import os
-import time
+import cli
 import filesystem as fs
+import info
+import os
+import shutil
+import time
 from datetime import datetime
 from exceptions import exception as ex
 from filesystem import wrapper as wr
@@ -71,16 +71,16 @@ def backup_projects(compressed = False):
 
   name_format = f'BKP_{year}{month}{day}_{hour}{minute}{second}'
   source = f'{repository_folder}'
-  target = f'{fs.CURRENT_LOCATION}/Backup/{name_format}'
+  target = f'{fs.CURRENT_LOCATION}/Backup'
 
   try:
     start = datetime.now()
     print("[PyBridge]: Backing up...")
-
+    wr.create_directory(target, create_subdirs=True)
     if compressed == True:
-      wr.make_zip(source, f'{target}.zip')
+      wr.make_zip(source, f'{target}/{name_format}.zip')
     else:  
-      shutil.copytree(source, target)
+      shutil.copytree(source, f'{target}/{name_format}.zip')
     
     print("[PyBridge]: Backup creation done!")
     end = datetime.now()
@@ -413,10 +413,10 @@ from sys import platform
 
 NAME = "{bridge_name}"
 VERSION = "1.0"
-COPYRIGHT = "{fs.USER_NAME}"
+CORPORATION = "{fs.USER_NAME}"
 TYPE = "{project_type}"
 LICENCE = "MIT"
-USERNAME_CURRENT = getpass.getuser().capitalize()
+CURRENT_USERNAME = getpass.getuser()[0].upper() + getpass.getuser()[1:]
 """
     file += """
 ### Python running version
@@ -443,29 +443,29 @@ def load_splashscreen():
 
   print(f'Name: {NAME}')
   print(f'Version: {VERSION}')
-  print(f'Created By: {COPYRIGHT}')
+  print(f'Created By: {CORPORATION}')
 
   if CURRENT_YEAR == 2023:
-    print(f'Copyright © {CURRENT_YEAR} | {COPYRIGHT}. All rights reserved.')
+    print(f'Copyright © {CURRENT_YEAR} | {CORPORATION}. All rights reserved.')
     print("="*80)
   else:
-    print(f'Copyright © 2023 - {CURRENT_YEAR} | {COPYRIGHT}. All rights reserved.')
+    print(f'Copyright © 2023 - {CURRENT_YEAR} | {CORPORATION}. All rights reserved.')
     print("="*80)
 
   if HOUR >= 6 and HOUR < 12:
     DAY_PERIOD = "Morning"
-    print(f'Hello {USERNAME_CURRENT}. Good {DAY_PERIOD}! - {TIME_ACCESS}')
+    print(f'Hello {CURRENT_USERNAME}. Good {DAY_PERIOD}! - {TIME_ACCESS}')
     print("="*80)
   elif HOUR >= 12 and HOUR < 18:
     DAY_PERIOD = "Afternoon"
-    print(f'Hello {USERNAME_CURRENT}. Good {DAY_PERIOD}! - {TIME_ACCESS}')
+    print(f'Hello {CURRENT_USERNAME}. Good {DAY_PERIOD}! - {TIME_ACCESS}')
     print("="*80)
   elif HOUR >= 18 and HOUR != 0:
     DAY_PERIOD = "Evening"
-    print(f'Hello {USERNAME_CURRENT}. Good {DAY_PERIOD}! - {TIME_ACCESS}')
+    print(f'Hello {CURRENT_USERNAME}. Good {DAY_PERIOD}! - {TIME_ACCESS}')
     print("="*80)
   else:
-    print(f'Hello {USERNAME_CURRENT}. Nice to see you! - {TIME_ACCESS}')
+    print(f'Hello {CURRENT_USERNAME}. Nice to see you! - {TIME_ACCESS}')
     print("="*80)
 
 ## Linux

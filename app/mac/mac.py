@@ -5,11 +5,11 @@
 - Codes implemented here, will run before the main script starts running
 """
 
+import pybridge
 import info
 import filesystem as fs
 from filesystem import wrapper as wr
 from system import requirements as req
-import pybridge
 
 def mac():
    ## NOTE: You can use this function

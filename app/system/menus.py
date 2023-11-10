@@ -7,9 +7,8 @@
 import cli
 import info
 from exceptions import exception as ex
-from system import core
-import filesystem as fs
 from filesystem import wrapper as wr
+from system import core
 from system import downloads
 
 def main_menu():
